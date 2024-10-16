@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 public class API : MonoBehaviour
 {
     private static string baseURL = "https://52.58.160.54/";
+    public MenuManager menuManager;
 
     private class AcceptAllCertificatesSignedWithASelfSignedCertificate : CertificateHandler
     {
@@ -29,15 +30,17 @@ public class API : MonoBehaviour
             request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
 
             yield return request.SendWebRequest();
+            string responseText = request.downloadHandler.text;
+            ApiResponse apiResponse = JsonUtility.FromJson<ApiResponse>(responseText);
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                string responseText = request.downloadHandler.text;
-                Debug.Log(responseText);
+                menuManager.OnSuccessMessage(apiResponse.detail);
+                menuManager.LogIn();
             }
             else
             {
-                Debug.LogError($"Error: {request.error} | Response: {request.downloadHandler.text}");
+                menuManager.OnErrorMessage(apiResponse.detail);
             }
         }
     }
@@ -52,5 +55,12 @@ public class API : MonoBehaviour
     {
         public string username;
         public string password;
+    }
+
+    [System.Serializable]
+    public class ApiResponse
+    {
+        public string error;
+        public string detail;
     }
 }
