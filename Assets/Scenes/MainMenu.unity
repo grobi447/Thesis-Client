@@ -4199,7 +4199,7 @@ GameObject:
   - component: {fileID: 1148280237}
   - component: {fileID: 1148280236}
   m_Layer: 5
-  m_Name: RegisterButton
+  m_Name: LoginButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4286,7 +4286,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1341314524}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: Register
+        m_MethodName: Login
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5317,9 +5317,12 @@ MonoBehaviour:
   startPanel: {fileID: 844462363}
   registerPanel: {fileID: 1155117749}
   messagePanel: {fileID: 2091389582}
-  usernameInput: {fileID: 677801552}
-  passwordInput1: {fileID: 1105457750}
-  passwordInput2: {fileID: 181820689}
+  loginPanel: {fileID: 2133405667}
+  RegisterUsernameInput: {fileID: 677801552}
+  LoginUsernameInput: {fileID: 1330300461}
+  RegisterPasswordInput1: {fileID: 1105457750}
+  RegisterPasswordInput2: {fileID: 181820689}
+  LoginPasswordInput: {fileID: 489921481}
   PlayButton: {fileID: 1188851083}
   RegisterButton: {fileID: 514194642}
   LoginButton: {fileID: 579786886}

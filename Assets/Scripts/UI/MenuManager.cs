@@ -7,9 +7,12 @@ public class MenuManager : MonoBehaviour
     public GameObject startPanel;
     public GameObject registerPanel;
     public GameObject messagePanel;
-    public TMPro.TMP_InputField usernameInput;
-    public TMPro.TMP_InputField passwordInput1;
-    public TMPro.TMP_InputField passwordInput2;
+    public GameObject loginPanel;
+    public TMPro.TMP_InputField RegisterUsernameInput;
+    public TMPro.TMP_InputField LoginUsernameInput;
+    public TMPro.TMP_InputField RegisterPasswordInput1;
+    public TMPro.TMP_InputField RegisterPasswordInput2;
+    public TMPro.TMP_InputField LoginPasswordInput;
     public Button PlayButton;
     public Button RegisterButton;
     public Button LoginButton;
@@ -26,8 +29,14 @@ public class MenuManager : MonoBehaviour
     {
         startPanel.SetActive(true);
         registerPanel.SetActive(false);
+        loginPanel.SetActive(false);
     }
-    public void LogIn(){
+    public void ShowLoginPanel()
+    {
+        startPanel.SetActive(false);
+        loginPanel.SetActive(true);
+    }
+    public void LoggedIn(){
         PlayButton.gameObject.SetActive(true);
         RegisterButton.gameObject.SetActive(false);
         LoginButton.gameObject.SetActive(false);
@@ -42,12 +51,17 @@ public class MenuManager : MonoBehaviour
     }
     public void Register()
     {
-        if (passwordInput1.text != passwordInput2.text)
+        if (RegisterPasswordInput1.text != RegisterPasswordInput2.text)
         {
             OnErrorMessage("Passwords do not match!");
             return;
         }
-        api.Register(usernameInput.text, passwordInput1.text);
+        api.Register(RegisterUsernameInput.text, RegisterPasswordInput1.text);
+    }
+
+    public void Login()
+    {
+        api.Login(LoginUsernameInput.text, LoginPasswordInput.text);
     }
 
     public void OnSuccessMessage(string message)
