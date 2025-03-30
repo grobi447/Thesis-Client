@@ -15,9 +15,9 @@ public class API : MonoBehaviour
         }
     }
 
-    public IEnumerator RegisterRequest(string endpoint, string username, string password)
+    public IEnumerator RegisterRequest(string username, string password)
     {
-        string url = $"{baseURL}{endpoint}";
+        string url = $"{baseURL}register/";
 
         string json = JsonUtility.ToJson(new UserRegister { username = username, password = password });
 
@@ -44,10 +44,10 @@ public class API : MonoBehaviour
             }
         }
     }
-    public IEnumerator LoginRequest(string endpoint, string username, string password)
+    public IEnumerator LoginRequest(string username, string password)
     {
-        string url = $"{baseURL}{endpoint}";
-
+        string url = $"{baseURL}login/";
+       
         string json = JsonUtility.ToJson(new UserRegister { username = username, password = password });
 
         using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
@@ -75,11 +75,11 @@ public class API : MonoBehaviour
     }
     public void Register(string username, string password)
     {
-        StartCoroutine(RegisterRequest("register/", username, password));
+        StartCoroutine(RegisterRequest(username, password));
     }
     public void Login(string username, string password)
     {
-        StartCoroutine(LoginRequest("login/", username, password));
+        StartCoroutine(LoginRequest(username, password));
     }
 
     [System.Serializable]
