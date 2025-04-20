@@ -101,6 +101,7 @@ MonoBehaviour:
   baseColor: {r: 0, g: 0.53106594, b: 1, a: 1}
   offsetColor: {r: 0, g: 0.8842337, b: 1, a: 1}
   tileRenderer: {fileID: 4379833828734191573}
+  gridManager: {fileID: 0}
 --- !u!61 &6587063288030470244
 BoxCollider2D:
   m_ObjectHideFlags: 0
