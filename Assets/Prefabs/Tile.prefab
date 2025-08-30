@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -98,10 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e33224df258fb774cb5ab49c8ba97937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseColor: {r: 0, g: 0.53106594, b: 1, a: 1}
-  offsetColor: {r: 0, g: 0.8842337, b: 1, a: 1}
   tileRenderer: {fileID: 4379833828734191573}
-  gridManager: {fileID: 0}
 --- !u!61 &6587063288030470244
 BoxCollider2D:
   m_ObjectHideFlags: 0

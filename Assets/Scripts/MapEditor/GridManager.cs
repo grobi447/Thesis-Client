@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GridManager : MonoBehaviour {
     [SerializeField] private int width, height;
@@ -30,8 +31,7 @@ public class GridManager : MonoBehaviour {
                 Tile newTile = Instantiate(tilePrefab, new Vector3(x, y), Quaternion.identity, gridParent);
                 newTile.name = $"Tile {x} {y}";
 
-                bool isOffset = (x + y) % 2 == 1; 
-                newTile.Init(isOffset, this);   
+                newTile.Init(this);   
 
                 tiles[new Vector2(x, y)] = newTile;
             }

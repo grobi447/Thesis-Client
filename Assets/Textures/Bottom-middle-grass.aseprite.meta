@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0fa3cef060a07024f9b290de0835eab5
+guid: eb4a67dc77f2f2140a5f91dff7eac0a4
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -120,16 +120,45 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
-  animatedSpriteImportData: []
+  animatedSpriteImportData:
+  - name: Bottom-middle-grass
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 32
+      height: 32
+    spriteID: 62be888ee7154c9419b0882b5f803d3e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 4}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -946182702
-    name: mapEditor-sprite-panel
+    guid: 1130248182
+    name: Bottom-middle-grass
     layerFlags: 0
     layerType: 0
     blendMode: 0
-    cells: []
+    cells:
+    - name: Bottom-middle-grass
+      frameIndex: 0
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      spriteId: 62be888ee7154c9419b0882b5f803d3e
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -148,4 +177,4 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 345, y: 1080}
+  canvasSize: {x: 32, y: 32}
