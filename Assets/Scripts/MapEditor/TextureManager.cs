@@ -10,7 +10,11 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
     SpriteData spriteData = new SpriteData();
     private Image imageComponent;
     private GameObject border;
-    private static GameObject currentlySelectedBorder;
+    private static Dictionary<View, GameObject> currentlySelectedBorder = new Dictionary<View, GameObject>
+        {
+            { View.Sky, null },
+            { View.Blocks, null }
+        };
     private UiHandler uiHandler;
     void Awake()
     {
@@ -27,23 +31,36 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
 
         spriteData.name = gameObject.name;
         spriteData.sprite = imageComponent.sprite;
-        
-        if (uiHandler.GetCurrentView() == View.Sky)
+        switch (uiHandler.GetCurrentView())
         {
-            uiHandler.UpdateSky(spriteData.sprite);
+            case View.Sky:
+                if (uiHandler.GetCurrentView() == View.Sky)
+                {
+                    uiHandler.UpdateSky(spriteData.sprite);
+                }
+                break;
+            case View.Blocks:
+                gridManager.SetSelectedSprite(spriteData);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
-        else
+
+
+
+        if (currentlySelectedBorder[uiHandler.GetCurrentView()] != null && currentlySelectedBorder[uiHandler.GetCurrentView()] != border)
         {
-            gridManager.SetSelectedSprite(spriteData);
-        }
-        if (currentlySelectedBorder != null && currentlySelectedBorder != border)
-        {
-            currentlySelectedBorder.SetActive(false);
+            currentlySelectedBorder[uiHandler.GetCurrentView()].SetActive(false);
         }
 
         border.SetActive(true);
 
-        currentlySelectedBorder = border;
+        currentlySelectedBorder[uiHandler.GetCurrentView()] = border;
 
+    }
+
+    public void setCurrentlySelectedBorder(View view, GameObject border)
+    {
+        currentlySelectedBorder[view] = border;
     }
 }

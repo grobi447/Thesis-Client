@@ -27,7 +27,7 @@ public class Tile : MonoBehaviour
     public void OnMouseEnter()
     {
         tileRenderer.color = new Color(1, 1, 1, 0.7f);
-        
+
     }
 
     public void OnMouseExit()
@@ -41,7 +41,7 @@ public class Tile : MonoBehaviour
             tileRenderer.color = baseColor;
         }
     }
-    
+
     public void OnMouseOver()
     {
         if (GridManager.isMouseDown && GridManager.hasSelectedSprite && uiHandler.GetCurrentView() != View.Sky)
@@ -49,7 +49,23 @@ public class Tile : MonoBehaviour
             spriteData = gridManager.GetSelectedSprite();
             tileRenderer.sprite = spriteData.sprite;
             gameObject.name = spriteData.name;
-            tileRenderer.color = baseColor;
+            if (gridManager.GetCurrentLayer() == 0)
+            {
+                baseColor = new Color(1, 1, 1, 0.5f);
+            }
+            else
+            {
+                tileRenderer.color = baseColor;
+            }
         }
+    }
+
+    public void TurnOffCollider()
+    {
+        GetComponent<BoxCollider2D>().enabled = false;
+    }
+    public void TurnOnCollider()
+    {
+        GetComponent<BoxCollider2D>().enabled = true;
     }
 }
