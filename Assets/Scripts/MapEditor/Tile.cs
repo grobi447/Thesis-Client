@@ -1,62 +1,110 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SpriteType
+{
+    Block,
+    Trap,
+}
+
 [System.Serializable]
 public class SpriteData
 {
     public string name;
     public Sprite sprite;
+    public SpriteType type;
 }
 
 public class Tile : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer tileRenderer;
+    [SerializeField] public Sprite emptySprite;
+
     private SpriteData spriteData;
     private GridManager gridManager;
-    [SerializeField] private SpriteRenderer tileRenderer;
-    private Color baseColor = new Color(1, 1, 1, 1);
-    private Color startColor;
     private UiHandler uiHandler;
+    private Vector3 position;
 
-    public void Init(GridManager gridManager)
+    private Color visibleColor = new Color(1, 1, 1, 1);
+    private Color invisibleColor = new Color(1, 1, 1, 0);
+    public SpriteRenderer TileRenderer
+    {
+        get => tileRenderer;
+        set => tileRenderer = value;
+    }
+    public SpriteData SpriteData
+    {
+        get => spriteData;
+        set => spriteData = value;
+    }
+
+    public void Init(GridManager gridManager, Vector3 position)
     {
         this.gridManager = gridManager;
-        startColor = tileRenderer.color;
         uiHandler = GameObject.Find("UiHandler").GetComponent<UiHandler>();
+        this.position = position;
     }
 
     public void OnMouseEnter()
     {
         tileRenderer.color = new Color(1, 1, 1, 0.7f);
-
     }
 
     public void OnMouseExit()
     {
-        if (spriteData == null)
-        {
-            tileRenderer.color = startColor;
-        }
-        else
-        {
-            tileRenderer.color = baseColor;
-        }
+        tileRenderer.color = spriteData == null ? invisibleColor : visibleColor;
     }
 
     public void OnMouseOver()
     {
         if (GridManager.isMouseDown && GridManager.hasSelectedSprite && uiHandler.GetCurrentView() != View.Sky)
         {
-            spriteData = gridManager.GetSelectedSprite();
-            tileRenderer.sprite = spriteData.sprite;
-            gameObject.name = spriteData.name;
-            if (gridManager.GetCurrentLayer() == 0)
+            SpriteData selectedData = gridManager.GetSelectedSprite();
+
+            if (uiHandler.GetCurrentTool() != Tool.Rubber)
             {
-                baseColor = new Color(1, 1, 1, 0.5f);
+                if (selectedData.type == SpriteType.Trap && this.GetType() == typeof(Tile))
+                {
+                    gridManager.ReplaceTileWithTrap(selectedData, position);
+                    return;
+                }
+                if (selectedData.type == SpriteType.Block && this.GetType() != typeof(Tile))
+                {
+                    gridManager.ReplaceTrapWithTile(selectedData, position);
+                    return;
+                }
+                spriteData = selectedData;
+                tileRenderer.sprite = spriteData.sprite;
+                gameObject.name = spriteData.name;
+                gameObject.tag = spriteData.type.ToString();
             }
-            else
-            {
-                tileRenderer.color = baseColor;
-            }
+
+            UseTool();
+        }
+    }
+
+    public void UseTool()
+    {
+        switch (uiHandler.GetCurrentTool())
+        {
+            case Tool.Brush:
+                if (gridManager.GetCurrentLayer() == 0)
+                {
+                    visibleColor = new Color(1, 1, 1, 0.5f);
+                }
+                else
+                {
+                    visibleColor = new Color(1, 1, 1, 1f);
+                }
+                tileRenderer.color = visibleColor;
+                break;
+            case Tool.Rubber:
+                spriteData = null;
+                tileRenderer.sprite = emptySprite;
+                gameObject.name = $"Tile {position.x} {position.y} {position.z}";
+                break;
+            default:
+                throw new System.ArgumentOutOfRangeException();
         }
     }
 
@@ -64,6 +112,7 @@ public class Tile : MonoBehaviour
     {
         GetComponent<BoxCollider2D>().enabled = false;
     }
+
     public void TurnOnCollider()
     {
         GetComponent<BoxCollider2D>().enabled = true;

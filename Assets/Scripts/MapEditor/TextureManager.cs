@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,16 +6,20 @@ using UnityEngine.UI;
 public class TextureManager : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GridManager gridManager;
-    SpriteData spriteData = new SpriteData();
+
     private Image imageComponent;
     private GameObject border;
+    private UiHandler uiHandler;
+    private SpriteData spriteData = new SpriteData();
+
     private static Dictionary<View, GameObject> currentlySelectedBorder = new Dictionary<View, GameObject>
         {
             { View.Sky, null },
-            { View.Blocks, null }
+            { View.Blocks, null },
+            { View.Traps, null }
         };
-    private UiHandler uiHandler;
-    void Awake()
+
+    private void Awake()
     {
         Transform child = transform.Find("Image");
         Transform borderChild = transform.Find("Border");
@@ -31,16 +34,15 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
 
         spriteData.name = gameObject.name;
         spriteData.sprite = imageComponent.sprite;
+        spriteData.type = gameObject.tag == "Block" ? SpriteType.Block : SpriteType.Trap;
         switch (uiHandler.GetCurrentView())
         {
             case View.Sky:
-                if (uiHandler.GetCurrentView() == View.Sky)
-                {
-                    uiHandler.UpdateSky(spriteData.sprite);
-                }
+                uiHandler.UpdateSky(spriteData.sprite);
                 break;
             case View.Blocks:
-                gridManager.SetSelectedSprite(spriteData);
+            case View.Traps:
+                gridManager.SetSelectedSprite(uiHandler.GetCurrentView(), spriteData);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -48,18 +50,18 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
 
 
 
-        if (currentlySelectedBorder[uiHandler.GetCurrentView()] != null && currentlySelectedBorder[uiHandler.GetCurrentView()] != border)
+        View currentView = uiHandler.GetCurrentView();
+        if (currentlySelectedBorder[currentView] != null && currentlySelectedBorder[currentView] != border)
         {
-            currentlySelectedBorder[uiHandler.GetCurrentView()].SetActive(false);
+            currentlySelectedBorder[currentView].SetActive(false);
         }
 
         border.SetActive(true);
 
-        currentlySelectedBorder[uiHandler.GetCurrentView()] = border;
-
+        currentlySelectedBorder[currentView] = border;
     }
 
-    public void setCurrentlySelectedBorder(View view, GameObject border)
+    public void SetCurrentlySelectedBorder(View view, GameObject border)
     {
         currentlySelectedBorder[view] = border;
     }
