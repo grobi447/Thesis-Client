@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8306085713310893923}
   - component: {fileID: 7112636346786880233}
   - component: {fileID: 2461153335392517739}
+  - component: {fileID: 8448295020906693234}
   m_Layer: 0
   m_Name: SpikeRight
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 87b10f1349b067745968aa902093b72f, type: 3}
+  m_Sprite: {fileID: -1445621821, guid: 186e9586dac54a8458cde61bfe51f7a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -145,3 +146,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileRenderer: {fileID: 8306085713310893923}
   emptySprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  animationFirstStartDelay: 0
+  animationStartDelay: 0
+  idleTime: 0
+  empty: {fileID: 21300000, guid: c3ec830027f137743be1434e039cdd2e, type: 3}
+--- !u!95 &8448295020906693234
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5905877963414930218}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2d79baf51ca159c4c85524c9fda7b0c3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
