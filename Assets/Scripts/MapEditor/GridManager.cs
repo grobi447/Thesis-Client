@@ -25,7 +25,6 @@ public class GridManager : MonoBehaviour
     public Tile TilePrefab => tilePrefab;
     public Dictionary<string, Tile> TrapPrefabDict => trapPrefabDict;
 
-    [SerializeField]
     public Dictionary<View, SpriteData> lastSelectedSprite = new Dictionary<View, SpriteData>
     {
         { View.Blocks, null },
@@ -82,8 +81,6 @@ public class GridManager : MonoBehaviour
         lastSelectedSprite[view] = data;
     }
 
-    public SpriteData GetSelectedSprite() => selectedSpriteData;
-
     public SpriteData GetLastSelectedSprite(View view) => lastSelectedSprite[view];
 
     public void CheckActiveToggle()
@@ -125,6 +122,7 @@ public class GridManager : MonoBehaviour
                 Tile trapTile = Instantiate(trapPrefab, position, Quaternion.identity, parent);
                 trapTile.name = trapData.name;
                 trapTile.Init(this, position);
+                trapTile.transform.rotation = trapPrefab.transform.rotation;
                 trapTile.TileRenderer.sortingOrder = (int)position.z;
                 trapTile.SpriteData = trapData;
                 trapTile.GetComponent<SpriteRenderer>().sprite = trapData.sprite;
@@ -153,6 +151,14 @@ public class GridManager : MonoBehaviour
             newTile.UseTool();
         }
     }
+
+    public bool HasBlockNeighbor(Tile tile, Vector3 direction)
+    {
+        Vector3 neighborPos = tile.transform.position + direction;
+        if (tiles.TryGetValue(neighborPos, out Tile neighborTile)
+            && neighborTile.SpriteData != null && neighborTile.SpriteData.type == SpriteType.Block)
+            return true;
+        return false;
+    }
+
 }
-
-

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7112636346786880233}
   - component: {fileID: 2461153335392517739}
   m_Layer: 0
-  m_Name: Spike
+  m_Name: SpikeBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,13 +27,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5905877963414930218}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 12.142487, y: 9.528425, z: 3.2102258}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &8306085713310893923
 SpriteRenderer:
   m_ObjectHideFlags: 0

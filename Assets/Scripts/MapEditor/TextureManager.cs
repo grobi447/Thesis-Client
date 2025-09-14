@@ -31,10 +31,9 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-
         spriteData.name = gameObject.name;
         spriteData.sprite = imageComponent.sprite;
-        spriteData.type = gameObject.tag == "Block" ? SpriteType.Block : SpriteType.Trap;
+        
         switch (uiHandler.GetCurrentView())
         {
             case View.Sky:
@@ -42,6 +41,13 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
                 break;
             case View.Blocks:
             case View.Traps:
+
+                spriteData.type = gameObject.tag switch
+                {
+                    "Block" => SpriteType.Block,
+                    "Spike" => SpriteType.Spike,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
                 gridManager.SetSelectedSprite(uiHandler.GetCurrentView(), spriteData);
                 break;
             default:

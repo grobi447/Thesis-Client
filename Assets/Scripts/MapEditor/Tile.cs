@@ -4,10 +4,9 @@ using UnityEngine;
 public enum SpriteType
 {
     Block,
-    Trap,
+    Spike
 }
 
-[System.Serializable]
 public class SpriteData
 {
     public string name;
@@ -24,6 +23,7 @@ public class Tile : MonoBehaviour
     private GridManager gridManager;
     private UiHandler uiHandler;
     private Vector3 position;
+    private bool canPlace = true;
 
     private Color visibleColor = new Color(1, 1, 1, 1);
     private Color invisibleColor = new Color(1, 1, 1, 0);
@@ -47,23 +47,25 @@ public class Tile : MonoBehaviour
 
     public void OnMouseEnter()
     {
-        tileRenderer.color = new Color(1, 1, 1, 0.7f);
+        HandleHover();
     }
 
     public void OnMouseExit()
     {
         tileRenderer.color = spriteData == null ? invisibleColor : visibleColor;
+        canPlace = true;
     }
 
     public void OnMouseOver()
     {
-        if (GridManager.isMouseDown && GridManager.hasSelectedSprite && uiHandler.GetCurrentView() != View.Sky)
+        View currentView = uiHandler.GetCurrentView();
+        if (canPlace && GridManager.isMouseDown && GridManager.hasSelectedSprite && currentView != View.Sky)
         {
-            SpriteData selectedData = gridManager.GetSelectedSprite();
+            SpriteData selectedData = gridManager.GetLastSelectedSprite(currentView);
 
             if (uiHandler.GetCurrentTool() != Tool.Rubber)
             {
-                if (selectedData.type == SpriteType.Trap && this.GetType() == typeof(Tile))
+                if (selectedData.type != SpriteType.Block && this.GetType() == typeof(Tile))
                 {
                     gridManager.ReplaceTileWithTrap(selectedData, position);
                     return;
@@ -88,14 +90,8 @@ public class Tile : MonoBehaviour
         switch (uiHandler.GetCurrentTool())
         {
             case Tool.Brush:
-                if (gridManager.GetCurrentLayer() == 0)
-                {
-                    visibleColor = new Color(1, 1, 1, 0.5f);
-                }
-                else
-                {
-                    visibleColor = new Color(1, 1, 1, 1f);
-                }
+                if (gridManager.GetCurrentLayer() == 0) visibleColor = new Color(1, 1, 1, 0.5f);
+                else visibleColor = new Color(1, 1, 1, 1f);
                 tileRenderer.color = visibleColor;
                 break;
             case Tool.Rubber:
@@ -116,5 +112,35 @@ public class Tile : MonoBehaviour
     public void TurnOnCollider()
     {
         GetComponent<BoxCollider2D>().enabled = true;
+    }
+
+    public void HandleHover()
+    {
+        SpriteData selectedTile = gridManager.GetLastSelectedSprite(uiHandler.GetCurrentView());
+        if (selectedTile != null && selectedTile.type == SpriteType.Spike && uiHandler.GetCurrentTool() == Tool.Brush)
+        {
+            switch (selectedTile.name)
+            {
+                case "SpikeTop":
+                    if (!gridManager.HasBlockNeighbor(this, Vector3.down)) canPlace = false;
+                    break;
+                case "SpikeBottom":
+                    if (!gridManager.HasBlockNeighbor(this, Vector3.up)) canPlace = false;
+                    break;
+                case "SpikeLeft":
+                    if (!gridManager.HasBlockNeighbor(this, Vector3.right)) canPlace = false;
+                    break;
+                case "SpikeRight":
+                    if (!gridManager.HasBlockNeighbor(this, Vector3.left)) canPlace = false;
+                    break;
+                default:
+                    throw new System.ArgumentOutOfRangeException();
+            }
+
+            if (!canPlace) tileRenderer.color = new Color(1, 0, 0, 0.7f);
+            else tileRenderer.color = new Color(0, 1, 0, 0.7f);
+            return;
+        }
+        tileRenderer.color = new Color(1, 1, 1, 0.7f);
     }
 }
