@@ -1,16 +1,19 @@
 using System.Collections;
 using UnityEngine;
 
-public class SpikeTile : Tile
+public class SpikeTile : Trap
 {
     private Animator animator;
     public float animationFirstStartDelay;
     public float animationStartDelay;
     public float idleTime;
     private Coroutine animationCoroutine;
+    
 
     private void Awake()
     {
+
+        trapType = TrapType.Spike;
         animator = GetComponent<Animator>();
         animationFirstStartDelay = 0f;
         animationStartDelay = 1f;
@@ -32,7 +35,8 @@ public class SpikeTile : Tile
 
     public void RestartTimer()
     {
-        if (animationCoroutine != null) {
+        if (animationCoroutine != null)
+        {
             animator.SetTrigger("triggerOff");
             StopCoroutine(animationCoroutine);
         }

@@ -16,7 +16,8 @@ public enum View
 public enum Tool
 {
     Brush,
-    Rubber
+    Rubber,
+    Settings
 }
 
 public class UiHandler : MonoBehaviour
@@ -33,6 +34,8 @@ public class UiHandler : MonoBehaviour
     [SerializeField] private Sprite greenSky;
     [SerializeField] private Sprite caveSky;
     [SerializeField] private ToggleGroup toolToggleGroup;
+    [SerializeField] private GameObject settingsToggle;
+    [SerializeField] private Toggle brushToggle;
     [SerializeField] private GridManager gridManager;
 
     private View currentView = View.Sky;
@@ -50,8 +53,7 @@ public class UiHandler : MonoBehaviour
         {
             currentView = View.Sky;
         }
-        UpdateView();        
-
+        UpdateView();
     }
 
     public void OnLeftButtonClick()
@@ -74,12 +76,27 @@ public class UiHandler : MonoBehaviour
                 skyView.SetActive(true);
                 blocksView.SetActive(false);
                 trapView.SetActive(false);
+                if (settingsToggle.GetComponent<Toggle>().isOn)
+                {
+                    settingsToggle.GetComponent<Toggle>().isOn = false;
+                    brushToggle.isOn = true;
+                    ToggleCurrentTool();
+                }
+                settingsToggle.SetActive(false);
+
                 break;
             case View.Blocks:
                 label.text = "Blocks";
                 skyView.SetActive(false);
                 trapView.SetActive(false);
                 blocksView.SetActive(true);
+                if (settingsToggle.GetComponent<Toggle>().isOn)
+                {
+                    settingsToggle.GetComponent<Toggle>().isOn = false;
+                    brushToggle.isOn = true;
+                    ToggleCurrentTool();
+                }
+                settingsToggle.SetActive(false);
                 scrollbar.value = 1;
                 break;
             case View.Traps:
@@ -87,6 +104,7 @@ public class UiHandler : MonoBehaviour
                 blocksView.SetActive(false);
                 skyView.SetActive(false);
                 trapView.SetActive(true);
+                settingsToggle.SetActive(true);
                 scrollbar.value = 1;
                 break;
         }
@@ -103,7 +121,7 @@ public class UiHandler : MonoBehaviour
         return currentView;
     }
 
-    public void ToogleCurrentTool()
+    public void ToggleCurrentTool()
     {
         Toggle activeToggle = toolToggleGroup.ActiveToggles().FirstOrDefault();
         if (activeToggle.name == "Brush")
@@ -114,6 +132,16 @@ public class UiHandler : MonoBehaviour
         {
             currentTool = Tool.Rubber;
         }
+        else if (activeToggle.name == "Settings")
+        {
+            currentTool = Tool.Settings;
+        }
+
+        if (currentTool != Tool.Settings)
+        {
+            gridManager.SetActiveTraps(null);
+        }
+
     }
 
     public Tool GetCurrentTool()

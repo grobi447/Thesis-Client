@@ -33,7 +33,6 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
     {
         spriteData.name = gameObject.name;
         spriteData.sprite = imageComponent.sprite;
-        
         switch (uiHandler.GetCurrentView())
         {
             case View.Sky:
@@ -45,9 +44,15 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
                 spriteData.type = gameObject.tag switch
                 {
                     "Block" => SpriteType.Block,
-                    "Spike" => SpriteType.Spike,
+                    "Trap" => SpriteType.Trap,
                     _ => throw new ArgumentOutOfRangeException()
                 };
+
+                if (spriteData.type == SpriteType.Trap)
+                {
+                    if (gameObject.name.Contains("Spike")) spriteData.trapType = TrapType.Spike;
+                    if (gameObject.name.Contains("Saw")) spriteData.trapType = TrapType.Saw;
+                }
                 gridManager.SetSelectedSprite(uiHandler.GetCurrentView(), spriteData);
                 break;
             default:

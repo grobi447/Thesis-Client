@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 public class GridManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform gridParent;
     [SerializeField] private ToggleGroup toggleGroup;
     [SerializeField] private UiHandler uiHandler;
-
+    public HashSet<Trap> activeTraps = new HashSet<Trap>();
     public static bool isMouseDown = false;
     public static bool hasSelectedSprite = false;
     public static int currentLayer = 1;
@@ -110,7 +111,7 @@ public class GridManager : MonoBehaviour
 
     public int GetCurrentLayer() => currentLayer;
 
-    public void ReplaceTileWithTrap(SpriteData trapData, Vector3 position)
+    public void ReplaceToTrap(SpriteData trapData, Vector3 position)
     {
         if (tiles.TryGetValue(position, out Tile oldTile))
         {
@@ -133,8 +134,9 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public void ReplaceTrapWithTile(SpriteData blockData, Vector3 position)
+    public void ReplaceToTile(SpriteData blockData, Vector3 position)
     {
+        if (blockData == null) blockData = new SpriteData { name = "Empty", sprite = tilePrefab.emptySprite, type = SpriteType.Block };
         if (tiles.TryGetValue(position, out Tile oldTile))
         {
             Transform parent = oldTile.transform.parent;
@@ -161,4 +163,41 @@ public class GridManager : MonoBehaviour
         return false;
     }
 
+    public void SetActiveTraps(Trap trap)
+    {
+        if (trap == null)
+        {
+            clearActiveTraps();
+            return;
+        }
+
+        bool shift = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
+        if (shift)
+        {
+            if (activeTraps.Count == 0 || trap.trapType == activeTraps.First().trapType)
+            {
+                if (activeTraps.Add(trap))
+                {
+                    trap.isActive = true;
+                    trap.SetBorder();
+                }
+            }
+            return;
+        }
+        clearActiveTraps();
+        activeTraps.Add(trap);
+        trap.isActive = true;
+        trap.SetBorder();
+    }
+
+    private void clearActiveTraps()
+    {
+        foreach (var trap in activeTraps)
+        {
+            trap.isActive = false;
+            trap.SetBorder();
+        }
+        activeTraps.Clear();
+    }
 }

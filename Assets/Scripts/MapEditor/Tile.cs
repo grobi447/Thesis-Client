@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public enum SpriteType
 {
     Block,
-    Spike
+    Trap,
 }
 
 public class SpriteData
@@ -12,6 +13,7 @@ public class SpriteData
     public string name;
     public Sprite sprite;
     public SpriteType type;
+    public TrapType trapType;
 }
 
 public class Tile : MonoBehaviour
@@ -20,10 +22,10 @@ public class Tile : MonoBehaviour
     [SerializeField] public Sprite emptySprite;
 
     private SpriteData spriteData;
-    private GridManager gridManager;
-    private UiHandler uiHandler;
+    public GridManager gridManager;
+    public UiHandler uiHandler;
     private Vector3 position;
-    private bool canPlace = true;
+    public bool canPlace = true;
 
     private Color visibleColor = new Color(1, 1, 1, 1);
     private Color invisibleColor = new Color(1, 1, 1, 0);
@@ -63,16 +65,21 @@ public class Tile : MonoBehaviour
         {
             SpriteData selectedData = gridManager.GetLastSelectedSprite(currentView);
 
-            if (uiHandler.GetCurrentTool() != Tool.Rubber)
+            if (uiHandler.GetCurrentTool() == Tool.Brush)
             {
                 if (selectedData.type != SpriteType.Block && this.GetType() == typeof(Tile))
                 {
-                    gridManager.ReplaceTileWithTrap(selectedData, position);
+                    gridManager.ReplaceToTrap(selectedData, position);
                     return;
                 }
                 if (selectedData.type == SpriteType.Block && this.GetType() != typeof(Tile))
                 {
-                    gridManager.ReplaceTrapWithTile(selectedData, position);
+                    gridManager.ReplaceToTile(selectedData, position);
+                    return;
+                }
+                if (selectedData.type == SpriteType.Trap && this.GetType() != typeof(Tile))
+                {
+                    gridManager.ReplaceToTrap(selectedData, position);
                     return;
                 }
                 spriteData = selectedData;
@@ -80,6 +87,13 @@ public class Tile : MonoBehaviour
                 gameObject.name = spriteData.name;
                 gameObject.tag = spriteData.type.ToString();
             }
+
+            if (uiHandler.GetCurrentTool() == Tool.Rubber && this.GetType() != typeof(Tile))
+            {
+                gridManager.ReplaceToTile(null, position);
+                return;
+            }
+
 
             UseTool();
         }
@@ -99,6 +113,12 @@ public class Tile : MonoBehaviour
                 tileRenderer.sprite = emptySprite;
                 gameObject.name = $"Tile {position.x} {position.y} {position.z}";
                 break;
+            case Tool.Settings:
+                if (this.GetType().BaseType == typeof(Trap))
+                {
+                    gridManager.SetActiveTraps((Trap)this);
+                }
+                break;
             default:
                 throw new System.ArgumentOutOfRangeException();
         }
@@ -117,7 +137,34 @@ public class Tile : MonoBehaviour
     public void HandleHover()
     {
         SpriteData selectedTile = gridManager.GetLastSelectedSprite(uiHandler.GetCurrentView());
-        if (selectedTile != null && selectedTile.type == SpriteType.Spike && uiHandler.GetCurrentTool() == Tool.Brush)
+
+        if (selectedTile != null)
+        {
+            if (selectedTile.type == SpriteType.Trap)
+            {
+                HandleTrapHover(selectedTile);
+                return;
+            }
+            tileRenderer.color = new Color(1, 1, 1, 0.7f);
+
+        }
+    }
+
+    public void HandleTrapHover(SpriteData selectedTile)
+    {
+        if (selectedTile.trapType == TrapType.Spike)
+        {
+            HandleSpikeHover(selectedTile);
+        }
+        if (selectedTile.trapType == TrapType.Saw)
+        {
+            tileRenderer.color = new Color(1, 1, 1, 0.7f);
+        }
+    }
+
+        public void HandleSpikeHover(SpriteData selectedTile)
+    {
+        if (uiHandler.GetCurrentTool() == Tool.Brush)
         {
             switch (selectedTile.name)
             {
@@ -137,10 +184,24 @@ public class Tile : MonoBehaviour
                     throw new System.ArgumentOutOfRangeException();
             }
 
-            if (!canPlace) tileRenderer.color = new Color(1, 0, 0, 0.7f);
-            else tileRenderer.color = new Color(0, 1, 0, 0.7f);
+            if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
+            else TileRenderer.color = new Color(0, 1, 0, 0.7f);
             return;
         }
-        tileRenderer.color = new Color(1, 1, 1, 0.7f);
+
+        if (uiHandler.GetCurrentTool() == Tool.Rubber)
+        {
+            TileRenderer.color = new Color(1, 1, 1, 0.7f);
+            return;
+        }
+
+        if (uiHandler.GetCurrentTool() == Tool.Settings)
+        {
+            if (SpriteData != null && SpriteData.type != SpriteType.Block)
+                TileRenderer.color = new Color(0, 1, 0, 0.7f);
+            else
+                TileRenderer.color = new Color(1, 0, 0, 0.7f);
+        }
     }
+
 }
