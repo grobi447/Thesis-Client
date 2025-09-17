@@ -1,23 +1,26 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class SpikeTile : Trap
+public class Spike : Trap
 {
     private Animator animator;
-    public float animationFirstStartDelay;
-    public float animationStartDelay;
-    public float idleTime;
+    public Dictionary<string, float> settings = new Dictionary<string, float>
+    {
+        {"startTime", 0f},
+        {"onTime", 1f},
+        {"offTime", 1f}
+    };
     private Coroutine animationCoroutine;
-    
+
 
     private void Awake()
     {
-
         trapType = TrapType.Spike;
         animator = GetComponent<Animator>();
-        animationFirstStartDelay = 0f;
-        animationStartDelay = 1f;
-        idleTime = 1f;
+        settings["startTime"] = 0f;
+        settings["onTime"] = 1f;
+        settings["offTime"] = 1f;
     }
 
     void Start()
@@ -45,13 +48,13 @@ public class SpikeTile : Trap
 
     private IEnumerator PlayAnimationSequence()
     {
-        yield return new WaitForSeconds(animationFirstStartDelay);
+        yield return new WaitForSeconds(settings["startTime"]);
         while (true)
         {
             animator.SetTrigger("triggerIn");
-            yield return new WaitForSeconds(idleTime);
+            yield return new WaitForSeconds(settings["onTime"]);
             animator.SetTrigger("triggerOut");
-            yield return new WaitForSeconds(animationStartDelay);
+            yield return new WaitForSeconds(settings["offTime"]);
         }
     }
 }

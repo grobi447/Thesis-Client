@@ -37,6 +37,8 @@ public class UiHandler : MonoBehaviour
     [SerializeField] private GameObject settingsToggle;
     [SerializeField] private Toggle brushToggle;
     [SerializeField] private GridManager gridManager;
+    [SerializeField] private GameObject trapSettingsPanel;
+    [SerializeField] private Settings settings;
 
     private View currentView = View.Sky;
     private Tool currentTool = Tool.Brush;
@@ -76,6 +78,7 @@ public class UiHandler : MonoBehaviour
                 skyView.SetActive(true);
                 blocksView.SetActive(false);
                 trapView.SetActive(false);
+                trapSettingsPanel.SetActive(false);
                 if (settingsToggle.GetComponent<Toggle>().isOn)
                 {
                     settingsToggle.GetComponent<Toggle>().isOn = false;
@@ -90,6 +93,7 @@ public class UiHandler : MonoBehaviour
                 skyView.SetActive(false);
                 trapView.SetActive(false);
                 blocksView.SetActive(true);
+                trapSettingsPanel.SetActive(false);
                 if (settingsToggle.GetComponent<Toggle>().isOn)
                 {
                     settingsToggle.GetComponent<Toggle>().isOn = false;
@@ -105,7 +109,9 @@ public class UiHandler : MonoBehaviour
                 skyView.SetActive(false);
                 trapView.SetActive(true);
                 settingsToggle.SetActive(true);
+                trapSettingsPanel.SetActive(true);
                 scrollbar.value = 1;
+                settings.UpdateTrapSettingsView();
                 break;
         }
     }
@@ -136,12 +142,10 @@ public class UiHandler : MonoBehaviour
         {
             currentTool = Tool.Settings;
         }
-
         if (currentTool != Tool.Settings)
         {
             gridManager.SetActiveTraps(null);
         }
-
     }
 
     public Tool GetCurrentTool()

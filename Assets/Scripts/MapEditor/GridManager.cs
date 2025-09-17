@@ -15,7 +15,9 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform gridParent;
     [SerializeField] private ToggleGroup toggleGroup;
     [SerializeField] private UiHandler uiHandler;
+    [SerializeField] private Settings settings;
     public HashSet<Trap> activeTraps = new HashSet<Trap>();
+    public HashSet<Trap> allTraps = new HashSet<Trap>();
     public static bool isMouseDown = false;
     public static bool hasSelectedSprite = false;
     public static int currentLayer = 1;
@@ -115,6 +117,10 @@ public class GridManager : MonoBehaviour
     {
         if (tiles.TryGetValue(position, out Tile oldTile))
         {
+            if (oldTile is Trap oldTrap)
+            {
+                allTraps.Remove(oldTrap);
+            }
             Transform parent = oldTile.transform.parent;
             DestroyImmediate(oldTile.gameObject);
 
@@ -129,6 +135,7 @@ public class GridManager : MonoBehaviour
                 trapTile.GetComponent<SpriteRenderer>().sprite = trapData.sprite;
                 trapTile.emptySprite = trapPrefab.emptySprite;
                 tiles[position] = trapTile;
+                allTraps.Add((Trap)trapTile);
                 trapTile.UseTool();
             }
         }
@@ -150,6 +157,7 @@ public class GridManager : MonoBehaviour
             newTile.GetComponent<SpriteRenderer>().sprite = blockData.sprite;
             newTile.emptySprite = tilePrefab.emptySprite;
             tiles[position] = newTile;
+            allTraps.Remove((Trap)oldTile);
             newTile.UseTool();
         }
     }
@@ -167,6 +175,7 @@ public class GridManager : MonoBehaviour
     {
         if (trap == null)
         {
+            settings.UpdateTrapSettingsView();
             clearActiveTraps();
             return;
         }
@@ -179,6 +188,7 @@ public class GridManager : MonoBehaviour
             {
                 if (activeTraps.Add(trap))
                 {
+                    settings.UpdateTrapSettingsView();
                     trap.isActive = true;
                     trap.SetBorder();
                 }
@@ -189,6 +199,7 @@ public class GridManager : MonoBehaviour
         activeTraps.Add(trap);
         trap.isActive = true;
         trap.SetBorder();
+        settings.UpdateTrapSettingsView();
     }
 
     private void clearActiveTraps()
@@ -200,4 +211,6 @@ public class GridManager : MonoBehaviour
         }
         activeTraps.Clear();
     }
+
+    public HashSet<Trap> GetActiveTraps() => activeTraps;
 }
