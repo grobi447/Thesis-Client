@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class TextureManager : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GridManager gridManager;
+    private Settings settings;
 
     private Image imageComponent;
     private GameObject border;
@@ -26,9 +27,10 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
         imageComponent = child.GetComponent<Image>();
         border = borderChild.gameObject;
         uiHandler = GameObject.Find("UiHandler").GetComponent<UiHandler>();
+        settings = GameObject.FindAnyObjectByType<Settings>();
         border.SetActive(false);
     }
-
+    
     public void OnPointerClick(PointerEventData eventData)
     {
         spriteData.name = gameObject.name;
@@ -40,7 +42,7 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
                 break;
             case View.Blocks:
             case View.Traps:
-
+                gridManager.SetSelectedSprite(uiHandler.GetCurrentView(), spriteData);
                 spriteData.type = gameObject.tag switch
                 {
                     "Block" => SpriteType.Block,
@@ -52,8 +54,8 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
                 {
                     if (gameObject.name.Contains("Spike")) spriteData.trapType = TrapType.Spike;
                     if (gameObject.name.Contains("Saw")) spriteData.trapType = TrapType.Saw;
+                    settings.UpdataSawSettingsView();
                 }
-                gridManager.SetSelectedSprite(uiHandler.GetCurrentView(), spriteData);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

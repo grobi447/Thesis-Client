@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Saw : Trap
 {
+
     void Awake()
     {
         this.trapType = TrapType.Saw;

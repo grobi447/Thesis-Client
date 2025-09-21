@@ -6,6 +6,7 @@ public enum SpriteType
 {
     Block,
     Trap,
+    Rail
 }
 
 public class SpriteData
@@ -65,14 +66,14 @@ public class Tile : MonoBehaviour
         {
             SpriteData selectedData = gridManager.GetLastSelectedSprite(currentView);
 
-            if (uiHandler.GetCurrentTool() == Tool.Brush)
+            if (uiHandler.GetCurrentTool() == Tool.Brush && selectedData != null)
             {
                 if (selectedData.type != SpriteType.Block && this.GetType() == typeof(Tile))
                 {
                     gridManager.ReplaceToTrap(selectedData, position);
                     return;
                 }
-                if (selectedData.type == SpriteType.Block && this.GetType() != typeof(Tile))
+                if (selectedData.type == SpriteType.Block && this.GetType() != typeof(Tile) &&  this.GetType() != typeof(Rail))
                 {
                     gridManager.ReplaceToTile(selectedData, position);
                     return;
@@ -88,10 +89,18 @@ public class Tile : MonoBehaviour
                 gameObject.tag = spriteData.type.ToString();
             }
 
-            if (uiHandler.GetCurrentTool() == Tool.Rubber && this.GetType() != typeof(Tile))
+            if (uiHandler.GetCurrentTool() == Tool.Rubber)
             {
-                gridManager.ReplaceToTile(null, position);
-                return;
+                if (this is Rail)
+                {
+                    gridManager.destroyRail((Rail)this);
+                    return;
+                }
+                if (this is not Tile)
+                {
+                    gridManager.ReplaceToTile(null, position);
+                    return;
+                }
             }
 
 
@@ -118,6 +127,9 @@ public class Tile : MonoBehaviour
                 {
                     gridManager.SetActiveTraps((Trap)this);
                 }
+                break;
+            case Tool.Rail:
+                 gridManager.PaintRail(position);
                 break;
             default:
                 throw new System.ArgumentOutOfRangeException();
@@ -158,11 +170,16 @@ public class Tile : MonoBehaviour
         }
         if (selectedTile.trapType == TrapType.Saw)
         {
+            if (uiHandler.GetCurrentTool() == Tool.Rail)
+            {
+                HandlerRailHover();
+                return;
+            }
             tileRenderer.color = new Color(1, 1, 1, 0.7f);
         }
     }
 
-        public void HandleSpikeHover(SpriteData selectedTile)
+    public void HandleSpikeHover(SpriteData selectedTile)
     {
         if (uiHandler.GetCurrentTool() == Tool.Brush)
         {
@@ -202,6 +219,13 @@ public class Tile : MonoBehaviour
             else
                 TileRenderer.color = new Color(1, 0, 0, 0.7f);
         }
+    }
+
+    public void HandlerRailHover()
+    {
+        canPlace = this.GetType().BaseType != typeof(Trap);
+        if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
+        else TileRenderer.color = new Color(0, 1, 0, 0.7f);        
     }
 
 }

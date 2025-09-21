@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System;
 
 public class GridManager : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] private ToggleGroup toggleGroup;
     [SerializeField] private UiHandler uiHandler;
     [SerializeField] private Settings settings;
+    [SerializeField] public Rail railPrefab;
+    public List<Rail> rails = new List<Rail>();
     public HashSet<Trap> activeTraps = new HashSet<Trap>();
     public HashSet<Trap> allTraps = new HashSet<Trap>();
     public static bool isMouseDown = false;
@@ -24,7 +27,6 @@ public class GridManager : MonoBehaviour
 
     private Dictionary<Vector3, Tile> tiles;
     private Dictionary<string, Tile> trapPrefabDict;
-
     public Tile TilePrefab => tilePrefab;
     public Dictionary<string, Tile> TrapPrefabDict => trapPrefabDict;
 
@@ -157,11 +159,22 @@ public class GridManager : MonoBehaviour
             newTile.GetComponent<SpriteRenderer>().sprite = blockData.sprite;
             newTile.emptySprite = tilePrefab.emptySprite;
             tiles[position] = newTile;
-            allTraps.Remove((Trap)oldTile);
+            if (oldTile is Trap) allTraps.Remove((Trap)oldTile);
+            if (oldTile is Rail)
+            {
+                rails.Remove((Rail)oldTile);
+            }
             newTile.UseTool();
         }
     }
-
+    public void destroyRail(Rail rail)
+    {
+        if (rails.Contains(rail))
+        {
+            rails.Remove(rail);
+            DestroyImmediate(rail.gameObject);
+        }
+    }
     public bool HasBlockNeighbor(Tile tile, Vector3 direction)
     {
         Vector3 neighborPos = tile.transform.position + direction;
@@ -171,11 +184,15 @@ public class GridManager : MonoBehaviour
         return false;
     }
 
+    public Rail GetRailAtPosition(Vector3 position)
+    {
+        return rails.FirstOrDefault(r => r.transform.position == position);
+    }
+
     public void SetActiveTraps(Trap trap)
     {
         if (trap == null)
         {
-            settings.UpdateTrapSettingsView();
             clearActiveTraps();
             return;
         }
@@ -188,7 +205,7 @@ public class GridManager : MonoBehaviour
             {
                 if (activeTraps.Add(trap))
                 {
-                    settings.UpdateTrapSettingsView();
+                    settings.UpdateSpikeSettingsView();
                     trap.isActive = true;
                     trap.SetBorder();
                 }
@@ -199,7 +216,7 @@ public class GridManager : MonoBehaviour
         activeTraps.Add(trap);
         trap.isActive = true;
         trap.SetBorder();
-        settings.UpdateTrapSettingsView();
+        settings.UpdateSpikeSettingsView();
     }
 
     private void clearActiveTraps()
@@ -213,4 +230,104 @@ public class GridManager : MonoBehaviour
     }
 
     public HashSet<Trap> GetActiveTraps() => activeTraps;
+
+    public void PaintRail(Vector3 position)
+    {
+        if (rails.Any(r => r.transform.position == position))
+            return;
+
+        Transform parent = gridParent.GetChild((int)position.z);
+        Rail newRail = Instantiate(railPrefab, position, Quaternion.identity, parent);
+        newRail.name = $"Rail {position.x} {position.y} {position.z}";
+        newRail.TileRenderer.sortingOrder = 2;
+        newRail.Init(this, position);
+        rails.Add(newRail);
+
+        UpdateRailAndNeighbors(newRail);
+    }
+    public void UpdateRailAndNeighbors(Rail rail)
+    {
+        Vector3 pos = rail.transform.position;
+
+        UpdateRailSpriteAtPosition(pos, rail);
+
+        UpdateRailSpriteAtPosition(pos + Vector3.up, rail);
+        UpdateRailSpriteAtPosition(pos + Vector3.down, rail);
+        UpdateRailSpriteAtPosition(pos + Vector3.left, rail);
+        UpdateRailSpriteAtPosition(pos + Vector3.right, rail);
+    }
+
+    private void UpdateRailSpriteAtPosition(Vector3 position, Rail rail)
+    {
+        rail = GetRailAtPosition(position);
+        if (rail == null) return;
+
+        Rail top = GetRailAtPosition(position + Vector3.up);
+        Rail bottom = GetRailAtPosition(position + Vector3.down);
+        Rail left = GetRailAtPosition(position + Vector3.left);
+        Rail right = GetRailAtPosition(position + Vector3.right);
+
+        RailBitmapType type = DetermineRailType(top, bottom, left, right);
+
+        rail.SetSprite(type);
+
+        if (type == RailBitmapType.BottomToTop || type == RailBitmapType.LeftToRight || type == RailBitmapType.BottomToRight || type == RailBitmapType.BottomToLeft || type == RailBitmapType.TopToRight || type == RailBitmapType.LeftToUp)
+        {
+            rail.isLocked = true;
+        }
+    }
+
+    private RailBitmapType DetermineRailType(Rail top, Rail bottom, Rail left, Rail right)
+    {
+        if (right != null && bottom != null && (right.currentType == RailBitmapType.LeftToEnd || right.currentType == RailBitmapType.LeftToRight || right.currentType == RailBitmapType.LeftToUp || right.currentType == RailBitmapType.BottomToLeft || right.currentType == RailBitmapType.RightToEnd || right.currentType == RailBitmapType.BottomToEnd)
+            && (bottom.currentType == RailBitmapType.TopToEnd || bottom.currentType == RailBitmapType.BottomToTop || bottom.currentType == RailBitmapType.LeftToUp || bottom.currentType == RailBitmapType.TopToRight || bottom.currentType == RailBitmapType.BottomToEnd || bottom.currentType == RailBitmapType.LeftToEnd || bottom.currentType == RailBitmapType.RightToEnd))
+        {
+            return RailBitmapType.BottomToRight;
+        }
+        else if (left != null && bottom != null && (left.currentType == RailBitmapType.RightToEnd || left.currentType == RailBitmapType.LeftToRight || left.currentType == RailBitmapType.TopToRight || left.currentType == RailBitmapType.BottomToRight || left.currentType == RailBitmapType.LeftToEnd || left.currentType == RailBitmapType.BottomToEnd)
+            && (bottom.currentType == RailBitmapType.TopToEnd || bottom.currentType == RailBitmapType.BottomToTop || bottom.currentType == RailBitmapType.TopToRight || bottom.currentType == RailBitmapType.LeftToUp || bottom.currentType == RailBitmapType.BottomToEnd || bottom.currentType == RailBitmapType.LeftToEnd || bottom.currentType == RailBitmapType.RightToEnd))
+        {
+            return RailBitmapType.BottomToLeft;
+        }
+        else if (top != null && right != null && (top.currentType == RailBitmapType.BottomToEnd || top.currentType == RailBitmapType.BottomToTop || top.currentType == RailBitmapType.BottomToLeft || top.currentType == RailBitmapType.BottomToRight || top.currentType == RailBitmapType.TopToEnd || top.currentType == RailBitmapType.LeftToEnd || top.currentType == RailBitmapType.RightToEnd)
+            && (right.currentType == RailBitmapType.LeftToEnd || right.currentType == RailBitmapType.LeftToRight || right.currentType == RailBitmapType.LeftToUp || right.currentType == RailBitmapType.BottomToLeft || right.currentType == RailBitmapType.RightToEnd || right.currentType == RailBitmapType.TopToEnd || right.currentType == RailBitmapType.BottomToEnd))
+        {
+            return RailBitmapType.TopToRight;
+        }
+        else if (left != null && top != null && (left.currentType == RailBitmapType.RightToEnd || left.currentType == RailBitmapType.LeftToRight || left.currentType == RailBitmapType.TopToRight || left.currentType == RailBitmapType.BottomToRight || left.currentType == RailBitmapType.LeftToEnd || left.currentType == RailBitmapType.TopToEnd || left.currentType == RailBitmapType.BottomToEnd)
+            && (top.currentType == RailBitmapType.BottomToEnd || top.currentType == RailBitmapType.BottomToTop || top.currentType == RailBitmapType.BottomToRight || top.currentType == RailBitmapType.BottomToLeft || top.currentType == RailBitmapType.TopToEnd || top.currentType == RailBitmapType.LeftToEnd || top.currentType == RailBitmapType.RightToEnd))
+        {
+            return RailBitmapType.LeftToUp;
+        }
+        else if (top != null && bottom != null && (top.currentType == RailBitmapType.BottomToEnd || top.currentType == RailBitmapType.BottomToLeft || top.currentType == RailBitmapType.BottomToRight || top.currentType == RailBitmapType.BottomToTop || top.currentType == RailBitmapType.LeftToEnd || top.currentType == RailBitmapType.RightToEnd || top.currentType == RailBitmapType.TopToEnd || top.currentType == RailBitmapType.Center)
+            && (bottom.currentType == RailBitmapType.TopToEnd || bottom.currentType == RailBitmapType.LeftToUp || bottom.currentType == RailBitmapType.TopToRight || bottom.currentType == RailBitmapType.BottomToTop || bottom.currentType == RailBitmapType.LeftToEnd || bottom.currentType == RailBitmapType.RightToEnd || bottom.currentType == RailBitmapType.BottomToEnd || bottom.currentType == RailBitmapType.Center))
+        {
+            return RailBitmapType.BottomToTop;
+        }
+        else if (left != null && right != null && (left.currentType == RailBitmapType.RightToEnd || left.currentType == RailBitmapType.TopToRight || left.currentType == RailBitmapType.BottomToRight || left.currentType == RailBitmapType.LeftToRight || left.currentType == RailBitmapType.TopToEnd || left.currentType == RailBitmapType.BottomToEnd || left.currentType == RailBitmapType.LeftToEnd || left.currentType == RailBitmapType.Center)
+            && (right.currentType == RailBitmapType.LeftToEnd || right.currentType == RailBitmapType.LeftToUp || right.currentType == RailBitmapType.BottomToLeft || right.currentType == RailBitmapType.LeftToRight || right.currentType == RailBitmapType.TopToEnd || right.currentType == RailBitmapType.BottomToEnd || right.currentType == RailBitmapType.RightToEnd || right.currentType == RailBitmapType.Center))
+        {
+            return RailBitmapType.LeftToRight;
+        }
+        else if (top != null && top.currentType != RailBitmapType.LeftToRight)
+        {
+            return RailBitmapType.TopToEnd;
+        }
+        else if (bottom != null && bottom.currentType != RailBitmapType.LeftToRight)
+        {
+            return RailBitmapType.BottomToEnd;
+        }
+        else if (left != null && left.currentType != RailBitmapType.BottomToTop)
+        {
+            return RailBitmapType.LeftToEnd;
+        }
+        else if (right != null && right.currentType != RailBitmapType.BottomToTop)
+        {
+            return RailBitmapType.RightToEnd;
+        }
+        else
+        {
+            return RailBitmapType.Center;
+        }
+    }
 }

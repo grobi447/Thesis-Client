@@ -17,7 +17,8 @@ public enum Tool
 {
     Brush,
     Rubber,
-    Settings
+    Settings,
+    Rail
 }
 
 public class UiHandler : MonoBehaviour
@@ -36,6 +37,7 @@ public class UiHandler : MonoBehaviour
     [SerializeField] private ToggleGroup toolToggleGroup;
     [SerializeField] private GameObject settingsToggle;
     [SerializeField] private Toggle brushToggle;
+    [SerializeField] private Toggle railToggle;
     [SerializeField] private GridManager gridManager;
     [SerializeField] private GameObject trapSettingsPanel;
     [SerializeField] private Settings settings;
@@ -71,6 +73,7 @@ public class UiHandler : MonoBehaviour
     public void UpdateView()
     {
         gridManager.SetSelectedSprite(currentView, gridManager.GetLastSelectedSprite(currentView));
+        brushToggle.isOn = true;
         switch (currentView)
         {
             case View.Sky:
@@ -79,12 +82,6 @@ public class UiHandler : MonoBehaviour
                 blocksView.SetActive(false);
                 trapView.SetActive(false);
                 trapSettingsPanel.SetActive(false);
-                if (settingsToggle.GetComponent<Toggle>().isOn)
-                {
-                    settingsToggle.GetComponent<Toggle>().isOn = false;
-                    brushToggle.isOn = true;
-                    ToggleCurrentTool();
-                }
                 settingsToggle.SetActive(false);
 
                 break;
@@ -94,12 +91,6 @@ public class UiHandler : MonoBehaviour
                 trapView.SetActive(false);
                 blocksView.SetActive(true);
                 trapSettingsPanel.SetActive(false);
-                if (settingsToggle.GetComponent<Toggle>().isOn)
-                {
-                    settingsToggle.GetComponent<Toggle>().isOn = false;
-                    brushToggle.isOn = true;
-                    ToggleCurrentTool();
-                }
                 settingsToggle.SetActive(false);
                 scrollbar.value = 1;
                 break;
@@ -111,7 +102,8 @@ public class UiHandler : MonoBehaviour
                 settingsToggle.SetActive(true);
                 trapSettingsPanel.SetActive(true);
                 scrollbar.value = 1;
-                settings.UpdateTrapSettingsView();
+                settings.UpdateSpikeSettingsView();
+                settings.UpdataSawSettingsView();
                 break;
         }
     }
@@ -142,7 +134,11 @@ public class UiHandler : MonoBehaviour
         {
             currentTool = Tool.Settings;
         }
-        if (currentTool != Tool.Settings)
+        else if (activeToggle.name == "Rail")
+        {
+            currentTool = Tool.Rail;
+        }
+        if (currentTool != Tool.Settings && currentTool != Tool.Rail)
         {
             gridManager.SetActiveTraps(null);
         }
