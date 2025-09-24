@@ -73,7 +73,7 @@ public class Tile : MonoBehaviour
                     gridManager.ReplaceToTrap(selectedData, position);
                     return;
                 }
-                if (selectedData.type == SpriteType.Block && this.GetType() != typeof(Tile) &&  this.GetType() != typeof(Rail))
+                if (selectedData.type == SpriteType.Block && this.GetType() != typeof(Tile) && this.GetType() != typeof(Rail))
                 {
                     gridManager.ReplaceToTile(selectedData, position);
                     return;
@@ -96,14 +96,13 @@ public class Tile : MonoBehaviour
                     gridManager.destroyRail((Rail)this);
                     return;
                 }
-                if (this is not Tile)
+                if (this is Trap)
                 {
-                    gridManager.ReplaceToTile(null, position);
+                    
+                    gridManager.destroyTrap((Trap)this);
                     return;
                 }
             }
-
-
             UseTool();
         }
     }
@@ -121,6 +120,13 @@ public class Tile : MonoBehaviour
                 spriteData = null;
                 tileRenderer.sprite = emptySprite;
                 gameObject.name = $"Tile {position.x} {position.y} {position.z}";
+                Rail rail = gridManager.GetRailAtPosition(this.transform.position);
+                if (rail != null)
+                {
+                    rail.GetComponent<Collider2D>().layerOverridePriority = 1;
+                    rail.GetComponent<Collider2D>().enabled = false;
+                    rail.GetComponent<Collider2D>().enabled = true;
+                }
                 break;
             case Tool.Settings:
                 if (this.GetType().BaseType == typeof(Trap))
@@ -129,7 +135,7 @@ public class Tile : MonoBehaviour
                 }
                 break;
             case Tool.Rail:
-                 gridManager.PaintRail(position);
+                gridManager.PaintRail(position);
                 break;
             default:
                 throw new System.ArgumentOutOfRangeException();
@@ -175,6 +181,12 @@ public class Tile : MonoBehaviour
                 HandlerRailHover();
                 return;
             }
+            else if (uiHandler.GetCurrentTool() == Tool.Brush)
+            {
+
+                HandleSawHover();
+                return;
+            }
             tileRenderer.color = new Color(1, 1, 1, 0.7f);
         }
     }
@@ -183,6 +195,7 @@ public class Tile : MonoBehaviour
     {
         if (uiHandler.GetCurrentTool() == Tool.Brush)
         {
+            if( this.SpriteData != null) canPlace = false;
             switch (selectedTile.name)
             {
                 case "SpikeTop":
@@ -200,9 +213,9 @@ public class Tile : MonoBehaviour
                 default:
                     throw new System.ArgumentOutOfRangeException();
             }
-
             if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
             else TileRenderer.color = new Color(0, 1, 0, 0.7f);
+            Debug.Log(canPlace);
             return;
         }
 
@@ -223,9 +236,14 @@ public class Tile : MonoBehaviour
 
     public void HandlerRailHover()
     {
-        canPlace = this.GetType().BaseType != typeof(Trap);
+        canPlace = this.GetType().BaseType != typeof(Trap) && this.SpriteData == null;
         if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
-        else TileRenderer.color = new Color(0, 1, 0, 0.7f);        
+        else TileRenderer.color = new Color(0, 1, 0, 0.7f);
     }
 
+    public void HandleSawHover(){
+        canPlace = this.GetType() == typeof(Rail);
+        if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
+        else TileRenderer.color = new Color(0, 1, 0, 0.7f);
+    }
 }

@@ -36,7 +36,7 @@ public class UiHandler : MonoBehaviour
     [SerializeField] private Sprite caveSky;
     [SerializeField] private ToggleGroup toolToggleGroup;
     [SerializeField] private GameObject settingsToggle;
-    [SerializeField] private Toggle brushToggle;
+    [SerializeField] public Toggle brushToggle;
     [SerializeField] private Toggle railToggle;
     [SerializeField] private GridManager gridManager;
     [SerializeField] private GameObject trapSettingsPanel;

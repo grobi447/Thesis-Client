@@ -64,6 +64,7 @@ MonoBehaviour:
   - {fileID: -1821786037, guid: 3c0937ca576ae114abac02bba6d78dc5, type: 3}
   - {fileID: 418283054, guid: 3c0937ca576ae114abac02bba6d78dc5, type: 3}
   currentType: 0
+  isLocked: 0
 --- !u!212 &118565296213915268
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -131,8 +132,8 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
+    m_Bits: 4294967295
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -159,5 +160,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.64, y: 0.64}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0

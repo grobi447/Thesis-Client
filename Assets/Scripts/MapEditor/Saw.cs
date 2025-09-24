@@ -13,4 +13,8 @@ public class Saw : Trap
         border.transform.rotation = Quaternion.Euler(0, 0, 0);
 
     }
+    void Start()
+    {
+        this.TileRenderer.sortingOrder = 2;
+    }
 }

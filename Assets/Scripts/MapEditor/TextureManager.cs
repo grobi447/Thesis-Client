@@ -52,7 +52,11 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
 
                 if (spriteData.type == SpriteType.Trap)
                 {
-                    if (gameObject.name.Contains("Spike")) spriteData.trapType = TrapType.Spike;
+                    if (gameObject.name.Contains("Spike")) {
+                        spriteData.trapType = TrapType.Spike;
+                        uiHandler.brushToggle.isOn = true;
+                    }
+                    else
                     if (gameObject.name.Contains("Saw")) spriteData.trapType = TrapType.Saw;
                     settings.UpdataSawSettingsView();
                 }
