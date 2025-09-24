@@ -10,6 +10,7 @@ public class Settings : MonoBehaviour
     [SerializeField] public GameObject spikeSettings;
     [SerializeField] public List<GameObject> spikeSliders;
     [SerializeField] public GameObject sawSettings;
+    [SerializeField] public GameObject sawSpeedSlider;
     [SerializeField] private UiHandler uiHandler;
 
     private readonly string[] keys = { "startTime", "onTime", "offTime" };
@@ -45,6 +46,22 @@ public class Settings : MonoBehaviour
                 }
             });
         }
+
+        Slider sawSpeed = sawSpeedSlider.GetComponentInChildren<Slider>();
+        sawSpeed.onValueChanged.AddListener(value =>
+        {
+            TextMeshProUGUI label = sawSpeedSlider.GetComponentInChildren<TextMeshProUGUI>();
+            label.text = "Speed: " + value.ToString("0.00");
+            var saws = gridManager.GetActiveTraps()
+                .Where(t => t.trapType == TrapType.Saw)
+                .Cast<Saw>();
+
+            foreach (var saw in saws)
+            {
+                saw.speed = value;
+            }
+            
+        });
     }
 
     public void UpdateSpikeSettingsView()
@@ -73,9 +90,9 @@ public class Settings : MonoBehaviour
         }
     }
 
-    public void UpdataSawSettingsView()
+    public void UpdateSawSettingsView()
     {
-        if(gridManager.GetLastSelectedSprite(uiHandler.GetCurrentView()) == null || 
+        if (gridManager.GetLastSelectedSprite(uiHandler.GetCurrentView()) == null ||
            gridManager.GetLastSelectedSprite(uiHandler.GetCurrentView()).trapType != TrapType.Saw)
         {
             sawSettings.SetActive(false);
@@ -83,5 +100,22 @@ public class Settings : MonoBehaviour
         }
         sawSettings.SetActive(true);
         spikeSettings.SetActive(false);
+
+        if (gridManager.activeTraps.Any(t => t.trapType == TrapType.Saw))
+        {
+            sawSpeedSlider.SetActive(true);
+            Slider slider = sawSpeedSlider.GetComponentInChildren<Slider>();
+            TextMeshProUGUI label = sawSpeedSlider.GetComponentInChildren<TextMeshProUGUI>();
+            var saw = gridManager.GetActiveTraps()
+                .Where(t => t.trapType == TrapType.Saw)
+                .Cast<Saw>()
+                .First();
+            slider.value = saw.speed;
+            label.text = "Speed: " + slider.value.ToString("0.00");
+        }
+        else
+        {
+            sawSpeedSlider.SetActive(false);
+        }
     }
 }

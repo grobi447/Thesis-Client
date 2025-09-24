@@ -103,7 +103,7 @@ public class UiHandler : MonoBehaviour
                 trapSettingsPanel.SetActive(true);
                 scrollbar.value = 1;
                 settings.UpdateSpikeSettingsView();
-                settings.UpdataSawSettingsView();
+                settings.UpdateSawSettingsView();
                 break;
         }
     }

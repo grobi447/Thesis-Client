@@ -215,7 +215,6 @@ public class Tile : MonoBehaviour
             }
             if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
             else TileRenderer.color = new Color(0, 1, 0, 0.7f);
-            Debug.Log(canPlace);
             return;
         }
 

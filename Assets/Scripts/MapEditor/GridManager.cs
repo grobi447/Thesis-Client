@@ -138,6 +138,10 @@ public class GridManager : MonoBehaviour
                 trapTile.emptySprite = trapPrefab.emptySprite;
                 tiles[position] = trapTile;
                 allTraps.Add((Trap)trapTile);
+                if (trapTile is Saw saw)
+                {
+                    saw.StartMoving();
+                }
                 trapTile.UseTool();
             }
         }
@@ -187,6 +191,8 @@ public class GridManager : MonoBehaviour
         if (trap == null)
         {
             clearActiveTraps();
+            settings.UpdateSpikeSettingsView();
+            settings.UpdateSawSettingsView();
             return;
         }
 
@@ -198,7 +204,8 @@ public class GridManager : MonoBehaviour
             {
                 if (activeTraps.Add(trap))
                 {
-                    settings.UpdateSpikeSettingsView();
+                    if (trap.trapType == TrapType.Spike) settings.UpdateSpikeSettingsView();
+                    if(trap.trapType == TrapType.Saw) settings.UpdateSawSettingsView();
                     trap.isActive = true;
                     trap.SetBorder();
                 }
@@ -209,7 +216,8 @@ public class GridManager : MonoBehaviour
         activeTraps.Add(trap);
         trap.isActive = true;
         trap.SetBorder();
-        settings.UpdateSpikeSettingsView();
+        if(trap.trapType == TrapType.Spike) settings.UpdateSpikeSettingsView();
+        if(trap.trapType == TrapType.Saw) settings.UpdateSawSettingsView();
     }
 
     private void clearActiveTraps()
@@ -283,6 +291,10 @@ public class GridManager : MonoBehaviour
             allTraps.Remove(trap);
             activeTraps.Remove(trap);
             trap.transform.rotation = Quaternion.Euler(0, 0, 0);
+            if(trap is Saw saw)
+            {
+                saw.ResetToSpawn();
+            }
             ReplaceToTile(null, trap.transform.position);
         }
     }

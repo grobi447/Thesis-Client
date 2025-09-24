@@ -58,7 +58,7 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
                     }
                     else
                     if (gameObject.name.Contains("Saw")) spriteData.trapType = TrapType.Saw;
-                    settings.UpdataSawSettingsView();
+                    settings.UpdateSawSettingsView();
                 }
                 break;
             default:
