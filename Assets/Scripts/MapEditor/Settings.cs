@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -12,6 +13,10 @@ public class Settings : MonoBehaviour
     [SerializeField] public GameObject sawSettings;
     [SerializeField] public GameObject sawSpeedSlider;
     [SerializeField] private UiHandler uiHandler;
+    [SerializeField] public GameObject canonPanel;
+    [SerializeField] public GameObject selectedCanonPanel;
+    [SerializeField] public GameObject canonFireRateSlider;
+    [SerializeField] public GameObject canonProjectileSpeedSlider;
 
     private readonly string[] keys = { "startTime", "onTime", "offTime" };
     private readonly string[] labels = { "Start Delay: ", "On Time: ", "Off Time: " };
@@ -60,12 +65,47 @@ public class Settings : MonoBehaviour
             {
                 saw.speed = value;
             }
-            
+
+        });
+
+
+        Slider canonFireRate = canonFireRateSlider.GetComponentInChildren<Slider>();
+        canonFireRate.onValueChanged.AddListener(value =>
+        {
+            TextMeshProUGUI label = canonFireRateSlider.GetComponentInChildren<TextMeshProUGUI>();
+            label.text = "Reload: " + value.ToString("0.00") + " sec";
+            var canons = gridManager.GetActiveTraps()
+                .Where(t => t.trapType == TrapType.Canon)
+                .Cast<Canon>();
+            foreach (var canon in canons)
+            {
+                canon.fireRate = value;
+            }
+        });
+
+        Slider canonProjectileSpeed = canonProjectileSpeedSlider.GetComponentInChildren<Slider>();
+        canonProjectileSpeed.onValueChanged.AddListener(value =>
+        {
+            TextMeshProUGUI label = canonProjectileSpeedSlider.GetComponentInChildren<TextMeshProUGUI>();
+            label.text = "Bullet Speed: " + value.ToString("0.00");
+            var canons = gridManager.GetActiveTraps()
+                .Where(t => t.trapType == TrapType.Canon)
+                .Cast<Canon>();
+            foreach (var canon in canons)
+            {
+                canon.projectileSpeed = value;
+            }
         });
     }
 
     public void UpdateSpikeSettingsView()
     {
+        if (gridManager.GetLastSelectedSprite(uiHandler.GetCurrentView()) == null ||
+           gridManager.GetLastSelectedSprite(uiHandler.GetCurrentView()).trapType != TrapType.Spike)
+        {
+            spikeSettings.SetActive(false);
+            return;
+        }
         var spikes = gridManager.GetActiveTraps()
             .Where(t => t.trapType == TrapType.Spike)
             .Cast<Spike>()
@@ -75,12 +115,13 @@ public class Settings : MonoBehaviour
         {
             spikeSettings.SetActive(false);
             sawSettings.SetActive(false);
+            canonPanel.SetActive(false);
             return;
         }
 
         spikeSettings.SetActive(true);
         sawSettings.SetActive(false);
-
+        canonPanel.SetActive(false);
         for (int i = 0; i < spikeSliders.Count; i++)
         {
             Slider slider = spikeSliders[i].GetComponentInChildren<Slider>();
@@ -100,7 +141,7 @@ public class Settings : MonoBehaviour
         }
         sawSettings.SetActive(true);
         spikeSettings.SetActive(false);
-
+        canonPanel.SetActive(false);
         if (gridManager.activeTraps.Any(t => t.trapType == TrapType.Saw))
         {
             sawSpeedSlider.SetActive(true);
@@ -116,6 +157,47 @@ public class Settings : MonoBehaviour
         else
         {
             sawSpeedSlider.SetActive(false);
+        }
+    }
+
+    public void UpdateCanonSettingsView()
+    {
+        if (gridManager.GetLastSelectedSprite(uiHandler.GetCurrentView()) == null ||
+           gridManager.GetLastSelectedSprite(uiHandler.GetCurrentView()).trapType != TrapType.Canon)
+        {
+            selectedCanonPanel.SetActive(false);
+            return;
+        }
+        spikeSettings.SetActive(false);
+        sawSettings.SetActive(false);
+        canonPanel.SetActive(true);
+        if (gridManager.activeTraps.Any(t => t.trapType == TrapType.Canon))
+        {
+            selectedCanonPanel.SetActive(true);
+            Slider fireRateSlider = canonFireRateSlider.GetComponentInChildren<Slider>();
+            TextMeshProUGUI fireRateLabel = canonFireRateSlider.GetComponentInChildren<TextMeshProUGUI>();
+            Slider projectileSpeedSlider = canonProjectileSpeedSlider.GetComponentInChildren<Slider>();
+            TextMeshProUGUI projectileSpeedLabel = canonProjectileSpeedSlider.GetComponentInChildren<TextMeshProUGUI>();
+            var canon = gridManager.GetActiveTraps()
+                .Where(t => t.trapType == TrapType.Canon)
+                .Cast<Canon>()
+                .First();
+            fireRateSlider.value = canon.fireRate;
+            fireRateLabel.text = "Reload: " + fireRateSlider.value.ToString("0.00") + " sec";
+            projectileSpeedSlider.value = canon.projectileSpeed;
+            projectileSpeedLabel.text = "Bullet Speed: " + projectileSpeedSlider.value.ToString("0.00");
+            ToggleGroup toggleGroup = uiHandler.canonDirectionToggleGroup;
+            foreach (var toggle in toggleGroup.GetComponentsInChildren<Toggle>())
+            {
+                if (toggle.name == canon.canonType.ToString())
+                {
+                    toggle.isOn = true;
+                }
+            }                   
+        }
+        else
+        {
+            selectedCanonPanel.SetActive(false);
         }
     }
 }

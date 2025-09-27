@@ -285,7 +285,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.17023325}
@@ -321,9 +321,6 @@ MonoBehaviour:
   trapType: 1
   isActive: 0
   border: {fileID: 9057873160576355102}
-  animationFirstStartDelay: 0.5
-  animationStartDelay: 0.5
-  idleTime: 1
 --- !u!95 &5030608284498064882
 Animator:
   serializedVersion: 5

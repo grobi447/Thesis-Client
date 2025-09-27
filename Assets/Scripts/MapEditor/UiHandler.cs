@@ -41,7 +41,8 @@ public class UiHandler : MonoBehaviour
     [SerializeField] private GridManager gridManager;
     [SerializeField] private GameObject trapSettingsPanel;
     [SerializeField] private Settings settings;
-
+    [SerializeField] public ToggleGroup canonDirectionToggleGroup;
+    [SerializeField] public Toggle canonTargetPlayerToggle;
     private View currentView = View.Sky;
     private Tool currentTool = Tool.Brush;
 
@@ -147,5 +148,33 @@ public class UiHandler : MonoBehaviour
     public Tool GetCurrentTool()
     {
         return currentTool;
+    }
+
+    public void ToggleCanonDirection()
+    {
+        Toggle activeDirectionToggle = canonDirectionToggleGroup.ActiveToggles().FirstOrDefault();
+        if (activeDirectionToggle.name == "Left")
+        {
+            gridManager.currentCanonDirection = CanonType.Left;
+        }
+        else if (activeDirectionToggle.name == "Right")
+        {
+            gridManager.currentCanonDirection = CanonType.Right;
+        }
+        else if (activeDirectionToggle.name == "Up")
+        {
+            gridManager.currentCanonDirection = CanonType.Up;
+        }
+        else if (activeDirectionToggle.name == "Down")
+        {
+            gridManager.currentCanonDirection = CanonType.Down;
+        }
+
+        List<Canon> activeCanons = gridManager.GetActiveTraps().Where(t => t is Canon).Select(t => (Canon)t).ToList();
+        foreach (Canon canon in activeCanons)
+        {
+            canon.canonType = gridManager.currentCanonDirection;
+            canon.UpdateCanon();
+        }
     }
 }

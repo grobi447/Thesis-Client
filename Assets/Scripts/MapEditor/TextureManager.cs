@@ -30,11 +30,12 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
         settings = GameObject.FindAnyObjectByType<Settings>();
         border.SetActive(false);
     }
-    
+
     public void OnPointerClick(PointerEventData eventData)
     {
         spriteData.name = gameObject.name;
         spriteData.sprite = imageComponent.sprite;
+        gridManager.SetActiveTraps(null);
         switch (uiHandler.GetCurrentView())
         {
             case View.Sky:
@@ -52,13 +53,22 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
 
                 if (spriteData.type == SpriteType.Trap)
                 {
-                    if (gameObject.name.Contains("Spike")) {
+                    if (gameObject.name.Contains("Spike"))
+                    {
                         spriteData.trapType = TrapType.Spike;
                         uiHandler.brushToggle.isOn = true;
                     }
                     else
-                    if (gameObject.name.Contains("Saw")) spriteData.trapType = TrapType.Saw;
-                    settings.UpdateSawSettingsView();
+                    if (gameObject.name.Contains("Saw"))
+                    {
+                        spriteData.trapType = TrapType.Saw;
+                        settings.UpdateSawSettingsView();
+                    }
+                    if (gameObject.name.Contains("Canon"))
+                    {
+                        spriteData.trapType = TrapType.Canon;
+                        settings.UpdateCanonSettingsView();
+                    }
                 }
                 break;
             default:

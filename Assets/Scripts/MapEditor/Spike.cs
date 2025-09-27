@@ -48,12 +48,15 @@ public class Spike : Trap
 
     private IEnumerator PlayAnimationSequence()
     {
+        this.GetComponent<Collider2D>().enabled = false;
         yield return new WaitForSeconds(settings["startTime"]);
         while (true)
         {
             animator.SetTrigger("triggerIn");
+            this.GetComponent<Collider2D>().enabled = true;
             yield return new WaitForSeconds(settings["onTime"]);
             animator.SetTrigger("triggerOut");
+            this.GetComponent<Collider2D>().enabled = false;
             yield return new WaitForSeconds(settings["offTime"]);
         }
     }

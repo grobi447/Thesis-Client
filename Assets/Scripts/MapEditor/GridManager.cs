@@ -24,6 +24,7 @@ public class GridManager : MonoBehaviour
     public static bool isMouseDown = false;
     public static bool hasSelectedSprite = false;
     public static int currentLayer = 1;
+    public CanonType currentCanonDirection = CanonType.Left;
 
     private Dictionary<Vector3, Tile> tiles;
     private Dictionary<string, Tile> trapPrefabDict;
@@ -136,6 +137,7 @@ public class GridManager : MonoBehaviour
                 trapTile.SpriteData = trapData;
                 trapTile.GetComponent<SpriteRenderer>().sprite = trapData.sprite;
                 trapTile.emptySprite = trapPrefab.emptySprite;
+                trapTile.tag = trapData.type.ToString();
                 tiles[position] = trapTile;
                 allTraps.Add((Trap)trapTile);
                 if (trapTile is Saw saw)
@@ -162,6 +164,7 @@ public class GridManager : MonoBehaviour
             newTile.SpriteData = blockData;
             newTile.GetComponent<SpriteRenderer>().sprite = blockData.sprite;
             newTile.emptySprite = tilePrefab.emptySprite;
+            newTile.tag = blockData.type.ToString();
             tiles[position] = newTile;
             if (oldTile is Trap) allTraps.Remove((Trap)oldTile);
             if (oldTile is Rail)
@@ -193,6 +196,7 @@ public class GridManager : MonoBehaviour
             clearActiveTraps();
             settings.UpdateSpikeSettingsView();
             settings.UpdateSawSettingsView();
+            settings.UpdateCanonSettingsView();
             return;
         }
 
@@ -205,19 +209,23 @@ public class GridManager : MonoBehaviour
                 if (activeTraps.Add(trap))
                 {
                     if (trap.trapType == TrapType.Spike) settings.UpdateSpikeSettingsView();
-                    if(trap.trapType == TrapType.Saw) settings.UpdateSawSettingsView();
+                    if (trap.trapType == TrapType.Saw) settings.UpdateSawSettingsView();
+                    if (trap.trapType == TrapType.Canon) settings.UpdateCanonSettingsView();
                     trap.isActive = true;
                     trap.SetBorder();
                 }
             }
+            lastSelectedSprite[View.Traps] = trap.SpriteData;
             return;
         }
         clearActiveTraps();
         activeTraps.Add(trap);
         trap.isActive = true;
         trap.SetBorder();
-        if(trap.trapType == TrapType.Spike) settings.UpdateSpikeSettingsView();
-        if(trap.trapType == TrapType.Saw) settings.UpdateSawSettingsView();
+        if (trap.trapType == TrapType.Spike) settings.UpdateSpikeSettingsView();
+        if (trap.trapType == TrapType.Saw) settings.UpdateSawSettingsView();
+        if (trap.trapType == TrapType.Canon) settings.UpdateCanonSettingsView();
+        lastSelectedSprite[View.Traps] = trap.SpriteData;
     }
 
     private void clearActiveTraps()

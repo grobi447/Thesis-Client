@@ -189,13 +189,21 @@ public class Tile : MonoBehaviour
             }
             tileRenderer.color = new Color(1, 1, 1, 0.7f);
         }
+        if (selectedTile.trapType == TrapType.Canon)
+        {
+            if (uiHandler.GetCurrentTool() == Tool.Brush)
+            {
+                HandleCanonHover();
+                return;
+            }
+        }
     }
 
     public void HandleSpikeHover(SpriteData selectedTile)
     {
         if (uiHandler.GetCurrentTool() == Tool.Brush)
         {
-            if( this.SpriteData != null) canPlace = false;
+            if (this.SpriteData != null) canPlace = false;
             switch (selectedTile.name)
             {
                 case "SpikeTop":
@@ -240,8 +248,16 @@ public class Tile : MonoBehaviour
         else TileRenderer.color = new Color(0, 1, 0, 0.7f);
     }
 
-    public void HandleSawHover(){
+    public void HandleSawHover()
+    {
         canPlace = this.GetType() == typeof(Rail);
+        if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
+        else TileRenderer.color = new Color(0, 1, 0, 0.7f);
+    }
+    
+    public void HandleCanonHover()
+    {
+        canPlace = this.GetType() == typeof(Tile) && this.SpriteData == null;
         if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
         else TileRenderer.color = new Color(0, 1, 0, 0.7f);
     }
