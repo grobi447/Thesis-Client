@@ -186,6 +186,7 @@ public class UiHandler : MonoBehaviour
         foreach (Canon canon in activeCanons)
         {
             canon.targetingPlayer = isTargeting;
+            canon.ResetPosition();
         }
     }
 }

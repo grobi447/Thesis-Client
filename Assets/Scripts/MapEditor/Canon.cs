@@ -33,7 +33,12 @@ public class Canon : Trap
     {
         initialPosition = transform.position;
     }
-
+    public void ResetPosition()
+    {
+        transform.position = initialPosition;
+        pivotPoint.transform.localEulerAngles = Vector3.zero;
+        canonBody.transform.position = initialPosition;
+    }
     void Start()
     {
         canonType = gridManager.currentCanonDirection;
@@ -42,7 +47,14 @@ public class Canon : Trap
 
     void Update()
     {
-        AimAtMouse();
+        if (targetingPlayer)
+        {
+            AimAtMouse();
+        }
+        else
+        {
+            Fire();
+        }
     }
 
     public void UpdateCanon()
@@ -50,33 +62,33 @@ public class Canon : Trap
         if (canonType == CanonType.Up)
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
-            if (gridManager.GetTileAtPosition(transform.position + Vector3.left) != null && gridManager.GetTileAtPosition(transform.position + Vector3.left).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.right) != null && gridManager.GetTileAtPosition(transform.position + Vector3.right).SpriteData != null) canonBody.transform.position = initialPosition;
-            else if (gridManager.GetTileAtPosition(transform.position + Vector3.left) != null && gridManager.GetTileAtPosition(transform.position + Vector3.left).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.down) != null && gridManager.GetTileAtPosition(transform.position + Vector3.down).SpriteData != null ) pivotPoint.transform.position = initialPosition - new Vector3(0.24f, 0, 0);
-            else if (gridManager.GetTileAtPosition(transform.position + Vector3.right) != null && gridManager.GetTileAtPosition(transform.position + Vector3.right).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.down) != null && gridManager.GetTileAtPosition(transform.position + Vector3.down).SpriteData != null ) pivotPoint.transform.position = initialPosition + new Vector3(0.25f, 0, 0);
+            if ((gridManager.GetTileAtPosition(transform.position + Vector3.left) != null && gridManager.GetTileAtPosition(transform.position + Vector3.left).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.right) != null && gridManager.GetTileAtPosition(transform.position + Vector3.right).SpriteData != null) || gridManager.GetTileAtPosition(transform.position + Vector3.down) != null && gridManager.GetTileAtPosition(transform.position + Vector3.down).SpriteData != null) canonBody.transform.position = initialPosition;
+            else if (gridManager.GetTileAtPosition(transform.position + Vector3.left) != null && gridManager.GetTileAtPosition(transform.position + Vector3.left).SpriteData != null) canonBody.transform.position = initialPosition - new Vector3(0.24f, 0, 0);
+            else if (gridManager.GetTileAtPosition(transform.position + Vector3.right) != null && gridManager.GetTileAtPosition(transform.position + Vector3.right).SpriteData != null) canonBody.transform.position = initialPosition + new Vector3(0.25f, 0, 0);
             else canonBody.transform.position = initialPosition;
         }
         else if (canonType == CanonType.Down)
         {
             transform.rotation = Quaternion.Euler(0, 0, -180);
-            if(gridManager.GetTileAtPosition(transform.position + Vector3.left) != null && gridManager.GetTileAtPosition(transform.position + Vector3.left).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.right) != null && gridManager.GetTileAtPosition(transform.position + Vector3.right).SpriteData != null) canonBody.transform.position = initialPosition;
-            else if (gridManager.GetTileAtPosition(transform.position + Vector3.left) != null && gridManager.GetTileAtPosition(transform.position + Vector3.left).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.up) != null && gridManager.GetTileAtPosition(transform.position + Vector3.up).SpriteData != null ) pivotPoint.transform.position = initialPosition - new Vector3(0.24f, 0, 0);
-            else if (gridManager.GetTileAtPosition(transform.position + Vector3.right) != null && gridManager.GetTileAtPosition(transform.position + Vector3.right).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.up) != null && gridManager.GetTileAtPosition(transform.position + Vector3.up).SpriteData != null ) pivotPoint.transform.position = initialPosition + new Vector3(0.25f, 0, 0);
+            if ((gridManager.GetTileAtPosition(transform.position + Vector3.left) != null && gridManager.GetTileAtPosition(transform.position + Vector3.left).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.right) != null && gridManager.GetTileAtPosition(transform.position + Vector3.right).SpriteData != null) || gridManager.GetTileAtPosition(transform.position + Vector3.up) != null && gridManager.GetTileAtPosition(transform.position + Vector3.up).SpriteData != null) canonBody.transform.position = initialPosition;
+            else if (gridManager.GetTileAtPosition(transform.position + Vector3.left) != null && gridManager.GetTileAtPosition(transform.position + Vector3.left).SpriteData != null) canonBody.transform.position = initialPosition - new Vector3(0.24f, 0, 0);
+            else if (gridManager.GetTileAtPosition(transform.position + Vector3.right) != null && gridManager.GetTileAtPosition(transform.position + Vector3.right).SpriteData != null) canonBody.transform.position = initialPosition + new Vector3(0.25f, 0, 0);
             else canonBody.transform.position = initialPosition;
         }
         else if (canonType == CanonType.Left)
         {
             transform.rotation = Quaternion.Euler(0, 0, 90);
-            if(gridManager.GetTileAtPosition(transform.position + Vector3.down) != null && gridManager.GetTileAtPosition(transform.position + Vector3.down).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.up) != null && gridManager.GetTileAtPosition(transform.position + Vector3.up).SpriteData != null) canonBody.transform.position = initialPosition;
-            else if (gridManager.GetTileAtPosition(transform.position + Vector3.down) != null && gridManager.GetTileAtPosition(transform.position + Vector3.down).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.right) != null && gridManager.GetTileAtPosition(transform.position + Vector3.right).SpriteData != null ) pivotPoint.transform.position = initialPosition - new Vector3(0, 0.25f, 0);
-            else if (gridManager.GetTileAtPosition(transform.position + Vector3.up) != null && gridManager.GetTileAtPosition(transform.position + Vector3.up).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.right) != null && gridManager.GetTileAtPosition(transform.position + Vector3.right).SpriteData != null ) pivotPoint.transform.position = initialPosition + new Vector3(0, 0.24f, 0);
+            if ((gridManager.GetTileAtPosition(transform.position + Vector3.down) != null && gridManager.GetTileAtPosition(transform.position + Vector3.down).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.up) != null && gridManager.GetTileAtPosition(transform.position + Vector3.up).SpriteData != null) || gridManager.GetTileAtPosition(transform.position + Vector3.right) != null && gridManager.GetTileAtPosition(transform.position + Vector3.right).SpriteData != null) canonBody.transform.position = initialPosition;
+            else if (gridManager.GetTileAtPosition(transform.position + Vector3.down) != null && gridManager.GetTileAtPosition(transform.position + Vector3.down).SpriteData != null) canonBody.transform.position = initialPosition - new Vector3(0, 0.25f, 0);
+            else if (gridManager.GetTileAtPosition(transform.position + Vector3.up) != null && gridManager.GetTileAtPosition(transform.position + Vector3.up).SpriteData != null) canonBody.transform.position = initialPosition + new Vector3(0, 0.24f, 0);
             else canonBody.transform.position = initialPosition;
         }
         else if (canonType == CanonType.Right)
         {
             transform.rotation = Quaternion.Euler(0, 0, -90);
-            if(gridManager.GetTileAtPosition(transform.position + Vector3.down) != null && gridManager.GetTileAtPosition(transform.position + Vector3.down).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.up) != null && gridManager.GetTileAtPosition(transform.position + Vector3.up).SpriteData != null) canonBody.transform.position = initialPosition;
-            else if (gridManager.GetTileAtPosition(transform.position + Vector3.down) != null && gridManager.GetTileAtPosition(transform.position + Vector3.down).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.left) != null && gridManager.GetTileAtPosition(transform.position + Vector3.left).SpriteData != null ) pivotPoint.transform.position = initialPosition - new Vector3(0, 0.25f, 0);
-            else if (gridManager.GetTileAtPosition(transform.position + Vector3.up) != null && gridManager.GetTileAtPosition(transform.position + Vector3.up).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.left) != null && gridManager.GetTileAtPosition(transform.position + Vector3.left).SpriteData != null ) pivotPoint.transform.position = initialPosition + new Vector3(0, 0.24f, 0);
+            if ((gridManager.GetTileAtPosition(transform.position + Vector3.down) != null && gridManager.GetTileAtPosition(transform.position + Vector3.down).SpriteData != null && gridManager.GetTileAtPosition(transform.position + Vector3.up) != null && gridManager.GetTileAtPosition(transform.position + Vector3.up).SpriteData != null) || (gridManager.GetTileAtPosition(transform.position + Vector3.left) != null && gridManager.GetTileAtPosition(transform.position + Vector3.left).SpriteData != null)) canonBody.transform.position = initialPosition;
+            else if (gridManager.GetTileAtPosition(transform.position + Vector3.down) != null && gridManager.GetTileAtPosition(transform.position + Vector3.down).SpriteData != null) canonBody.transform.position = initialPosition - new Vector3(0, 0.25f, 0);
+            else if (gridManager.GetTileAtPosition(transform.position + Vector3.up) != null && gridManager.GetTileAtPosition(transform.position + Vector3.up).SpriteData != null) canonBody.transform.position = initialPosition + new Vector3(0, 0.24f, 0);
             else canonBody.transform.position = initialPosition;
         }
         CalculateMinMaxRotation();
@@ -103,8 +115,8 @@ public class Canon : Trap
     {
         if (canonType == CanonType.Left)
         {
-            maxAimAngle = (gridManager.GetTileAtPosition(transform.position + Vector3.up) == null || gridManager.GetTileAtPosition(transform.position + Vector3.up).SpriteData == null) ? 90f : 0f;
-            minAimAngle = (gridManager.GetTileAtPosition(transform.position + Vector3.down) == null || gridManager.GetTileAtPosition(transform.position + Vector3.down).SpriteData == null) ? -90f : 0f;
+            maxAimAngle = (gridManager.GetTileAtPosition(transform.position + Vector3.down) == null || gridManager.GetTileAtPosition(transform.position + Vector3.down).SpriteData == null) ? 90f : 0f;
+            minAimAngle = (gridManager.GetTileAtPosition(transform.position + Vector3.up) == null || gridManager.GetTileAtPosition(transform.position + Vector3.up).SpriteData == null) ? -90f : 0f;
         }
         else if (canonType == CanonType.Right)
         {
@@ -118,8 +130,8 @@ public class Canon : Trap
         }
         else if (canonType == CanonType.Down)
         {
-            maxAimAngle = (gridManager.GetTileAtPosition(transform.position + Vector3.left) == null || gridManager.GetTileAtPosition(transform.position + Vector3.left).SpriteData == null) ? 90f : 0f;
-            minAimAngle = (gridManager.GetTileAtPosition(transform.position + Vector3.right) == null || gridManager.GetTileAtPosition(transform.position + Vector3.right).SpriteData == null) ? -90f : 0f;
+            maxAimAngle = (gridManager.GetTileAtPosition(transform.position + Vector3.right) == null || gridManager.GetTileAtPosition(transform.position + Vector3.right).SpriteData == null) ? 90f : 0f;
+            minAimAngle = (gridManager.GetTileAtPosition(transform.position + Vector3.left) == null || gridManager.GetTileAtPosition(transform.position + Vector3.left).SpriteData == null) ? -90f : 0f;
         }
     }
 
@@ -140,9 +152,13 @@ public class Canon : Trap
 
         float targetLocalAngle = Mathf.DeltaAngle(0f, targetWorldAngle - baseAngle);
 
-        if (targetLocalAngle >= minAimAngle && targetLocalAngle <= maxAimAngle)
+        if (float.IsNaN(targetLocalAngle) || float.IsInfinity(targetLocalAngle))
+            targetLocalAngle = 0f;
+
+        if (!IsLineBlocked(pivotPoint.position, mouseWorld) && targetLocalAngle >= minAimAngle && targetLocalAngle <= maxAimAngle)
         {
             pivotPoint.transform.localEulerAngles = new Vector3(0f, 0f, targetLocalAngle);
+            Fire();
         }
         else
         {
@@ -154,6 +170,25 @@ public class Canon : Trap
     {
         float range = maxAimAngle - minAimAngle;
         float idleAngle = Mathf.PingPong(Time.time * idleSpeed, range) + minAimAngle;
+        if (float.IsNaN(idleAngle) || float.IsInfinity(idleAngle))
+            idleAngle = 0f;
         pivotPoint.transform.localEulerAngles = new Vector3(0f, 0f, idleAngle);
+    }
+
+    private bool IsLineBlocked(Vector3 start, Vector3 end)
+    {
+        Vector2 start2D = new Vector2(start.x, start.y);
+        Vector2 end2D = new Vector2(end.x, end.y);
+        Vector2 direction = end2D - start2D;
+        RaycastHit2D[] hitInfos = Physics2D.RaycastAll(start2D, direction, Vector2.Distance(start2D, end2D));
+
+        foreach (var hitInfo in hitInfos)
+        {
+            if (hitInfo.collider != null && (hitInfo.collider.CompareTag("Block") || (hitInfo.collider.CompareTag("Trap") && hitInfo.collider.gameObject != this.gameObject)))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
