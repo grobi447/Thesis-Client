@@ -43,6 +43,7 @@ public class UiHandler : MonoBehaviour
     [SerializeField] private Settings settings;
     [SerializeField] public ToggleGroup canonDirectionToggleGroup;
     [SerializeField] public Toggle canonTargetPlayerToggle;
+
     private View currentView = View.Sky;
     private Tool currentTool = Tool.Brush;
 
@@ -175,6 +176,16 @@ public class UiHandler : MonoBehaviour
         {
             canon.canonType = gridManager.currentCanonDirection;
             canon.UpdateCanon();
+        }
+    }
+
+    public void ToggleCanonTargeting()
+    {
+        bool isTargeting = canonTargetPlayerToggle.isOn;
+        List<Canon> activeCanons = gridManager.GetActiveTraps().Where(t => t is Canon).Select(t => (Canon)t).ToList();
+        foreach (Canon canon in activeCanons)
+        {
+            canon.targetingPlayer = isTargeting;
         }
     }
 }

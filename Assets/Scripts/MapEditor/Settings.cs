@@ -18,6 +18,7 @@ public class Settings : MonoBehaviour
     [SerializeField] public GameObject canonFireRateSlider;
     [SerializeField] public GameObject canonProjectileSpeedSlider;
 
+
     private readonly string[] keys = { "startTime", "onTime", "offTime" };
     private readonly string[] labels = { "Start Delay: ", "On Time: ", "Off Time: " };
 

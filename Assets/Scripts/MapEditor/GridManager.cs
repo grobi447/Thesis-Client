@@ -135,7 +135,7 @@ public class GridManager : MonoBehaviour
                 trapTile.transform.rotation = trapPrefab.transform.rotation;
                 trapTile.TileRenderer.sortingOrder = (int)position.z;
                 trapTile.SpriteData = trapData;
-                trapTile.GetComponent<SpriteRenderer>().sprite = trapData.sprite;
+                trapTile.TileRenderer.sprite = trapData.sprite;
                 trapTile.emptySprite = trapPrefab.emptySprite;
                 trapTile.tag = trapData.type.ToString();
                 tiles[position] = trapTile;
@@ -162,7 +162,7 @@ public class GridManager : MonoBehaviour
             newTile.Init(this, position);
             newTile.TileRenderer.sortingOrder = (int)position.z;
             newTile.SpriteData = blockData;
-            newTile.GetComponent<SpriteRenderer>().sprite = blockData.sprite;
+            newTile.TileRenderer.sprite = blockData.sprite;
             newTile.emptySprite = tilePrefab.emptySprite;
             newTile.tag = blockData.type.ToString();
             tiles[position] = newTile;
@@ -182,6 +182,12 @@ public class GridManager : MonoBehaviour
             && neighborTile.SpriteData != null && neighborTile.SpriteData.type == SpriteType.Block)
             return true;
         return false;
+    }
+
+    public Tile GetTileAtPosition(Vector3 position)
+    {
+        tiles.TryGetValue(position, out Tile tile);
+        return tile;
     }
 
     public Rail GetRailAtPosition(Vector3 position)
