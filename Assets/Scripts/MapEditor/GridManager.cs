@@ -25,6 +25,8 @@ public class GridManager : MonoBehaviour
     public static bool hasSelectedSprite = false;
     public static int currentLayer = 1;
     public CanonType currentCanonDirection = CanonType.Left;
+    public AxeMovement currentAxeMovement = AxeMovement.Half;
+    public AxeDirection currentAxeDirection = AxeDirection.Down;
 
     private Dictionary<Vector3, Tile> tiles;
     private Dictionary<string, Tile> trapPrefabDict;
@@ -115,7 +117,7 @@ public class GridManager : MonoBehaviour
     }
 
     public int GetCurrentLayer() => currentLayer;
-
+    
     public void ReplaceToTrap(SpriteData trapData, Vector3 position)
     {
         if (tiles.TryGetValue(position, out Tile oldTile))
@@ -151,7 +153,7 @@ public class GridManager : MonoBehaviour
 
     public void ReplaceToTile(SpriteData blockData, Vector3 position)
     {
-        if (blockData == null) blockData = new SpriteData { name = "Empty", sprite = tilePrefab.emptySprite, type = SpriteType.Block };
+        if (blockData == null) blockData = new SpriteData { name = "Empty", sprite = tilePrefab.emptySprite, type = SpriteType.Empty};
         if (tiles.TryGetValue(position, out Tile oldTile))
         {
             Transform parent = oldTile.transform.parent;
@@ -164,7 +166,7 @@ public class GridManager : MonoBehaviour
             newTile.SpriteData = blockData;
             newTile.TileRenderer.sprite = blockData.sprite;
             newTile.emptySprite = tilePrefab.emptySprite;
-            newTile.tag = blockData.type.ToString();
+            newTile.tag = blockData.type == SpriteType.Empty ? "Untagged" : blockData.type.ToString();
             tiles[position] = newTile;
             if (oldTile is Trap) allTraps.Remove((Trap)oldTile);
             if (oldTile is Rail)
@@ -203,6 +205,7 @@ public class GridManager : MonoBehaviour
             settings.UpdateSpikeSettingsView();
             settings.UpdateSawSettingsView();
             settings.UpdateCanonSettingsView();
+            settings.UpdateAxeSettingsView();
             return;
         }
 
@@ -217,6 +220,7 @@ public class GridManager : MonoBehaviour
                     if (trap.trapType == TrapType.Spike) settings.UpdateSpikeSettingsView();
                     if (trap.trapType == TrapType.Saw) settings.UpdateSawSettingsView();
                     if (trap.trapType == TrapType.Canon) settings.UpdateCanonSettingsView();
+                    if (trap.trapType == TrapType.Axe) settings.UpdateAxeSettingsView();
                     trap.isActive = true;
                     trap.SetBorder();
                 }
@@ -231,6 +235,7 @@ public class GridManager : MonoBehaviour
         if (trap.trapType == TrapType.Spike) settings.UpdateSpikeSettingsView();
         if (trap.trapType == TrapType.Saw) settings.UpdateSawSettingsView();
         if (trap.trapType == TrapType.Canon) settings.UpdateCanonSettingsView();
+        if (trap.trapType == TrapType.Axe) settings.UpdateAxeSettingsView();
         lastSelectedSprite[View.Traps] = trap.SpriteData;
     }
 
@@ -293,6 +298,7 @@ public class GridManager : MonoBehaviour
                 if (r == null) return;
                 RailBitmapType type = DetermineRailType(GetRailAtPosition(r.transform.position + Vector3.up), GetRailAtPosition(r.transform.position + Vector3.down), GetRailAtPosition(r.transform.position + Vector3.left), GetRailAtPosition(r.transform.position + Vector3.right));
                 r.SetSprite(type);
+                LockRails(r.transform.position, true);
             });
             DestroyImmediate(rail.gameObject);
         }

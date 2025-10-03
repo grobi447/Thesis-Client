@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum SpriteType
 {
+    Empty,
     Block,
     Trap,
     Rail
@@ -30,6 +31,7 @@ public class Tile : MonoBehaviour
 
     private Color visibleColor = new Color(1, 1, 1, 1);
     private Color invisibleColor = new Color(1, 1, 1, 0);
+
     public SpriteRenderer TileRenderer
     {
         get => tileRenderer;
@@ -98,7 +100,6 @@ public class Tile : MonoBehaviour
                 }
                 if (this is Trap)
                 {
-                    
                     gridManager.destroyTrap((Trap)this);
                     return;
                 }
@@ -196,6 +197,16 @@ public class Tile : MonoBehaviour
                 HandleCanonHover();
                 return;
             }
+            tileRenderer.color = new Color(1, 1, 1, 0.7f);
+        }
+        if(selectedTile.trapType == TrapType.Axe)
+        {
+            if (uiHandler.GetCurrentTool() == Tool.Brush)
+            {
+                HandleAxeHover();
+                return;
+            }
+            tileRenderer.color = new Color(1, 1, 1, 0.7f);
         }
     }
 
@@ -254,11 +265,16 @@ public class Tile : MonoBehaviour
         if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
         else TileRenderer.color = new Color(0, 1, 0, 0.7f);
     }
-    
+
     public void HandleCanonHover()
     {
         canPlace = this.GetType() == typeof(Tile) && this.SpriteData == null;
         if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
         else TileRenderer.color = new Color(0, 1, 0, 0.7f);
+    }
+
+    public void HandleAxeHover()
+    {
+        tileRenderer.color = new Color(1, 1, 1, 0.7f);
     }
 }

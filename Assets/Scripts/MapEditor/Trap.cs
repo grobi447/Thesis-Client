@@ -5,7 +5,8 @@ public enum TrapType
     Empty,
     Spike,
     Saw,
-    Canon
+    Canon,
+    Axe
 }
 
 public class Trap : Tile

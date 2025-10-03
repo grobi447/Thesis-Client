@@ -69,6 +69,11 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
                         spriteData.trapType = TrapType.Canon;
                         settings.UpdateCanonSettingsView();
                     }
+                    if (gameObject.name.Contains("Axe"))
+                    {
+                        spriteData.trapType = TrapType.Axe;
+                        settings.UpdateAxeSettingsView();
+                    }
                 }
                 break;
             default:

@@ -43,6 +43,8 @@ public class UiHandler : MonoBehaviour
     [SerializeField] private Settings settings;
     [SerializeField] public ToggleGroup canonDirectionToggleGroup;
     [SerializeField] public Toggle canonTargetPlayerToggle;
+    [SerializeField] public ToggleGroup axeDirectionToggleGroup;
+    [SerializeField] public ToggleGroup axeMovementToggleGroup;
 
     private View currentView = View.Sky;
     private Tool currentTool = Tool.Brush;
@@ -106,6 +108,8 @@ public class UiHandler : MonoBehaviour
                 scrollbar.value = 1;
                 settings.UpdateSpikeSettingsView();
                 settings.UpdateSawSettingsView();
+                settings.UpdateCanonSettingsView();
+                settings.UpdateAxeSettingsView();
                 break;
         }
     }
@@ -187,6 +191,53 @@ public class UiHandler : MonoBehaviour
         {
             canon.targetingPlayer = isTargeting;
             canon.ResetPosition();
+        }
+    }
+
+    public void ToggleAxeDirection()
+    {
+        Toggle axeDirectionToggle = axeDirectionToggleGroup.ActiveToggles().FirstOrDefault();
+        if (axeDirectionToggle.name == "Left")
+        {
+            gridManager.currentAxeDirection = AxeDirection.Left;
+        }
+        else if (axeDirectionToggle.name == "Right")
+        {
+            gridManager.currentAxeDirection = AxeDirection.Right;
+        }
+        else if (axeDirectionToggle.name == "Up")
+        {
+            gridManager.currentAxeDirection = AxeDirection.Up;
+        }
+        else if (axeDirectionToggle.name == "Down")
+        {
+            gridManager.currentAxeDirection = AxeDirection.Down;
+        }
+
+        List<Axe> activeAxes = gridManager.GetActiveTraps().Where(t => t is Axe).Select(t => (Axe)t).ToList();
+        foreach (Axe axe in activeAxes)
+        {
+            axe.axeDirection = gridManager.currentAxeDirection;
+            axe.SetDirection(axe.axeDirection);
+        }
+    }
+
+    public void ToggleAxeMovement()
+    {
+        Toggle axeMovementToggle = axeMovementToggleGroup.ActiveToggles().FirstOrDefault();
+        if (axeMovementToggle.name == "Half")
+        {
+            gridManager.currentAxeMovement = AxeMovement.Half;
+        }
+        else if (axeMovementToggle.name == "Circle")
+        {
+            gridManager.currentAxeMovement = AxeMovement.Circle;
+        }
+
+        List<Axe> activeAxes = gridManager.GetActiveTraps().Where(t => t is Axe).Select(t => (Axe)t).ToList();
+        foreach (Axe axe in activeAxes)
+        {
+            axe.axeMovement = gridManager.currentAxeMovement;
         }
     }
 }
