@@ -208,7 +208,15 @@ public class Tile : MonoBehaviour
             }
             tileRenderer.color = new Color(1, 1, 1, 0.7f);
         }
-        tileRenderer.color = new Color(1, 1, 1, 0.7f);
+        if (selectedTile.trapType == TrapType.Blade)
+        {
+            if (uiHandler.GetCurrentTool() == Tool.Brush)
+            {
+                HandleBladeHover();
+                return;
+            }
+            tileRenderer.color = new Color(1, 1, 1, 0.7f);
+        }
 
     }
 
@@ -276,6 +284,10 @@ public class Tile : MonoBehaviour
     }
 
     public void HandleAxeHover()
+    {
+        tileRenderer.color = new Color(1, 1, 1, 0.7f);
+    }
+    public void HandleBladeHover()
     {
         tileRenderer.color = new Color(1, 1, 1, 0.7f);
     }
