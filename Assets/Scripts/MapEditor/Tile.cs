@@ -199,7 +199,7 @@ public class Tile : MonoBehaviour
             }
             tileRenderer.color = new Color(1, 1, 1, 0.7f);
         }
-        if(selectedTile.trapType == TrapType.Axe)
+        if (selectedTile.trapType == TrapType.Axe)
         {
             if (uiHandler.GetCurrentTool() == Tool.Brush)
             {
@@ -208,6 +208,8 @@ public class Tile : MonoBehaviour
             }
             tileRenderer.color = new Color(1, 1, 1, 0.7f);
         }
+        tileRenderer.color = new Color(1, 1, 1, 0.7f);
+
     }
 
     public void HandleSpikeHover(SpriteData selectedTile)

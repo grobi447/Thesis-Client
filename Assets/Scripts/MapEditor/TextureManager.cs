@@ -74,6 +74,11 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
                         spriteData.trapType = TrapType.Axe;
                         settings.UpdateAxeSettingsView();
                     }
+                    if (gameObject.name.Contains("Blade"))
+                    {
+                        spriteData.trapType = TrapType.Blade;
+                        settings.UpdateBladeSettingsView();
+                    }
                 }
                 break;
             default:

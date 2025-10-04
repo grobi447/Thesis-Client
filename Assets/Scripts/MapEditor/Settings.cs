@@ -21,9 +21,13 @@ public class Settings : MonoBehaviour
     [SerializeField] public GameObject axePaintPanel;
     [SerializeField] public GameObject axeSettingsPanel;
      [SerializeField] public GameObject axeSpeedSlider;
+    [SerializeField] public GameObject bladeSettings;
+    [SerializeField] public List<GameObject> bladeSliders;
 
     private readonly string[] keys = { "startTime", "onTime", "offTime" };
     private readonly string[] labels = { "Start Delay: ", "On Time: ", "Off Time: " };
+    private readonly string[] bladeKeys = { "crushTime", "upTime", "reload" };
+    private readonly string[] bladeLabels = { "Crush Time: ", "Up Time: ", "Reload: " };
 
     private void Start()
     {
@@ -114,6 +118,32 @@ public class Settings : MonoBehaviour
                 axe.speed = value;
             }
         });
+
+        for (int i = 0; i < bladeSliders.Count; i++)
+        {
+            int idx = i;
+            Slider s = bladeSliders[idx].GetComponentInChildren<Slider>();
+            s.onValueChanged.AddListener(value =>
+            {
+                TextMeshProUGUI label = bladeSliders[idx].GetComponentInChildren<TextMeshProUGUI>();
+                label.text = bladeLabels[idx] + value.ToString("0.00") + " sec";
+
+                float crushValue = bladeSliders[0].GetComponentInChildren<Slider>().value;
+                float upValue = bladeSliders[1].GetComponentInChildren<Slider>().value;
+                float reloadValue = bladeSliders[2].GetComponentInChildren<Slider>().value;
+
+                var blades = gridManager.GetActiveTraps()
+                    .Where(t => t.trapType == TrapType.Blade)
+                    .Cast<Blade>();
+
+                foreach (var blade in blades)
+                {
+                    blade.settings["crushTime"] = crushValue;
+                    blade.settings["upTime"] = upValue;
+                    blade.settings["reload"] = reloadValue;
+                }
+            });
+        }
     }
 
     public void UpdateSpikeSettingsView()
@@ -134,6 +164,7 @@ public class Settings : MonoBehaviour
             spikeSettings.SetActive(false);
             sawSettings.SetActive(false);
             canonPanel.SetActive(false);
+            bladeSettings.SetActive(false);
             return;
         }
 
@@ -141,6 +172,7 @@ public class Settings : MonoBehaviour
         sawSettings.SetActive(false);
         canonPanel.SetActive(false);
         axePanel.SetActive(false);
+        bladeSettings.SetActive(false);
         for (int i = 0; i < spikeSliders.Count; i++)
         {
             Slider slider = spikeSliders[i].GetComponentInChildren<Slider>();
@@ -162,6 +194,7 @@ public class Settings : MonoBehaviour
         spikeSettings.SetActive(false);
         canonPanel.SetActive(false);
         axePanel.SetActive(false);
+        bladeSettings.SetActive(false);
         if (gridManager.activeTraps.Any(t => t.trapType == TrapType.Saw))
         {
             sawSpeedSlider.SetActive(true);
@@ -192,6 +225,7 @@ public class Settings : MonoBehaviour
         sawSettings.SetActive(false);
         canonPanel.SetActive(true);
         axePanel.SetActive(false);
+        bladeSettings.SetActive(false);
         if (gridManager.activeTraps.Any(t => t.trapType == TrapType.Canon))
         {
             selectedCanonPanel.SetActive(true);
@@ -236,6 +270,7 @@ public class Settings : MonoBehaviour
         canonPanel.SetActive(false);
         axePanel.SetActive(true);
         axePaintPanel.SetActive(true);
+        bladeSettings.SetActive(false);
         if (gridManager.activeTraps.Any(t => t.trapType == TrapType.Axe))
         {
             axeSettingsPanel.SetActive(true);
@@ -247,13 +282,50 @@ public class Settings : MonoBehaviour
                 .First();
             slider.value = axe.speed;
             label.text = "Speed: " + slider.value.ToString("0.00");
-            
+
 
         }
         else
         {
             axeSettingsPanel.SetActive(false);
         }
-        
+
+    }
+
+    public void UpdateBladeSettingsView()
+    {
+        if (gridManager.GetLastSelectedSprite(uiHandler.GetCurrentView()) == null ||
+           gridManager.GetLastSelectedSprite(uiHandler.GetCurrentView()).trapType != TrapType.Blade)
+        {
+            bladeSettings.SetActive(false);
+            return;
+        }
+        var blades = gridManager.GetActiveTraps()
+            .Where(t => t.trapType == TrapType.Blade)
+            .Cast<Blade>()
+            .ToList();
+
+        if (blades.Count == 0)
+        {
+            spikeSettings.SetActive(false);
+            sawSettings.SetActive(false);
+            canonPanel.SetActive(false);
+            bladeSettings.SetActive(false);
+            return;
+        }
+
+        spikeSettings.SetActive(false);
+        sawSettings.SetActive(false);
+        canonPanel.SetActive(false);
+        axePanel.SetActive(false);
+        bladeSettings.SetActive(true);
+
+        for (int i = 0; i < bladeSliders.Count; i++)
+        {
+            Slider slider = bladeSliders[i].GetComponentInChildren<Slider>();
+            TextMeshProUGUI label = bladeSliders[i].GetComponentInChildren<TextMeshProUGUI>();
+            slider.value = blades[0].settings[bladeKeys[i]];
+            label.text = bladeLabels[i] + slider.value.ToString("0.00") + " sec";
+        }
     }
 }

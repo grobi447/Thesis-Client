@@ -206,6 +206,7 @@ public class GridManager : MonoBehaviour
             settings.UpdateSawSettingsView();
             settings.UpdateCanonSettingsView();
             settings.UpdateAxeSettingsView();
+            settings.UpdateBladeSettingsView();
             return;
         }
 
@@ -221,6 +222,7 @@ public class GridManager : MonoBehaviour
                     if (trap.trapType == TrapType.Saw) settings.UpdateSawSettingsView();
                     if (trap.trapType == TrapType.Canon) settings.UpdateCanonSettingsView();
                     if (trap.trapType == TrapType.Axe) settings.UpdateAxeSettingsView();
+                    if (trap.trapType == TrapType.Blade) settings.UpdateBladeSettingsView();
                     trap.isActive = true;
                     trap.SetBorder();
                 }
@@ -236,6 +238,7 @@ public class GridManager : MonoBehaviour
         if (trap.trapType == TrapType.Saw) settings.UpdateSawSettingsView();
         if (trap.trapType == TrapType.Canon) settings.UpdateCanonSettingsView();
         if (trap.trapType == TrapType.Axe) settings.UpdateAxeSettingsView();
+        if (trap.trapType == TrapType.Blade) settings.UpdateBladeSettingsView();
         lastSelectedSprite[View.Traps] = trap.SpriteData;
     }
 
