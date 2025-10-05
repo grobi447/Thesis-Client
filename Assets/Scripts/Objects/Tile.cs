@@ -7,7 +7,9 @@ public enum SpriteType
     Empty,
     Block,
     Trap,
-    Rail
+    Rail,
+    Spawn,
+    Finish
 }
 
 public class SpriteData
@@ -70,12 +72,12 @@ public class Tile : MonoBehaviour
 
             if (uiHandler.GetCurrentTool() == Tool.Brush && selectedData != null)
             {
-                if (selectedData.type != SpriteType.Block && this.GetType() == typeof(Tile))
+                if (selectedData.type != SpriteType.Block && selectedData.type != SpriteType.Spawn && selectedData.type != SpriteType.Finish && this.GetType() == typeof(Tile))
                 {
                     gridManager.ReplaceToTrap(selectedData, position);
                     return;
                 }
-                if (selectedData.type == SpriteType.Block && this.GetType() != typeof(Tile) && this.GetType() != typeof(Rail))
+                if ((selectedData.type == SpriteType.Block || selectedData.type == SpriteType.Spawn || selectedData.type == SpriteType.Finish) && this.GetType() != typeof(Tile) && this.GetType() != typeof(Rail))
                 {
                     gridManager.ReplaceToTile(selectedData, position);
                     return;
@@ -162,6 +164,16 @@ public class Tile : MonoBehaviour
             if (selectedTile.type == SpriteType.Trap)
             {
                 HandleTrapHover(selectedTile);
+                return;
+            }
+            if (selectedTile.type == SpriteType.Spawn && uiHandler.GetCurrentTool() == Tool.Brush)
+            {
+                HandleSpawmHover();
+                return;
+            }
+            if (selectedTile.type == SpriteType.Finish && uiHandler.GetCurrentTool() == Tool.Brush)
+            {
+                HandleFinishHover();
                 return;
             }
             tileRenderer.color = new Color(1, 1, 1, 0.7f);
@@ -290,5 +302,17 @@ public class Tile : MonoBehaviour
     public void HandleBladeHover()
     {
         tileRenderer.color = new Color(1, 1, 1, 0.7f);
+    }
+    public void HandleSpawmHover()
+    {
+        canPlace = this.SpriteData == null && !gridManager.IsSpawnSet() && gridManager.HasBlockNeighbor(this, Vector3.down);
+        if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
+        else TileRenderer.color = new Color(0, 1, 0, 0.7f);
+    }
+    public void HandleFinishHover()
+    {
+        canPlace = this.SpriteData == null && !gridManager.IsFinishSet() && gridManager.HasBlockNeighbor(this, Vector3.down);
+        if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
+        else TileRenderer.color = new Color(0, 1, 0, 0.7f);
     }
 }

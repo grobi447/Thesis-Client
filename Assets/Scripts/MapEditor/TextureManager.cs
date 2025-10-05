@@ -48,6 +48,8 @@ public class TextureManager : MonoBehaviour, IPointerClickHandler
                 {
                     "Block" => SpriteType.Block,
                     "Trap" => SpriteType.Trap,
+                    "Spawn" => SpriteType.Spawn,
+                    "Finish" => SpriteType.Finish,
                     _ => throw new ArgumentOutOfRangeException()
                 };
 

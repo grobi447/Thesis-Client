@@ -27,7 +27,6 @@ public class GridManager : MonoBehaviour
     public CanonType currentCanonDirection = CanonType.Left;
     public AxeMovement currentAxeMovement = AxeMovement.Half;
     public AxeDirection currentAxeDirection = AxeDirection.Down;
-
     private Dictionary<Vector3, Tile> tiles;
     private Dictionary<string, Tile> trapPrefabDict;
     public Tile TilePrefab => tilePrefab;
@@ -153,7 +152,7 @@ public class GridManager : MonoBehaviour
 
     public void ReplaceToTile(SpriteData blockData, Vector3 position)
     {
-        if (blockData == null) blockData = new SpriteData { name = "Empty", sprite = tilePrefab.emptySprite, type = SpriteType.Empty};
+        if (blockData == null) blockData = new SpriteData { name = "Empty", sprite = tilePrefab.emptySprite, type = SpriteType.Empty };
         if (tiles.TryGetValue(position, out Tile oldTile))
         {
             Transform parent = oldTile.transform.parent;
@@ -314,7 +313,7 @@ public class GridManager : MonoBehaviour
             allTraps.Remove(trap);
             activeTraps.Remove(trap);
             trap.transform.rotation = Quaternion.Euler(0, 0, 0);
-            if(trap is Saw saw)
+            if (trap is Saw saw)
             {
                 saw.ResetToSpawn();
             }
@@ -437,5 +436,15 @@ public class GridManager : MonoBehaviour
         {
             return RailBitmapType.Center;
         }
+    }
+
+    public bool IsSpawnSet()
+    {
+        return tiles.Any(t => t.Value.name == "Spawn");
+    }
+
+    public bool IsFinishSet()
+    {
+        return tiles.Any(t => t.Value.name == "Finish");
     }
 }
