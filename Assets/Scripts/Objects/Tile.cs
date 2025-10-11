@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public enum SpriteType
     Finish
 }
 
+[Serializable]
 public class SpriteData
 {
     public string name;
@@ -28,7 +30,7 @@ public class Tile : MonoBehaviour
     private SpriteData spriteData;
     public GridManager gridManager;
     public UiHandler uiHandler;
-    private Vector3 position;
+    public Vector3 position;
     public bool canPlace = true;
 
     private Color visibleColor = new Color(1, 1, 1, 1);

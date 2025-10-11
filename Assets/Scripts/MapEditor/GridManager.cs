@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System;
+using System.IO;
 
 public class GridManager : MonoBehaviour
 {
@@ -56,6 +57,11 @@ public class GridManager : MonoBehaviour
     private void Update()
     {
         isMouseDown = Input.GetMouseButton(0);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CreateMap();
+        }
+
     }
 
     private void GenerateGrid()
@@ -116,7 +122,7 @@ public class GridManager : MonoBehaviour
     }
 
     public int GetCurrentLayer() => currentLayer;
-    
+
     public void ReplaceToTrap(SpriteData trapData, Vector3 position)
     {
         if (tiles.TryGetValue(position, out Tile oldTile))
@@ -446,5 +452,19 @@ public class GridManager : MonoBehaviour
     public bool IsFinishSet()
     {
         return tiles.Any(t => t.Value.name == "Finish");
+    }
+    public void CreateMap()
+    {
+        string sky = uiHandler.sky.GetComponent<Image>().sprite.name;
+        Map map = new Map(tiles, rails, sky);
+        string json = JsonUtility.ToJson(map, true);
+        Debug.Log(json);
+
+        if (!File.Exists(Application.dataPath + "/Maps"))
+        {
+            Directory.CreateDirectory(Application.dataPath + "/Maps");
+            string path = Application.dataPath + $"/Maps/{map.metaData.id}.json";
+            File.WriteAllText(path, json);
+        }
     }
 }

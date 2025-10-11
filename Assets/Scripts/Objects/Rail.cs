@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+[Serializable]
 public enum RailBitmapType
 {
     Center = 0,
@@ -14,7 +16,6 @@ public enum RailBitmapType
     LeftToRight = 9,
     LeftToUp = 10
 }
-
 public class Rail : Tile
 {
     [SerializeField] public List<Sprite> RailSprites;

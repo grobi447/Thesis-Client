@@ -6,7 +6,7 @@ public class API : MonoBehaviour
 {
     private static string baseURL = "https://52.58.160.54/";
     public MenuManager menuManager;
-
+    [SerializeField] private NotificationManager notificationManager;
     private class AcceptAllCertificatesSignedWithASelfSignedCertificate : CertificateHandler
     {
         protected override bool ValidateCertificate(byte[] certificateData)
@@ -30,17 +30,16 @@ public class API : MonoBehaviour
             request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
 
             yield return request.SendWebRequest();
-            string responseText = request.downloadHandler.text;
-            ApiResponse apiResponse = JsonUtility.FromJson<ApiResponse>(responseText);
-
             if (request.result == UnityWebRequest.Result.Success)
             {
-                menuManager.OnSuccessMessage(apiResponse.detail);
+                string responseText = request.downloadHandler.text;
+                ApiResponse apiResponse = JsonUtility.FromJson<ApiResponse>(responseText);
+                notificationManager.OnSuccessMessage(apiResponse?.detail ?? "Registration successful");
                 menuManager.LoggedIn();
             }
             else
             {
-                menuManager.OnErrorMessage(apiResponse.detail);
+                notificationManager.OnErrorMessage(request.error ?? "Registration failed");
             }
         }
     }
@@ -59,17 +58,16 @@ public class API : MonoBehaviour
             request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
 
             yield return request.SendWebRequest();
-            string responseText = request.downloadHandler.text;
-            ApiResponse apiResponse = JsonUtility.FromJson<ApiResponse>(responseText);
-
             if (request.result == UnityWebRequest.Result.Success)
             {
-                menuManager.OnSuccessMessage(apiResponse.detail);
+                string responseText = request.downloadHandler.text;
+                ApiResponse apiResponse = JsonUtility.FromJson<ApiResponse>(responseText);
+                notificationManager.OnSuccessMessage(apiResponse?.detail ?? "Login successful");
                 menuManager.LoggedIn();
             }
             else
             {
-                menuManager.OnErrorMessage(apiResponse.detail);
+                notificationManager.OnErrorMessage(request.error ?? "Login failed");
             }
         }
     }

@@ -30,7 +30,7 @@ public class UiHandler : MonoBehaviour
     [SerializeField] private GameObject blocksView;
     [SerializeField] private GameObject skyView;
     [SerializeField] private GameObject trapView;
-    [SerializeField] private GameObject sky;
+    [SerializeField] public GameObject sky;
     [SerializeField] private Sprite blueSky;
     [SerializeField] private Sprite greenSky;
     [SerializeField] private Sprite caveSky;
@@ -45,6 +45,7 @@ public class UiHandler : MonoBehaviour
     [SerializeField] public Toggle canonTargetPlayerToggle;
     [SerializeField] public ToggleGroup axeDirectionToggleGroup;
     [SerializeField] public ToggleGroup axeMovementToggleGroup;
+    [SerializeField] private NotificationManager notificationManager;
 
     private View currentView = View.Sky;
     private Tool currentTool = Tool.Brush;
@@ -239,5 +240,10 @@ public class UiHandler : MonoBehaviour
         {
             axe.axeMovement = gridManager.currentAxeMovement;
         }
+    }
+
+    public void OnSaveButton()
+    {
+        notificationManager.OnSuccessMessage("Map saved!");
     }
 }
