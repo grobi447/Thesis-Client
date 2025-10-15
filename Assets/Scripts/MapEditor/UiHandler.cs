@@ -46,7 +46,9 @@ public class UiHandler : MonoBehaviour
     [SerializeField] public ToggleGroup axeDirectionToggleGroup;
     [SerializeField] public ToggleGroup axeMovementToggleGroup;
     [SerializeField] private NotificationManager notificationManager;
-
+    [SerializeField] private GameObject savePanel;
+    [SerializeField] private TMPro.TMP_InputField mapNameInput;
+    bool isSavePanelOpen = false;
     private View currentView = View.Sky;
     private Tool currentTool = Tool.Brush;
 
@@ -88,7 +90,8 @@ public class UiHandler : MonoBehaviour
                 trapView.SetActive(false);
                 trapSettingsPanel.SetActive(false);
                 settingsToggle.SetActive(false);
-
+                savePanel.SetActive(false);
+                isSavePanelOpen = false;
                 break;
             case View.Blocks:
                 label.text = "Blocks";
@@ -98,6 +101,8 @@ public class UiHandler : MonoBehaviour
                 trapSettingsPanel.SetActive(false);
                 settingsToggle.SetActive(false);
                 scrollbar.value = 1;
+                savePanel.SetActive(false);
+                isSavePanelOpen = false;
                 break;
             case View.Traps:
                 label.text = "Traps";
@@ -111,6 +116,8 @@ public class UiHandler : MonoBehaviour
                 settings.UpdateSawSettingsView();
                 settings.UpdateCanonSettingsView();
                 settings.UpdateAxeSettingsView();
+                savePanel.SetActive(false);
+                isSavePanelOpen = false;
                 break;
         }
     }
@@ -149,6 +156,8 @@ public class UiHandler : MonoBehaviour
         {
             gridManager.SetActiveTraps(null);
         }
+        isSavePanelOpen = false;
+        savePanel.SetActive(false);
     }
 
     public Tool GetCurrentTool()
@@ -244,6 +253,32 @@ public class UiHandler : MonoBehaviour
 
     public void OnSaveButton()
     {
-        notificationManager.OnSuccessMessage("Map saved!");
+        if(!isSavePanelOpen)
+        {
+            savePanel.SetActive(true);
+            isSavePanelOpen = true;
+        }
+        else
+        {
+        if(!gridManager.IsSpawnSet())
+        {
+            notificationManager.OnErrorMessage("Must have a spawn point!");
+            return;
+        }
+        if(!gridManager.IsFinishSet())
+        {
+            notificationManager.OnErrorMessage("Must have an end point!");
+            return;
+        }
+
+        if(string.IsNullOrWhiteSpace(mapNameInput.text))
+        {
+            notificationManager.OnErrorMessage("Map name is empty!");
+            return;
+        }
+        //todo: check if map name already exists
+        gridManager.CreateMap(mapNameInput.text);
+        notificationManager.OnSuccessMessage("Map saved successfully!");
+        }
     }
 }

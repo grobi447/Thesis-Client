@@ -14,10 +14,14 @@ public class MenuManager : MonoBehaviour
     public TMPro.TMP_InputField RegisterPasswordInput2;
     public TMPro.TMP_InputField LoginPasswordInput;
     public Button PlayButton;
+    public Button MenuRegisterButton;
+    public Button MenuLoginButton;
     public Button RegisterButton;
     public Button LoginButton;
     public Button LogoutButton;
     public Button MapEditorButton;
+    public GameObject registerSpinner;
+    public GameObject loginSpinner;
     public API api;
 
     public void ShowRegisterPanel()
@@ -39,18 +43,19 @@ public class MenuManager : MonoBehaviour
     }
     public void LoggedIn()
     {
+        ShowStartPanel();
         PlayButton.gameObject.SetActive(true);
         MapEditorButton.gameObject.SetActive(true);
-        RegisterButton.gameObject.SetActive(false);
-        LoginButton.gameObject.SetActive(false);
+        MenuRegisterButton.gameObject.SetActive(false);
+        MenuLoginButton.gameObject.SetActive(false);
         LogoutButton.gameObject.SetActive(true);
     }
     public void LogOut()
     {
         PlayButton.gameObject.SetActive(false);
         MapEditorButton.gameObject.SetActive(false);
-        RegisterButton.gameObject.SetActive(true);
-        LoginButton.gameObject.SetActive(true);
+        MenuRegisterButton.gameObject.SetActive(true);
+        MenuLoginButton.gameObject.SetActive(true);
         LogoutButton.gameObject.SetActive(false);
         notificationManager.OnSuccessMessage("Logged out");
     }
@@ -61,12 +66,46 @@ public class MenuManager : MonoBehaviour
             notificationManager.OnErrorMessage("Passwords do not match!");
             return;
         }
-        api.Register(RegisterUsernameInput.text, RegisterPasswordInput1.text);
+        StartCoroutine(RegisterRoutine(RegisterUsernameInput.text, RegisterPasswordInput1.text));
+    }
+
+    private IEnumerator RegisterRoutine(string username, string password)
+    {
+        if (registerSpinner != null)
+            registerSpinner.SetActive(true);
+            RegisterButton.gameObject.SetActive(false);
+        if (RegisterButton != null)
+            RegisterButton.interactable = false;
+
+        yield return api.RegisterRequest(username, password);
+
+        if (registerSpinner != null)
+            registerSpinner.SetActive(false);
+            RegisterButton.gameObject.SetActive(true);
+        if (RegisterButton != null)
+            RegisterButton.interactable = true;
     }
 
     public void Login()
     {
-        api.Login(LoginUsernameInput.text, LoginPasswordInput.text);
+        StartCoroutine(LoginRoutine(LoginUsernameInput.text, LoginPasswordInput.text));
+    }
+
+    private IEnumerator LoginRoutine(string username, string password)
+    {
+        if (loginSpinner != null)
+            loginSpinner.SetActive(true);
+            LoginButton.gameObject.SetActive(false);
+        if (LoginButton != null)
+            LoginButton.interactable = false;
+
+        yield return api.LoginRequest(username, password);
+
+        if (loginSpinner != null)
+            loginSpinner.SetActive(false);
+            LoginButton.gameObject.SetActive(true);
+        if (LoginButton != null)
+            LoginButton.interactable = true;
     }
 
 

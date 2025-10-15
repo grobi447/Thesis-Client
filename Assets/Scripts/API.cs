@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 public class API : MonoBehaviour
 {
     private static string baseURL = "https://52.58.160.54/";
-    public MenuManager menuManager;
+    [SerializeField] private MenuManager menuManager;
     [SerializeField] private NotificationManager notificationManager;
     private class AcceptAllCertificatesSignedWithASelfSignedCertificate : CertificateHandler
     {
@@ -19,7 +19,7 @@ public class API : MonoBehaviour
     {
         string url = $"{baseURL}register/";
 
-        string json = JsonUtility.ToJson(new UserRegister { username = username, password = password });
+        string json = JsonUtility.ToJson(new User { username = username, password = password });
 
         using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
         {
@@ -30,16 +30,16 @@ public class API : MonoBehaviour
             request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
 
             yield return request.SendWebRequest();
+            ApiResponse apiResponse = JsonUtility.FromJson<ApiResponse>(request.downloadHandler.text);
+
             if (request.result == UnityWebRequest.Result.Success)
             {
-                string responseText = request.downloadHandler.text;
-                ApiResponse apiResponse = JsonUtility.FromJson<ApiResponse>(responseText);
-                notificationManager.OnSuccessMessage(apiResponse?.detail ?? "Registration successful");
+                notificationManager.OnSuccessMessage(apiResponse?.detail);
                 menuManager.LoggedIn();
             }
             else
             {
-                notificationManager.OnErrorMessage(request.error ?? "Registration failed");
+                notificationManager.OnErrorMessage(apiResponse?.detail);
             }
         }
     }
@@ -47,7 +47,7 @@ public class API : MonoBehaviour
     {
         string url = $"{baseURL}login/";
        
-        string json = JsonUtility.ToJson(new UserRegister { username = username, password = password });
+        string json = JsonUtility.ToJson(new User { username = username, password = password });
 
         using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
         {
@@ -58,16 +58,17 @@ public class API : MonoBehaviour
             request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
 
             yield return request.SendWebRequest();
+            ApiResponse apiResponse = JsonUtility.FromJson<ApiResponse>(request.downloadHandler.text);
+
             if (request.result == UnityWebRequest.Result.Success)
             {
-                string responseText = request.downloadHandler.text;
-                ApiResponse apiResponse = JsonUtility.FromJson<ApiResponse>(responseText);
-                notificationManager.OnSuccessMessage(apiResponse?.detail ?? "Login successful");
+                notificationManager.OnSuccessMessage(apiResponse?.detail);
+                UserManager.Instance.username = apiResponse.userdata.username;
                 menuManager.LoggedIn();
             }
             else
             {
-                notificationManager.OnErrorMessage(request.error ?? "Login failed");
+                notificationManager.OnErrorMessage(apiResponse?.detail);
             }
         }
     }
@@ -81,7 +82,7 @@ public class API : MonoBehaviour
     }
 
     [System.Serializable]
-    public class UserRegister
+    public class User
     {
         public string username;
         public string password;
@@ -92,6 +93,6 @@ public class API : MonoBehaviour
     {
         public string error;
         public string detail;
-        public UserRegister userdata;
+        public User userdata;
     }
 }

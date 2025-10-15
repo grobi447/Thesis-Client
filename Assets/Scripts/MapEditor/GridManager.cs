@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System;
 using System.IO;
+using Newtonsoft.Json;
 
 public class GridManager : MonoBehaviour
 {
@@ -453,11 +454,15 @@ public class GridManager : MonoBehaviour
     {
         return tiles.Any(t => t.Value.name == "Finish");
     }
-    public void CreateMap()
+    public void CreateMap(string mapName = "Map")
     {
         string sky = uiHandler.sky.GetComponent<Image>().sprite.name;
-        Map map = new Map(tiles, rails, sky);
-        string json = JsonUtility.ToJson(map, true);
+        Map map = new Map(tiles, rails, sky, mapName);
+        var jsonSettings = new JsonSerializerSettings
+        {
+            NullValueHandling = NullValueHandling.Ignore
+        };
+        string json = JsonConvert.SerializeObject(map, Formatting.Indented, jsonSettings);
         Debug.Log(json);
 
         if (!File.Exists(Application.dataPath + "/Maps"))
