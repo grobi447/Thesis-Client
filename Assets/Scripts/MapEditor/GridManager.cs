@@ -50,7 +50,7 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
-        GameObject parentObj = new GameObject("Tiles");
+        GameObject parentObj = GameObject.Find("Tiles");
         gridParent = parentObj.transform;
         GenerateGrid();
     }
@@ -468,8 +468,13 @@ public class GridManager : MonoBehaviour
         if (!File.Exists(Application.dataPath + "/Maps"))
         {
             Directory.CreateDirectory(Application.dataPath + "/Maps");
-            string path = Application.dataPath + $"/Maps/{map.metaData.id}.json";
-            File.WriteAllText(path, json);
         }
+        if (!File.Exists(Application.dataPath + $"/Maps/{map.metaData.id}/"))
+        {
+            Directory.CreateDirectory(Application.dataPath + $"/Maps/{map.metaData.id}/");
+        }
+        string path = Application.dataPath + $"/Maps/{map.metaData.id}/{map.metaData.id}";
+        File.WriteAllText(path + ".json", json);
+        ScreenshotHandler.TakeScreenshot_Static(1920, 1080, path);
     }
 }

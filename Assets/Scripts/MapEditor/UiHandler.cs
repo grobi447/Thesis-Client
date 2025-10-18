@@ -31,6 +31,7 @@ public class UiHandler : MonoBehaviour
     [SerializeField] private GameObject skyView;
     [SerializeField] private GameObject trapView;
     [SerializeField] public GameObject sky;
+    [SerializeField] public GameObject upscaledSky;
     [SerializeField] private Sprite blueSky;
     [SerializeField] private Sprite greenSky;
     [SerializeField] private Sprite caveSky;
@@ -126,6 +127,7 @@ public class UiHandler : MonoBehaviour
     public void UpdateSky(Sprite newSky)
     {
         sky.GetComponent<Image>().sprite = newSky;
+        upscaledSky.GetComponent<SpriteRenderer>().sprite = newSky;
     }
 
     public View GetCurrentView()
