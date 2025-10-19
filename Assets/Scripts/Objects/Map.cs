@@ -9,18 +9,11 @@ public class Map
 {
 
     public string skybox;
-    public MapMetaData metaData;
     public List<TileWrapper> tiles;
     public List<RailWrapper> rails;
 
-    public Map(Dictionary<Vector3, Tile> tiles, List<Rail> rails, string skybox, string name)
+    public Map(Dictionary<Vector3, Tile> tiles, List<Rail> rails, string skybox)
     {
-        this.metaData = new MapMetaData
-        {
-            id = Guid.NewGuid().ToString(),
-            name = name,
-            creator = UserManager.Instance.username
-        };
         this.tiles = tiles
             .Where(t => t.Value.SpriteData != null)
             .Select(t => new TileWrapper(t.Key, t.Value))
@@ -116,14 +109,6 @@ public class JsonSpriteData
         this.type = data.type;
         this.trapType = data.trapType;
     }
-}
-
-[Serializable]
-public class MapMetaData
-{
-    public string id;
-    public string name;
-    public string creator;
 }
 
 [Serializable]

@@ -9,6 +9,7 @@ public class ScreenshotHandler : MonoBehaviour
     private Camera screenshotCamera;
     private string path;
     private bool takeScreenshotOnNextFrame;
+    private System.Action onScreenshotComplete;
     private void Awake()
     {
         screenshotCamera = GetComponent<Camera>();
@@ -30,19 +31,23 @@ public class ScreenshotHandler : MonoBehaviour
 
             RenderTexture.ReleaseTemporary(renderTexture);
             screenshotCamera.targetTexture = null;
+            
+            onScreenshotComplete?.Invoke();
+            onScreenshotComplete = null;
         }
     }
 
-    private void TakeScreenshot(int width, int height, string path)
+    private void TakeScreenshot(int width, int height, string path, System.Action onComplete = null)
     {
         screenshotCamera.targetTexture = RenderTexture.GetTemporary(width, height, 16);
         instance.path = path;
+        instance.onScreenshotComplete = onComplete;
         takeScreenshotOnNextFrame = true;
     }
 
-    public static void TakeScreenshot_Static(int width, int height, string path)
+    public static void TakeScreenshot_Static(int width, int height, string path, System.Action onComplete = null)
     {
-        instance.TakeScreenshot(width, height, path);
+        instance.TakeScreenshot(width, height, path, onComplete);
     }
 }
 

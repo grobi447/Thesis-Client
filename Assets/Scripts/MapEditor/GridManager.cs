@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 
 public class GridManager : MonoBehaviour
 {
+    [SerializeField] private API api;
     [SerializeField] private int width, height;
     [SerializeField] private Tile tilePrefab;
     [SerializeField] private List<Tile> trapTilePrefabs;
@@ -457,24 +458,27 @@ public class GridManager : MonoBehaviour
     public void CreateMap(string mapName = "Map")
     {
         string sky = uiHandler.sky.GetComponent<Image>().sprite.name;
-        Map map = new Map(tiles, rails, sky, mapName);
+        Map map = new Map(tiles, rails, sky);
+        string id = Guid.NewGuid().ToString();
         var jsonSettings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore
         };
         string json = JsonConvert.SerializeObject(map, Formatting.Indented, jsonSettings);
-        Debug.Log(json);
 
         if (!File.Exists(Application.dataPath + "/Maps"))
         {
             Directory.CreateDirectory(Application.dataPath + "/Maps");
         }
-        if (!File.Exists(Application.dataPath + $"/Maps/{map.metaData.id}/"))
+        if (!File.Exists(Application.dataPath + $"/Maps/{id}/"))
         {
-            Directory.CreateDirectory(Application.dataPath + $"/Maps/{map.metaData.id}/");
+            Directory.CreateDirectory(Application.dataPath + $"/Maps/{id}/");
         }
-        string path = Application.dataPath + $"/Maps/{map.metaData.id}/{map.metaData.id}";
+        string path = Application.dataPath + $"/Maps/{id}/{id}";
         File.WriteAllText(path + ".json", json);
-        ScreenshotHandler.TakeScreenshot_Static(1920, 1080, path);
+        ScreenshotHandler.TakeScreenshot_Static(1920, 1080, path, () => {
+            byte[] imageBytes = File.ReadAllBytes(path + ".png");
+            api.CreateMap(id, UserManager.Instance.username, mapName, json, imageBytes);
+        });
     }
 }
