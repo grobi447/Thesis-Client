@@ -13527,7 +13527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc2ca3d4dba46954a9bd63b417bb77b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuManager: {fileID: 0}
+  menuManager: {fileID: 1983045899}
   notificationManager: {fileID: 1177995232}
 --- !u!4 &969388988
 Transform:
@@ -27113,6 +27113,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1982848587}
   m_CullTransparentMesh: 1
+--- !u!1 &1983045898
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1983045900}
+  - component: {fileID: 1983045899}
+  m_Layer: 0
+  m_Name: MenuManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1983045899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983045898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db4c8d944f0913b4db489bfff4114b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notificationManager: {fileID: 0}
+  startPanel: {fileID: 0}
+  registerPanel: {fileID: 0}
+  loginPanel: {fileID: 0}
+  RegisterUsernameInput: {fileID: 0}
+  LoginUsernameInput: {fileID: 0}
+  RegisterPasswordInput1: {fileID: 0}
+  RegisterPasswordInput2: {fileID: 0}
+  LoginPasswordInput: {fileID: 0}
+  PlayButton: {fileID: 0}
+  MenuRegisterButton: {fileID: 0}
+  MenuLoginButton: {fileID: 0}
+  RegisterButton: {fileID: 0}
+  LoginButton: {fileID: 0}
+  LogoutButton: {fileID: 0}
+  MapEditorButton: {fileID: 0}
+  registerSpinner: {fileID: 0}
+  loginSpinner: {fileID: 0}
+  api: {fileID: 969388987}
+--- !u!4 &1983045900
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983045898}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 53.99305, y: 8.913159, z: 73.254196}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1991373094
 GameObject:
   m_ObjectHideFlags: 0
@@ -29498,3 +29561,4 @@ SceneRoots:
   - {fileID: 1177995233}
   - {fileID: 1643975691}
   - {fileID: 969388988}
+  - {fileID: 1983045900}

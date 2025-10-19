@@ -5,9 +5,11 @@ using UnityEngine.UI;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private NotificationManager notificationManager;
+    public GameObject mainMenuPanel;
     public GameObject startPanel;
     public GameObject registerPanel;
     public GameObject loginPanel;
+    public GameObject mapSelectorPanel;
     public TMPro.TMP_InputField RegisterUsernameInput;
     public TMPro.TMP_InputField LoginUsernameInput;
     public TMPro.TMP_InputField RegisterPasswordInput1;
@@ -23,7 +25,12 @@ public class MenuManager : MonoBehaviour
     public GameObject registerSpinner;
     public GameObject loginSpinner;
     public API api;
+    public MapSelector mapSelector;
 
+    public void Awake()
+    {
+        api.GetMaps();
+    }
     public void ShowRegisterPanel()
     {
         startPanel.SetActive(false);
@@ -40,6 +47,18 @@ public class MenuManager : MonoBehaviour
     {
         startPanel.SetActive(false);
         loginPanel.SetActive(true);
+    }
+    public void ShowMapSelectorPanel()
+    {
+        mapSelector.LoadMaps();
+        mainMenuPanel.SetActive(false);
+        mapSelectorPanel.SetActive(true);
+    }
+    public void BackToMainMenu()
+    {
+        mainMenuPanel.SetActive(true);
+        mapSelectorPanel.SetActive(false);
+        LoggedIn();
     }
     public void LoggedIn()
     {

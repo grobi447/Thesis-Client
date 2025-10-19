@@ -1,18 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 public class API : MonoBehaviour
 {
     private static string baseURL = "https://52.58.160.54/";
     [SerializeField] private MenuManager menuManager;
     [SerializeField] private NotificationManager notificationManager;
+    [SerializeField] private string mainMenuSceneName = "MainMenu";
+    private string pendingSuccessMessage;
+    public MapSelector mapSelector;
+    public List<Dictionary<string, object>> mapLoader = new List<Dictionary<string, object>>();
+
     private class AcceptAllCertificatesSignedWithASelfSignedCertificate : CertificateHandler
     {
         protected override bool ValidateCertificate(byte[] certificateData)
         {
             return true;
+        }
+    }
+
+    private void OnMainMenuLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (!string.Equals(scene.name, mainMenuSceneName)) return;
+
+        SceneManager.sceneLoaded -= OnMainMenuLoaded;
+
+        if (menuManager == null)
+        {
+            menuManager = FindObjectOfType<MenuManager>();
+        }
+        menuManager?.LoggedIn();
+
+        if (!string.IsNullOrEmpty(pendingSuccessMessage))
+        {
+            if (notificationManager == null)
+            {
+                notificationManager = FindObjectOfType<NotificationManager>();
+            }
+            notificationManager?.OnSuccessMessage(pendingSuccessMessage);
+            pendingSuccessMessage = null;
         }
     }
 
@@ -90,7 +120,7 @@ public class API : MonoBehaviour
     public IEnumerator CreateMapRequest(string mapId, string createdBy, string mapName, string data, byte[] image)
     {
         string url = $"{baseURL}map-creator/";
-        
+
         using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
         {
             List<IMultipartFormSection> formData = new List<IMultipartFormSection>
@@ -100,12 +130,12 @@ public class API : MonoBehaviour
                 new MultipartFormDataSection("map_name", mapName),
                 new MultipartFormDataSection("data", data)
             };
-            
+
             if (image != null && image.Length > 0)
             {
                 formData.Add(new MultipartFormFileSection("image", image, "map_image.png", "image/png"));
             }
-            
+
             byte[] boundary = UnityWebRequest.GenerateBoundary();
             request.uploadHandler = new UploadHandlerRaw(UnityWebRequest.SerializeFormSections(formData, boundary));
             request.downloadHandler = new DownloadHandlerBuffer();
@@ -113,16 +143,76 @@ public class API : MonoBehaviour
             request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
 
             yield return request.SendWebRequest();
-            
+
             MapResponse apiResponse = JsonUtility.FromJson<MapResponse>(request.downloadHandler.text);
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                notificationManager.OnSuccessMessage(apiResponse?.detail);
+                pendingSuccessMessage = apiResponse.detail;
+                SceneManager.sceneLoaded += OnMainMenuLoaded;
+                SceneManager.LoadScene(mainMenuSceneName);
             }
             else
             {
                 notificationManager.OnErrorMessage(apiResponse?.detail);
+            }
+        }
+    }
+
+    public void GetMaps()
+    {
+        StartCoroutine(GetMapsRequest());
+    }
+    
+    public IEnumerator GetMapsRequest()
+    {
+        string url = $"{baseURL}maps/";
+
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
+
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                MapsResponse response = JsonUtility.FromJson<MapsResponse>(request.downloadHandler.text);
+                List<Dictionary<string, object>> maps = new List<Dictionary<string, object>>();
+                foreach (MapData mapData in response.maps)
+                {
+                    Dictionary<string, object> mapDict = new Dictionary<string, object>
+                    {
+                        ["map_id"] = mapData.map_id,
+                        ["created_by"] = mapData.created_by,
+                        ["map_name"] = mapData.map_name,
+                        ["data"] = mapData.data
+                    };
+                    maps.Add(mapDict);
+                }
+                mapLoader = maps;
+            }
+        }
+    }
+
+    public void DownloadMapImage(string mapId)
+    {
+        StartCoroutine(DownloadMapImageRequest(mapId));
+    }
+
+    private IEnumerator DownloadMapImageRequest(string mapId)
+    {
+        string url = $"{baseURL}download/{mapId}";
+        
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
+            
+            yield return request.SendWebRequest();
+            
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                string imagePath = Application.dataPath + $"/Maps/{mapId}/{mapId}.png";
+                File.WriteAllBytes(imagePath, request.downloadHandler.data);
             }
         }
     }
@@ -146,14 +236,28 @@ public class API : MonoBehaviour
     {
         public string error;
         public string detail;
-        public Map mapdata;
+        public SingleMap mapdata;
     }
     [System.Serializable]
-    public class Map
+    public class SingleMap
     {
         public string mapId;
         public string createdBy;
         public string mapName;
         public string data;
+    }
+
+    [System.Serializable]
+    public class MapsResponse
+    {
+        public MapData[] maps;
+    }
+    [System.Serializable]
+    public class MapData
+    {
+        public string map_id;
+        public string created_by;
+        public string map_name;
+        public Map data;
     }
 }

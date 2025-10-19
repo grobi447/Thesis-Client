@@ -459,26 +459,34 @@ public class GridManager : MonoBehaviour
     {
         string sky = uiHandler.sky.GetComponent<Image>().sprite.name;
         Map map = new Map(tiles, rails, sky);
-        string id = Guid.NewGuid().ToString();
+        string mapId = Guid.NewGuid().ToString();
         var jsonSettings = new JsonSerializerSettings
         {
             NullValueHandling = NullValueHandling.Ignore
         };
         string json = JsonConvert.SerializeObject(map, Formatting.Indented, jsonSettings);
 
+        API.MapData mapData = new API.MapData
+        {
+            map_id = mapId,
+            created_by = UserManager.Instance.username,
+            map_name = mapName,
+            data = map
+        };
+
         if (!File.Exists(Application.dataPath + "/Maps"))
         {
             Directory.CreateDirectory(Application.dataPath + "/Maps");
         }
-        if (!File.Exists(Application.dataPath + $"/Maps/{id}/"))
+        if (!File.Exists(Application.dataPath + $"/Maps/{mapId}/"))
         {
-            Directory.CreateDirectory(Application.dataPath + $"/Maps/{id}/");
+            Directory.CreateDirectory(Application.dataPath + $"/Maps/{mapId}/");
         }
-        string path = Application.dataPath + $"/Maps/{id}/{id}";
-        File.WriteAllText(path + ".json", json);
-        ScreenshotHandler.TakeScreenshot_Static(1920, 1080, path, () => {
-            byte[] imageBytes = File.ReadAllBytes(path + ".png");
-            api.CreateMap(id, UserManager.Instance.username, mapName, json, imageBytes);
+        string path = Application.dataPath + $"/Maps/{mapId}/{mapId}";
+        File.WriteAllText(path + ".json", JsonConvert.SerializeObject(mapData, Formatting.Indented, jsonSettings));
+        ScreenshotHandler.TakeScreenshot_Static(1920, 1080, path , () =>
+        {
+            api.CreateMap(mapId, UserManager.Instance.username, mapName, json, File.ReadAllBytes(path + ".png"));
         });
     }
 }

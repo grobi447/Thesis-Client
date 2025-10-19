@@ -278,9 +278,7 @@ public class UiHandler : MonoBehaviour
             notificationManager.OnErrorMessage("Map name is empty!");
             return;
         }
-        //todo: check if map name already exists
         gridManager.CreateMap(mapNameInput.text);
-        notificationManager.OnSuccessMessage("Map saved successfully!");
         }
     }
 }
