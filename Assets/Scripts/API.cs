@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -14,7 +16,7 @@ public class API : MonoBehaviour
     private string pendingSuccessMessage;
     public MapSelector mapSelector;
     public List<Dictionary<string, object>> mapLoader = new List<Dictionary<string, object>>();
-
+    public Leaderboard[] leaderboard;
     private class AcceptAllCertificatesSignedWithASelfSignedCertificate : CertificateHandler
     {
         protected override bool ValidateCertificate(byte[] certificateData)
@@ -163,7 +165,7 @@ public class API : MonoBehaviour
     {
         StartCoroutine(GetMapsRequest());
     }
-    
+
     public IEnumerator GetMapsRequest()
     {
         string url = $"{baseURL}maps/";
@@ -202,18 +204,42 @@ public class API : MonoBehaviour
     private IEnumerator DownloadMapImageRequest(string mapId)
     {
         string url = $"{baseURL}download/{mapId}";
-        
+
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
-            
+
             yield return request.SendWebRequest();
-            
+
             if (request.result == UnityWebRequest.Result.Success)
             {
                 string imagePath = Application.dataPath + $"/Maps/{mapId}/{mapId}.png";
                 File.WriteAllBytes(imagePath, request.downloadHandler.data);
             }
+        }
+    }
+
+    public void GetLeaderboard(string mapId)
+    {
+        StartCoroutine(GetLeaderboardRequest(mapId));
+    }
+
+    public IEnumerator GetLeaderboardRequest(string mapId)
+    {
+        string url = $"{baseURL}leaderboard/{mapId}";
+
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
+
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                LeaderboardResponse response = JsonConvert.DeserializeObject<LeaderboardResponse>(request.downloadHandler.text);
+                leaderboard = response?.leaderboard;
+            }
+
         }
     }
 
@@ -259,5 +285,19 @@ public class API : MonoBehaviour
         public string created_by;
         public string map_name;
         public Map data;
+    }
+
+    [System.Serializable]
+    public class Leaderboard
+    {
+        public string map_id;
+        public string user;
+        public int? current_deaths;
+        public int? leaderboard_deaths;
+    }
+
+    public class LeaderboardResponse
+    {
+        public Leaderboard[] leaderboard;
     }
 }

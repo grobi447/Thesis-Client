@@ -6,13 +6,24 @@ using Microsoft.Unity.VisualStudio.Editor;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using System.Linq;
 
 public class MapSelector : MonoBehaviour
 {
     public List<string> installedMaps = new List<string>();
+    public List<GameObject> mapItems = new List<GameObject>();
+    public List<GameObject> LeaderboardLines = new List<GameObject>();
+    public string activeMapId;
     public GameObject mapPrefab;
+    public GameObject linePrefab;
     public API api;
     public GameObject contentPanel;
+    public GameObject leaderboardContentPanel;
+
+    public GameObject leaderboardPanel;
+    public GameObject loadingPanel;
+    public GameObject loadedPanel;
 
     public void LoadMaps()
     {
@@ -34,9 +45,14 @@ public class MapSelector : MonoBehaviour
                 {
                     installedMaps.Add(mapId);
                     GameObject mapItem = Instantiate(mapPrefab, contentPanel.transform);
+                    mapItem.GetComponent<MapItem>().Initialize(
+                        mapId,
+                        JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataPath))["map_name"].ToString(),
+                        JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataPath))["created_by"].ToString()
+                    );
                     mapItem.name = mapId;
                     mapItem.transform.SetParent(contentPanel.transform, false);
-                    UpdatePreviewImage(mapItem);
+                    SetupMapItem(mapItem, JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataPath)));
                 }
             }
         }
@@ -51,15 +67,18 @@ public class MapSelector : MonoBehaviour
     {
         foreach (Dictionary<string, object> mapData in api.mapLoader)
         {
-            Debug.Log(mapData["map_id"].ToString());
-            Debug.Log(installedMaps.Count);
             if (!installedMaps.Contains(mapData["map_id"].ToString()))
             {
                 installedMaps.Add(mapData["map_id"].ToString());
                 GameObject mapItem = Instantiate(mapPrefab, contentPanel.transform);
-                mapItem.name =  mapData["map_id"].ToString();
+                mapItem.GetComponent<MapItem>().Initialize(
+                    mapData["map_id"].ToString(),
+                    mapData["map_name"].ToString(),
+                    mapData["created_by"].ToString()
+                );
+                mapItem.name = mapData["map_id"].ToString();
                 mapItem.transform.SetParent(contentPanel.transform, false);
-                string mapsPath = Application.dataPath + "/Maps/";      
+                string mapsPath = Application.dataPath + "/Maps/";
                 string mapId = mapData["map_id"].ToString();
                 string mapDir = Path.Combine(mapsPath, mapId);
                 if (!Directory.Exists(mapDir))
@@ -70,9 +89,20 @@ public class MapSelector : MonoBehaviour
                 string jsonData = JsonConvert.SerializeObject(mapData, Formatting.Indented);
                 File.WriteAllText(dataPath, jsonData);
                 api.DownloadMapImage(mapId);
-                UpdatePreviewImage(mapItem);
+                SetupMapItem(mapItem, mapData);
             }
         }
+    }
+    
+    public void SetupMapItem(GameObject mapItem, Dictionary<string, object> mapData)
+    {
+        UpdatePreviewImage(mapItem);
+        mapItems.Add(mapItem);
+        GameObject loaded = mapItem.transform.Find("Loaded").gameObject;
+        TextMeshProUGUI mapNameText = loaded.transform.Find("title").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI creatorText = loaded.transform.Find("user").GetComponent<TextMeshProUGUI>();
+        mapNameText.text = mapData["map_name"].ToString();
+        creatorText.text = "By: " + mapData["created_by"].ToString();
     }
 
     public void UpdatePreviewImage(GameObject mapItem)
@@ -139,6 +169,67 @@ public class MapSelector : MonoBehaviour
         {
             loading.SetActive(true);
             loaded.SetActive(false);
+        }
+    }
+
+    public void UpdateActiveMap(string mapId)
+    {
+        activeMapId = mapId;
+        foreach (GameObject mapItem in mapItems)
+        {
+            GameObject loaded = mapItem.transform.Find("Loaded").gameObject;
+            GameObject activeIndicator = loaded.transform.Find("ActivatedBorder").gameObject;
+            if (mapItem.name == mapId)
+            {
+                activeIndicator.SetActive(true);
+            }
+            else
+            {
+                activeIndicator.SetActive(false);
+            }
+
+        }
+        leaderboardPanel.SetActive(true);
+        StartCoroutine(UpdateLeaderboardAndDisplay());
+    }
+
+    private IEnumerator UpdateLeaderboardAndDisplay()
+    {
+        loadingPanel.SetActive(true);
+        loadedPanel.SetActive(false);
+
+        yield return StartCoroutine(api.GetLeaderboardRequest(activeMapId));
+
+        SortAndDisplayLeaderboard();
+    }
+
+    public void SortAndDisplayLeaderboard()
+    {
+        foreach (GameObject line in LeaderboardLines)
+        {
+            Destroy(line);
+        }
+        LeaderboardLines.Clear();
+
+        if (api.leaderboard != null)
+        {
+            API.Leaderboard[] sortedList = api.leaderboard
+                .Where(e => e.leaderboard_deaths != null)
+                .OrderBy(e => e.leaderboard_deaths)
+                .ToArray();
+            foreach (API.Leaderboard entry in sortedList)
+            {
+                GameObject line = Instantiate(linePrefab, leaderboardContentPanel.transform);
+                GameObject textObj = line.transform.Find("User").gameObject;
+                GameObject deathObj = line.transform.Find("Death").gameObject;
+                TextMeshProUGUI userText = textObj.GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI deathText = deathObj.GetComponent<TextMeshProUGUI>();
+                userText.text = entry.user;
+                deathText.text = entry.leaderboard_deaths.ToString();
+                LeaderboardLines.Add(line);
+            }
+            loadingPanel.SetActive(false);
+            loadedPanel.SetActive(true);
         }
     }
 }
