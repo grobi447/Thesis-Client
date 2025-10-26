@@ -12,6 +12,12 @@ public class Map
     public List<TileWrapper> tiles;
     public List<RailWrapper> rails;
 
+    public Map()
+    {
+        tiles = new List<TileWrapper>();
+        rails = new List<RailWrapper>();
+    }
+
     public Map(Dictionary<Vector3, Tile> tiles, List<Rail> rails, string skybox)
     {
         this.tiles = tiles
@@ -30,7 +36,12 @@ public class TileWrapper
 {
     public Vec3 position;
     public JsonSpriteData tile;
+    [SerializeReference]
     public object trapSettings;
+
+    public TileWrapper()
+    {
+    }
 
     public TileWrapper(Vector3 position, Tile tile)
     {
@@ -67,6 +78,11 @@ public class RailWrapper
 {
     public Vec3 position;
     public RailBitmapType type;
+
+    public RailWrapper()
+    {
+    }
+
     public RailWrapper(Vector3 position, Rail rail)
     {
         this.position = new Vec3(position);
@@ -96,6 +112,10 @@ public class JsonSpriteData
     public SpriteType type;
     public TrapType trapType;
 
+    public JsonSpriteData()
+    {
+    }
+
     public JsonSpriteData(SpriteData data)
     {
         if (data == null)
@@ -118,6 +138,10 @@ public class AxeSettings
     public AxeDirection axeDirection;
     public float speed;
 
+    public AxeSettings()
+    {
+    }
+
     public AxeSettings(Axe axe)
     {
         this.axeMovement = axe.axeMovement;
@@ -132,6 +156,11 @@ public class BladeSettings
     public float crushTime;
     public float upTime;
     public float reload;
+
+    public BladeSettings()
+    {
+    }
+
     public BladeSettings(Blade blade)
     {
         this.crushTime = blade.settings["crushTime"];
@@ -147,6 +176,10 @@ public class CanonSettings
     public float fireRate;
     public float projectileSpeed;
 
+    public CanonSettings()
+    {
+    }
+
     public CanonSettings(Canon canon)
     {
         this.canonType = canon.canonType;
@@ -160,6 +193,10 @@ public class SawSettings
 {
     public float speed;
 
+    public SawSettings()
+    {
+    }
+
     public SawSettings(Saw saw)
     {
         this.speed = saw.speed;
@@ -172,6 +209,10 @@ public class SpikeSettings
     public float startTime;
     public float onTime;
     public float offTime;
+
+    public SpikeSettings()
+    {
+    }
 
     public SpikeSettings(Spike spike)
     {

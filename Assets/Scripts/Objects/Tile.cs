@@ -170,7 +170,7 @@ public class Tile : MonoBehaviour
             }
             if (selectedTile.type == SpriteType.Spawn && uiHandler.GetCurrentTool() == Tool.Brush)
             {
-                HandleSpawmHover();
+                HandleSpawnHover();
                 return;
             }
             if (selectedTile.type == SpriteType.Finish && uiHandler.GetCurrentTool() == Tool.Brush)
@@ -305,7 +305,7 @@ public class Tile : MonoBehaviour
     {
         tileRenderer.color = new Color(1, 1, 1, 0.7f);
     }
-    public void HandleSpawmHover()
+    public void HandleSpawnHover()
     {
         canPlace = this.SpriteData == null && !gridManager.IsSpawnSet() && gridManager.HasBlockNeighbor(this, Vector3.down);
         if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);

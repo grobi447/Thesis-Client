@@ -178,7 +178,7 @@ public class API : MonoBehaviour
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                MapsResponse response = JsonUtility.FromJson<MapsResponse>(request.downloadHandler.text);
+                MapsResponse response = JsonConvert.DeserializeObject<MapsResponse>(request.downloadHandler.text);
                 List<Dictionary<string, object>> maps = new List<Dictionary<string, object>>();
                 foreach (MapData mapData in response.maps)
                 {
@@ -239,7 +239,9 @@ public class API : MonoBehaviour
                 LeaderboardResponse response = JsonConvert.DeserializeObject<LeaderboardResponse>(request.downloadHandler.text);
                 leaderboard = response?.leaderboard;
             }
-
+            else { 
+                leaderboard = new Leaderboard[0];
+            }
         }
     }
 

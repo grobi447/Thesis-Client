@@ -36,23 +36,25 @@ public class MapSelector : MonoBehaviour
         string mapsPath = Application.dataPath + "/Maps/";
         if (Directory.Exists(mapsPath))
         {
-            string[] mapDirectories = Directory.GetDirectories(mapsPath);
-            foreach (string dir in mapDirectories)
+            foreach (string mapIdOrder in api.mapLoader.Select(m => m["map_id"].ToString()))
             {
-                string mapId = Path.GetFileName(dir);
-                string dataPath = Path.Combine(dir, $"{mapId}.json");
-                if (File.Exists(dataPath) && !installedMaps.Contains(mapId))
+                if (!installedMaps.Contains(mapIdOrder))
                 {
-                    installedMaps.Add(mapId);
-                    GameObject mapItem = Instantiate(mapPrefab, contentPanel.transform);
-                    mapItem.GetComponent<MapItem>().Initialize(
-                        mapId,
-                        JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataPath))["map_name"].ToString(),
-                        JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataPath))["created_by"].ToString()
-                    );
-                    mapItem.name = mapId;
-                    mapItem.transform.SetParent(contentPanel.transform, false);
-                    SetupMapItem(mapItem, JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataPath)));
+                    string dir = Path.Combine(mapsPath, mapIdOrder);
+                    string dataPath = Path.Combine(dir, $"{mapIdOrder}.json");
+                    if (File.Exists(dataPath))
+                    {
+                        installedMaps.Add(mapIdOrder);
+                        GameObject mapItem = Instantiate(mapPrefab, contentPanel.transform);
+                        mapItem.GetComponent<MapItem>().Initialize(
+                            mapIdOrder,
+                            JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataPath))["map_name"].ToString(),
+                            JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataPath))["created_by"].ToString()
+                        );
+                        mapItem.name = mapIdOrder;
+                        mapItem.transform.SetParent(contentPanel.transform, false);
+                        SetupMapItem(mapItem, JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataPath)));
+                    }
                 }
             }
         }
@@ -175,6 +177,8 @@ public class MapSelector : MonoBehaviour
     public void UpdateActiveMap(string mapId)
     {
         activeMapId = mapId;
+        int activeMapIdIndex = installedMaps.IndexOf(activeMapId);
+        MapManager.Instance.SetMapHandler(activeMapId, activeMapIdIndex + 1 < installedMaps.Count ? installedMaps[activeMapIdIndex + 1] : null);
         foreach (GameObject mapItem in mapItems)
         {
             GameObject loaded = mapItem.transform.Find("Loaded").gameObject;
@@ -231,5 +235,9 @@ public class MapSelector : MonoBehaviour
             loadingPanel.SetActive(false);
             loadedPanel.SetActive(true);
         }
+    }
+
+    public void OnPlay(){
+        UnityEngine.SceneManagement.SceneManager.LoadScene("InGame");
     }
 }

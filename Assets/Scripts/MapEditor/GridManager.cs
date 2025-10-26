@@ -187,6 +187,11 @@ public class GridManager : MonoBehaviour
     public bool HasBlockNeighbor(Tile tile, Vector3 direction)
     {
         Vector3 neighborPos = tile.transform.position + direction;
+        neighborPos = new Vector3(
+            Mathf.Round(neighborPos.x),
+            Mathf.Round(neighborPos.y),
+            Mathf.Round(neighborPos.z)
+        );
         if (tiles.TryGetValue(neighborPos, out Tile neighborTile)
             && neighborTile.SpriteData != null && neighborTile.SpriteData.type == SpriteType.Block)
             return true;
