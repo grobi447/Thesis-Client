@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.Unity.VisualStudio.Editor;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UI;

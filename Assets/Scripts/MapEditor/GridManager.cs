@@ -271,7 +271,7 @@ public class GridManager : MonoBehaviour
         if (rails.Any(r => r.transform.position == position))
             return;
 
-        Transform parent = gridParent.GetChild((int)position.z);
+        Transform parent = gridParent.Find($"Layer {position.z}");
         Rail newRail = Instantiate(railPrefab, position, Quaternion.identity, parent);
         newRail.name = $"Rail {position.x} {position.y} {position.z}";
         newRail.TileRenderer.sortingOrder = 1;
@@ -325,12 +325,16 @@ public class GridManager : MonoBehaviour
         {
             allTraps.Remove(trap);
             activeTraps.Remove(trap);
-            trap.transform.rotation = Quaternion.Euler(0, 0, 0);
             if (trap is Saw saw)
             {
                 saw.ResetToSpawn();
             }
-            ReplaceToTile(null, trap.transform.position);
+            Vector3 roundedPosition = new Vector3(
+                Mathf.Round(trap.transform.position.x),
+                Mathf.Round(trap.transform.position.y),
+                Mathf.Round(trap.transform.position.z)
+            );
+            ReplaceToTile(null, roundedPosition);
         }
     }
     private void LockRails(Vector3 position, bool locking)
@@ -348,6 +352,7 @@ public class GridManager : MonoBehaviour
         rails.ForEach(r =>
         {
             if (r == null) return;
+            // Only lock lines and corners, NOT end pieces (ToEnd) or Center
             if (r.currentType == RailBitmapType.BottomToTop || r.currentType == RailBitmapType.LeftToRight || r.currentType == RailBitmapType.BottomToRight || r.currentType == RailBitmapType.BottomToLeft || r.currentType == RailBitmapType.TopToRight || r.currentType == RailBitmapType.LeftToUp)
             {
                 if (!locking)

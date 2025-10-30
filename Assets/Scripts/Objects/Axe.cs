@@ -32,9 +32,16 @@ public class Axe : Trap
 
     void Start()
     {
-        axeMovement = gridManager.currentAxeMovement;
-        axeDirection = gridManager.currentAxeDirection;
-        SetDirection(axeDirection);
+        if (!inGame)
+        {
+            axeMovement = gridManager.currentAxeMovement;
+            axeDirection = gridManager.currentAxeDirection;
+            SetDirection(axeDirection);
+        }
+        else
+        {
+            SetDirection(axeDirection);
+        }
     }
 
     void Update()

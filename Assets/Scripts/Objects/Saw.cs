@@ -42,17 +42,34 @@ public class Saw : Trap
     public void StartMoving()
     {
         spawnPoint = transform.position;
-        currentRail = gridManager.GetRailAtPosition(transform.position);
+        currentRail = GetRailAtPosition(transform.position);
         if (currentRail != null)
         {
             FindNextTarget();
         }
     }
 
+    private Rail GetRailAtPosition(Vector3 position)
+    {
+        if (gridManager != null)
+        {
+            return gridManager.GetRailAtPosition(position);
+        }
+        else
+        {
+            MapLoader mapLoader = FindObjectOfType<MapLoader>();
+            if (mapLoader != null)
+            {
+                return mapLoader.GetRailAtPosition(position);
+            }
+        }
+        return null;
+    }
+
     public void ResetToSpawn()
     {
         transform.position = spawnPoint;
-        currentRail = gridManager.GetRailAtPosition(spawnPoint);
+        currentRail = GetRailAtPosition(spawnPoint);
         isMoving = false;
         currentDirection = Vector3.right;
     }
@@ -69,7 +86,7 @@ public class Saw : Trap
         {
             Vector3 reverseDir = opposite;
             targetPosition = transform.position + reverseDir;
-            if (gridManager.GetRailAtPosition(targetPosition) != null)
+            if (GetRailAtPosition(targetPosition) != null)
             {
                 currentDirection = reverseDir;
                 isMoving = true;
@@ -83,7 +100,7 @@ public class Saw : Trap
 
         Vector3 nextDir = connected[0];
         targetPosition = transform.position + nextDir;
-        if (gridManager.GetRailAtPosition(targetPosition) != null)
+        if (GetRailAtPosition(targetPosition) != null)
         {
             currentDirection = nextDir;
             isMoving = true;
@@ -96,7 +113,7 @@ public class Saw : Trap
 
     private void MoveTowardsTarget()
     {
-        if (gridManager.GetRailAtPosition(targetPosition) == null)
+        if (GetRailAtPosition(targetPosition) == null)
         {
             isMoving = false;
             return;
@@ -105,7 +122,7 @@ public class Saw : Trap
         if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
         {
             transform.position = targetPosition;
-            currentRail = gridManager.GetRailAtPosition(transform.position);
+            currentRail = GetRailAtPosition(transform.position);
             isMoving = false;
         }
     }

@@ -27,10 +27,17 @@ public class Blade : Trap
 
     void Update()
     {
-        bool currentlyBelow = IsMouseBelow();
-        if (canTrigger && currentlyBelow )
+        if (gridManager == null)
         {
-            StartCoroutine(Smash());
+            //handle ingamame player tracking
+        }
+        else
+        {
+            bool currentlyBelow = IsMouseBelow();
+            if (canTrigger && currentlyBelow)
+            {
+                StartCoroutine(Smash());
+            }
         }
     }
 

@@ -1,17 +1,38 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapLoader : MonoBehaviour
 {
     public API api;
     public API.MapData map;
+    public List<Tile> prefabs;
+    public List<Sprite> tileAssets;
+    public List<Sprite> skyAssets;
+    public List<Tile> tiles = new List<Tile>();
+    public List<Rail> rails = new List<Rail>();
+    public Transform tilesParent;
+    public Camera mainCamera;
+    public Image skyboxRenderer;
+
+    private Dictionary<string, Tile> prefabDict;
 
     void Awake()
     {
         LoadJSON();
+        prefabDict = new Dictionary<string, Tile>();
+        foreach (var prefab in prefabs)
+        {
+            if (prefab != null && !string.IsNullOrEmpty(prefab.name))
+            {
+                prefabDict[prefab.name] = prefab;
+            }
+        }
+        RenderMap();
     }
 
     private void LoadJSON() {
@@ -52,6 +73,263 @@ public class MapLoader : MonoBehaviour
                         break;
                 }
             }
+        }
+    }
+
+    private void RenderMap()
+    {
+        if (map == null || map.data == null)
+        {
+            return;
+        }
+
+        CreateParentStructure();
+        RenderRails();
+        RenderTiles();
+        InitializeSaws();
+        ApplySkybox();
+    }
+
+    private void InitializeSaws()
+    {
+        foreach (var tile in tiles)
+        {
+            if (tile is Saw saw)
+            {
+                saw.StartMoving();
+            }
+        }
+    }
+
+    private void CreateParentStructure()
+    {
+        if (tilesParent == null)
+        {
+            GameObject parentObj = new GameObject("Tiles");
+            tilesParent = parentObj.transform;
+        }
+
+        for (int z = 0; z < 2; z++)
+        {
+            GameObject layer = new GameObject($"Layer {z}");
+            layer.transform.parent = tilesParent;
+        }
+    }
+
+    private void RenderRails()
+    {
+        if (map.data.rails == null || map.data.rails.Count == 0) return;
+
+        Rail railPrefab = GetRailPrefab();
+        if (railPrefab == null)
+        {
+            return;
+        }
+
+        foreach (var railWrapper in map.data.rails)
+        {
+            Vector3 position = new Vector3(railWrapper.position.x, railWrapper.position.y, railWrapper.position.z);
+            Transform parent = tilesParent.Find($"Layer {(int)position.z}");
+
+            Rail newRail = Instantiate(railPrefab, position, Quaternion.identity, parent);
+            newRail.inGame = true;
+            newRail.name = $"Rail {position.x} {position.y} {position.z}";
+            newRail.TileRenderer.sortingOrder = 1;
+            newRail.SetSprite(railWrapper.type);
+            rails.Add(newRail);
+        }
+    }
+
+    private void RenderTiles()
+    {
+        if (map.data.tiles == null || map.data.tiles.Count == 0) return;
+
+        foreach (var tileWrapper in map.data.tiles)
+        {
+            if (tileWrapper == null || tileWrapper.tile == null) continue;
+
+            Vector3 position = new Vector3(tileWrapper.position.x, tileWrapper.position.y, tileWrapper.position.z);
+            Transform parent = tilesParent.Find($"Layer {(int)position.z}");
+
+            Tile newTile = CreateTile(tileWrapper, position, parent);
+            if (newTile != null)
+            {
+                tiles.Add(newTile);
+            }
+        }
+    }
+
+    private Tile CreateTile(TileWrapper tileWrapper, Vector3 position, Transform parent)
+    {
+        Tile tilePrefab = GetTilePrefab(tileWrapper.tile);
+        if (tilePrefab == null)
+        {
+            return null;
+        }
+
+        Tile newTile = Instantiate(tilePrefab, position, tilePrefab.transform.rotation, parent);
+        newTile.name = tileWrapper.tile.name;
+        newTile.position = position;
+        newTile.inGame = true;
+
+        Sprite tileSprite = GetSpriteByName(tileWrapper.tile.name);
+        if (tileSprite != null)
+        {
+            newTile.TileRenderer.sprite = tileSprite;
+        }
+
+        Color tileColor = newTile.TileRenderer.color;
+        if (newTile.position.z == 0)
+        {
+            tileColor.a = 0.5f;
+        }
+        else
+        {
+            tileColor.a = 1f;
+        }
+        newTile.TileRenderer.color = tileColor;
+
+        newTile.TileRenderer.sortingOrder = (int)position.z;
+
+        newTile.SpriteData = new SpriteData
+        {
+            name = tileWrapper.tile.name,
+            sprite = tileSprite,
+            type = tileWrapper.tile.type,
+            trapType = tileWrapper.tile.trapType
+        };
+        switch (tileWrapper.tile.type)
+        {
+            case SpriteType.Block:
+                newTile.gameObject.tag = "Block";
+                break;
+            case SpriteType.Trap:
+                newTile.gameObject.tag = "Trap";
+                break;
+            case SpriteType.Spawn:
+                newTile.gameObject.tag = "Spawn";
+                break;
+            case SpriteType.Finish:
+                newTile.gameObject.tag = "Finish";
+                break;
+        }
+
+        if (newTile is Trap trap && tileWrapper.trapSettings != null)
+        {
+            ConfigureTrap(trap, tileWrapper.trapSettings);
+        }
+
+        return newTile;
+    }
+
+    private Tile GetTilePrefab(JsonSpriteData tileData)
+    {
+        if (tileData.type == SpriteType.Trap)
+        {
+            string prefabName = tileData.name;
+            if (prefabDict.ContainsKey(prefabName))
+            {
+                return prefabDict[prefabName];
+            }
+        }
+
+        if (prefabDict.ContainsKey("Tile"))
+        {
+            return prefabDict["Tile"];
+        }
+
+        return null;
+    }
+
+    private Rail GetRailPrefab()
+    {
+        if (prefabDict.ContainsKey("Rail"))
+        {
+            return prefabDict["Rail"] as Rail;
+        }
+        return null;
+    }
+
+    private Sprite GetSpriteByName(string name)
+    {
+        return tileAssets.FirstOrDefault(s => s != null && s.name == name);
+    }
+
+    private void ConfigureTrap(Trap trap, object trapSettings)
+    {
+        switch (trap.trapType)
+        {
+            case TrapType.Spike:
+                if (trapSettings is SpikeSettings spikeSettings && trap is Spike spike)
+                {
+                    spike.settings["startTime"] = spikeSettings.startTime;
+                    spike.settings["onTime"] = spikeSettings.onTime;
+                    spike.settings["offTime"] = spikeSettings.offTime;
+                }
+                break;
+
+            case TrapType.Saw:
+                if (trapSettings is SawSettings sawSettings && trap is Saw saw)
+                {
+                    saw.speed = sawSettings.speed;
+                }
+                break;
+
+            case TrapType.Canon:
+                if (trapSettings is CanonSettings canonSettings && trap is Canon canon)
+                {
+                    canon.canonType = canonSettings.canonType;
+                    canon.fireRate = canonSettings.fireRate;
+                    canon.projectileSpeed = canonSettings.projectileSpeed;
+                }
+                break;
+
+            case TrapType.Axe:
+                if (trapSettings is AxeSettings axeSettings && trap is Axe axe)
+                {
+                    axe.axeMovement = axeSettings.axeMovement;
+                    axe.axeDirection = axeSettings.axeDirection;
+                    axe.speed = axeSettings.speed;
+                }
+                break;
+
+            case TrapType.Blade:
+                if (trapSettings is BladeSettings bladeSettings && trap is Blade blade)
+                {
+                    blade.settings["crushTime"] = bladeSettings.crushTime;
+                    blade.settings["upTime"] = bladeSettings.upTime;
+                    blade.settings["reload"] = bladeSettings.reload;
+                }
+                break;
+        }
+    }
+
+    public Rail GetRailAtPosition(Vector3 position)
+    {
+        return rails.FirstOrDefault(r => 
+            Mathf.Approximately(r.transform.position.x, position.x) && 
+            Mathf.Approximately(r.transform.position.y, position.y) &&
+            Mathf.Approximately(r.transform.position.z, position.z));
+    }
+
+    public bool HasTileAtPosition(Vector3 position)
+    {
+        Tile tile = tiles.FirstOrDefault(t =>
+            Mathf.Approximately(t.transform.position.x, position.x) &&
+            Mathf.Approximately(t.transform.position.y, position.y) &&
+            Mathf.Approximately(t.transform.position.z, position.z));
+        
+        return tile != null && tile.SpriteData != null && tile.SpriteData.type == SpriteType.Block;
+    }
+
+    private void ApplySkybox()
+    {
+        if (string.IsNullOrEmpty(map.data.skybox)) return;
+
+        Sprite skySprite = skyAssets.FirstOrDefault(s => s != null && s.name == map.data.skybox);
+        if (skySprite != null && skyboxRenderer != null)
+        {
+            skyboxRenderer.sprite = skySprite;
         }
     }
 }

@@ -32,7 +32,7 @@ public class Tile : MonoBehaviour
     public UiHandler uiHandler;
     public Vector3 position;
     public bool canPlace = true;
-
+    public bool inGame;
     private Color visibleColor = new Color(1, 1, 1, 1);
     private Color invisibleColor = new Color(1, 1, 1, 0);
 
@@ -56,59 +56,65 @@ public class Tile : MonoBehaviour
 
     public void OnMouseEnter()
     {
-        HandleHover();
+        if (!inGame) HandleHover();
     }
 
     public void OnMouseExit()
     {
-        tileRenderer.color = spriteData == null ? invisibleColor : visibleColor;
-        canPlace = true;
+        if (!inGame)
+        {
+            tileRenderer.color = spriteData == null ? invisibleColor : visibleColor;
+            canPlace = true;
+        }
     }
 
     public void OnMouseOver()
     {
-        View currentView = uiHandler.GetCurrentView();
-        if (canPlace && GridManager.isMouseDown && GridManager.hasSelectedSprite && currentView != View.Sky)
+        if (!inGame)
         {
-            SpriteData selectedData = gridManager.GetLastSelectedSprite(currentView);
-
-            if (uiHandler.GetCurrentTool() == Tool.Brush && selectedData != null)
+            View currentView = uiHandler.GetCurrentView();
+            if (canPlace && GridManager.isMouseDown && GridManager.hasSelectedSprite && currentView != View.Sky)
             {
-                if (selectedData.type != SpriteType.Block && selectedData.type != SpriteType.Spawn && selectedData.type != SpriteType.Finish && this.GetType() == typeof(Tile))
-                {
-                    gridManager.ReplaceToTrap(selectedData, position);
-                    return;
-                }
-                if ((selectedData.type == SpriteType.Block || selectedData.type == SpriteType.Spawn || selectedData.type == SpriteType.Finish) && this.GetType() != typeof(Tile) && this.GetType() != typeof(Rail))
-                {
-                    gridManager.ReplaceToTile(selectedData, position);
-                    return;
-                }
-                if (selectedData.type == SpriteType.Trap && this.GetType() != typeof(Tile))
-                {
-                    gridManager.ReplaceToTrap(selectedData, position);
-                    return;
-                }
-                spriteData = selectedData;
-                tileRenderer.sprite = spriteData.sprite;
-                gameObject.name = spriteData.name;
-                gameObject.tag = spriteData.type.ToString();
-            }
+                SpriteData selectedData = gridManager.GetLastSelectedSprite(currentView);
 
-            if (uiHandler.GetCurrentTool() == Tool.Rubber)
-            {
-                if (this is Rail)
+                if (uiHandler.GetCurrentTool() == Tool.Brush && selectedData != null)
                 {
-                    gridManager.destroyRail((Rail)this);
-                    return;
+                    if (selectedData.type != SpriteType.Block && selectedData.type != SpriteType.Spawn && selectedData.type != SpriteType.Finish && this.GetType() == typeof(Tile))
+                    {
+                        gridManager.ReplaceToTrap(selectedData, position);
+                        return;
+                    }
+                    if ((selectedData.type == SpriteType.Block || selectedData.type == SpriteType.Spawn || selectedData.type == SpriteType.Finish) && this.GetType() != typeof(Tile) && this.GetType() != typeof(Rail))
+                    {
+                        gridManager.ReplaceToTile(selectedData, position);
+                        return;
+                    }
+                    if (selectedData.type == SpriteType.Trap && this.GetType() != typeof(Tile))
+                    {
+                        gridManager.ReplaceToTrap(selectedData, position);
+                        return;
+                    }
+                    spriteData = selectedData;
+                    tileRenderer.sprite = spriteData.sprite;
+                    gameObject.name = spriteData.name;
+                    gameObject.tag = spriteData.type.ToString();
                 }
-                if (this is Trap)
+
+                if (uiHandler.GetCurrentTool() == Tool.Rubber)
                 {
-                    gridManager.destroyTrap((Trap)this);
-                    return;
+                    if (this is Rail)
+                    {
+                        gridManager.destroyRail((Rail)this);
+                        return;
+                    }
+                    if (this is Trap)
+                    {
+                        gridManager.destroyTrap((Trap)this);
+                        return;
+                    }
                 }
+                UseTool();
             }
-            UseTool();
         }
     }
 
