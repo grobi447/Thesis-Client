@@ -35,6 +35,7 @@ public class Tile : MonoBehaviour
     public bool inGame;
     private Color visibleColor = new Color(1, 1, 1, 1);
     private Color invisibleColor = new Color(1, 1, 1, 0);
+    private bool wasPaused = false;
 
     public SpriteRenderer TileRenderer
     {
@@ -54,14 +55,24 @@ public class Tile : MonoBehaviour
         this.position = position;
     }
 
+    void Update()
+    {
+        if (!inGame && PauseMenu.GameIsPaused && !wasPaused)
+        {
+            tileRenderer.color = spriteData == null ? invisibleColor : visibleColor;
+            canPlace = true;
+        }
+        wasPaused = PauseMenu.GameIsPaused;
+    }
+
     public void OnMouseEnter()
     {
-        if (!inGame) HandleHover();
+        if (!inGame && !PauseMenu.GameIsPaused) HandleHover();
     }
 
     public void OnMouseExit()
     {
-        if (!inGame)
+        if (!inGame && !PauseMenu.GameIsPaused)
         {
             tileRenderer.color = spriteData == null ? invisibleColor : visibleColor;
             canPlace = true;
@@ -70,7 +81,7 @@ public class Tile : MonoBehaviour
 
     public void OnMouseOver()
     {
-        if (!inGame)
+        if (!inGame && !PauseMenu.GameIsPaused)
         {
             View currentView = uiHandler.GetCurrentView();
             if (canPlace && GridManager.isMouseDown && GridManager.hasSelectedSprite && currentView != View.Sky)

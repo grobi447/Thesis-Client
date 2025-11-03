@@ -26,6 +26,8 @@ public class MenuManager : MonoBehaviour
     public GameObject loginSpinner;
     public API api;
     public MapSelector mapSelector;
+    public GameObject RegisterBackButton;
+    public GameObject LoginBackButton;
 
     public void Awake()
     {
@@ -93,14 +95,15 @@ public class MenuManager : MonoBehaviour
         if (registerSpinner != null)
             registerSpinner.SetActive(true);
             RegisterButton.gameObject.SetActive(false);
+            RegisterBackButton.SetActive(false);
         if (RegisterButton != null)
             RegisterButton.interactable = false;
-
         yield return api.RegisterRequest(username, password);
 
         if (registerSpinner != null)
             registerSpinner.SetActive(false);
             RegisterButton.gameObject.SetActive(true);
+            RegisterBackButton.SetActive(true);
         if (RegisterButton != null)
             RegisterButton.interactable = true;
     }
@@ -115,6 +118,7 @@ public class MenuManager : MonoBehaviour
         if (loginSpinner != null)
             loginSpinner.SetActive(true);
             LoginButton.gameObject.SetActive(false);
+            LoginBackButton.SetActive(false);
         if (LoginButton != null)
             LoginButton.interactable = false;
 
@@ -123,14 +127,20 @@ public class MenuManager : MonoBehaviour
         if (loginSpinner != null)
             loginSpinner.SetActive(false);
             LoginButton.gameObject.SetActive(true);
+            LoginBackButton.SetActive(true);
         if (LoginButton != null)
             LoginButton.interactable = true;
     }
 
 
-    
+
     public void OpenMapEdiorScene()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("MapEditor");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

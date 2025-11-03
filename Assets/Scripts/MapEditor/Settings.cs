@@ -50,11 +50,19 @@ public class Settings : MonoBehaviour
                     .Where(t => t.trapType == TrapType.Spike)
                     .Cast<Spike>();
 
+                var allSpikes = gridManager.allTraps
+                    .Where(t => t.trapType == TrapType.Spike)
+                    .Cast<Spike>();
+
                 foreach (var spike in spikes)
                 {
                     spike.settings["startTime"] = startValue;
                     spike.settings["onTime"] = onValue;
                     spike.settings["offTime"] = offValue;
+                    spike.RestartTimer();
+                }
+                foreach (var spike in allSpikes)
+                {
                     spike.RestartTimer();
                 }
             });

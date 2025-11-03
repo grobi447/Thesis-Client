@@ -125,6 +125,29 @@ public class GridManager : MonoBehaviour
 
     public int GetCurrentLayer() => currentLayer;
 
+    private IEnumerator SyncAllSpikes()
+    {
+        yield return null;
+        foreach (Spike spike in allTraps.Where(t => t is Spike))
+        {
+            spike.RestartTimer();
+        }
+    }
+
+    private IEnumerator SyncAllSaws()
+    {
+        yield return null;
+        
+        var allSaws = allTraps.Where(t => t is Saw).Cast<Saw>().ToList();
+        
+        foreach (Saw saw in allSaws)
+        {
+            saw.InitializeSpawn();
+            saw.ResetToSpawn();
+            saw.StartMoving();
+        }
+    }
+
     public void ReplaceToTrap(SpriteData trapData, Vector3 position)
     {
         if (tiles.TryGetValue(position, out Tile oldTile))
@@ -149,9 +172,13 @@ public class GridManager : MonoBehaviour
                 trapTile.tag = trapData.type.ToString();
                 tiles[position] = trapTile;
                 allTraps.Add((Trap)trapTile);
-                if (trapTile is Saw saw)
+                if (trapTile is Saw)
                 {
-                    saw.StartMoving();
+                    StartCoroutine(SyncAllSaws());
+                }
+                if (trapTile is Spike)
+                {
+                    StartCoroutine(SyncAllSpikes());
                 }
                 trapTile.UseTool();
             }
@@ -352,7 +379,6 @@ public class GridManager : MonoBehaviour
         rails.ForEach(r =>
         {
             if (r == null) return;
-            // Only lock lines and corners, NOT end pieces (ToEnd) or Center
             if (r.currentType == RailBitmapType.BottomToTop || r.currentType == RailBitmapType.LeftToRight || r.currentType == RailBitmapType.BottomToRight || r.currentType == RailBitmapType.BottomToLeft || r.currentType == RailBitmapType.TopToRight || r.currentType == RailBitmapType.LeftToUp)
             {
                 if (!locking)
@@ -494,6 +520,11 @@ public class GridManager : MonoBehaviour
         }
         string path = Application.dataPath + $"/Maps/{mapId}/{mapId}";
         File.WriteAllText(path + ".json", JsonConvert.SerializeObject(mapData, Formatting.Indented, jsonSettings));
+        foreach (var trap in activeTraps)
+        {
+            trap.isActive = false;
+            trap.SetBorder();
+        }
         ScreenshotHandler.TakeScreenshot_Static(1920, 1080, path , () =>
         {
             api.CreateMap(mapId, UserManager.Instance.username, mapName, json, File.ReadAllBytes(path + ".png"));

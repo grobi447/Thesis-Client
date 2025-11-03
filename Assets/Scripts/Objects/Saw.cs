@@ -16,13 +16,8 @@ public class Saw : Trap
     }
     void Update()
     {
-        this.transform.rotation = Quaternion.Euler(0, 0, this.transform.rotation.eulerAngles.z + 6f);
+        transform.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + 6f);
         border.transform.rotation = Quaternion.Euler(0, 0, 0);
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ResetToSpawn();
-        }
 
         if (isMoving)
         {
@@ -35,8 +30,8 @@ public class Saw : Trap
     }
     void Start()
     {
-        this.TileRenderer.sortingOrder = 2;
-        this.GetComponent<Collider2D>().layerOverridePriority = 1;
+        TileRenderer.sortingOrder = 2;
+        GetComponent<Collider2D>().layerOverridePriority = 1;
     }
 
     public void StartMoving()
@@ -46,6 +41,14 @@ public class Saw : Trap
         if (currentRail != null)
         {
             FindNextTarget();
+        }
+    }
+
+    public void InitializeSpawn()
+    {
+        if (spawnPoint == Vector3.zero)
+        {
+            spawnPoint = transform.position;
         }
     }
 

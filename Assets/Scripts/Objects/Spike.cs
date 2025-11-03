@@ -28,14 +28,6 @@ public class Spike : Trap
         animationCoroutine = StartCoroutine(PlayAnimationSequence());
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            RestartTimer();
-        }
-    }
-
     public void RestartTimer()
     {
         if (animationCoroutine != null)

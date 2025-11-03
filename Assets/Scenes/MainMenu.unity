@@ -4327,7 +4327,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 754659508}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1341314524}
+        m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &754659508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7330,6 +7342,8 @@ MonoBehaviour:
   loginSpinner: {fileID: 1997348705}
   api: {fileID: 314716263}
   mapSelector: {fileID: 1341314525}
+  RegisterBackButton: {fileID: 272558382}
+  LoginBackButton: {fileID: 1852879651}
 --- !u!114 &1341314525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7354,6 +7368,7 @@ MonoBehaviour:
   leaderboardPanel: {fileID: 1097078558}
   loadingPanel: {fileID: 273111276}
   loadedPanel: {fileID: 1274656685}
+  scrollbar: {fileID: 882607860}
 --- !u!1 &1352949861
 GameObject:
   m_ObjectHideFlags: 0
