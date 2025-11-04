@@ -14,6 +14,8 @@ public class Blade : Trap
     private Vector3 startPos;
     private Vector3 endPos;
     private bool canTrigger = true;
+    private Player player;
+    private MapLoader mapLoader;
 
     private void Awake()
     {
@@ -23,21 +25,27 @@ public class Blade : Trap
     void Start()
     {
         startPos = transform.position;
+        if(inGame) 
+        {
+            player = FindObjectOfType<Player>();
+            mapLoader = FindObjectOfType<MapLoader>();
+        }
     }
 
     void Update()
     {
-        if (gridManager == null)
+        bool currentlyBelow;
+        if (inGame)
         {
-            //handle ingamame player tracking
+            currentlyBelow = IsPlayerBelow();
         }
         else
         {
-            bool currentlyBelow = IsMouseBelow();
-            if (canTrigger && currentlyBelow)
-            {
-                StartCoroutine(Smash());
-            }
+            currentlyBelow = IsMouseBelow();
+        }
+        if (canTrigger && currentlyBelow)
+        {
+            StartCoroutine(Smash());
         }
     }
 
@@ -48,6 +56,22 @@ public class Blade : Trap
         return mousePos.y < bounds.min.y && mousePos.x >= bounds.min.x && mousePos.x <= bounds.max.x;
     }
 
+    private bool IsPlayerBelow()
+    {
+        Vector3 playerPos = player.transform.position;
+        Bounds bounds = TileRenderer.bounds;
+        Collider2D playerCollider = player.GetComponent<Collider2D>();
+        
+        if (playerCollider != null)
+        {
+            Bounds playerBounds = playerCollider.bounds;
+            bool horizontalOverlap = playerBounds.max.x > bounds.min.x && playerBounds.min.x < bounds.max.x;
+            bool isBelow = playerBounds.center.y < bounds.min.y;
+            return horizontalOverlap && isBelow;
+        }
+        
+        return playerPos.y < bounds.min.y && playerPos.x >= bounds.min.x && playerPos.x <= bounds.max.x;
+    }
     private IEnumerator Smash()
     {
         endPos = GetEndPosition();
@@ -78,10 +102,21 @@ public class Blade : Trap
         for (int y = (int)currentPos.y - 1; y >= 0; y--)
         {
             Vector3 checkPos = new Vector3(currentPos.x, y, currentPos.z);
-            Tile tile = gridManager.GetTileAtPosition(checkPos);
-            if (tile != null && tile.SpriteData != null && tile.SpriteData.type == SpriteType.Block)
+            
+            if (inGame && mapLoader != null)
             {
-                return new Vector3(currentPos.x, y + 1, currentPos.z);
+                if (mapLoader.HasTileAtPosition(checkPos))
+                {
+                    return new Vector3(currentPos.x, y + 1, currentPos.z);
+                }
+            }
+            else if (!inGame && gridManager != null)
+            {
+                Tile tile = gridManager.GetTileAtPosition(checkPos);
+                if (tile != null && tile.SpriteData != null && tile.SpriteData.type == SpriteType.Block)
+                {
+                    return new Vector3(currentPos.x, y + 1, currentPos.z);
+                }
             }
         }
         return new Vector3(currentPos.x, 0, currentPos.z);

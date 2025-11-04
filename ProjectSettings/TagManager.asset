@@ -7,11 +7,12 @@ TagManager:
   - Block
   - Trap
   - Spawn
+  - Bullet
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - 

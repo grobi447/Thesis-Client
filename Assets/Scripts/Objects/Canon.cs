@@ -29,6 +29,7 @@ public class Canon : Trap
     [SerializeField] float idleSpeed = 50f;
     public bool reloading = false;
     public bool targetingPlayer = false;
+    private Player player;
 
     void Awake()
     {
@@ -50,14 +51,18 @@ public class Canon : Trap
         {
             mapLoader = FindObjectOfType<MapLoader>();
         }
+        if(inGame)
+        {
+            player = FindObjectOfType<Player>();
+        }
         UpdateCanon();
     }
 
     void Update()
     {
-        if(inGame && targetingPlayer)
+        if(inGame && targetingPlayer && player != null)
         {
-            //aim at player
+            AimAtPlayer();
         }
         else if (!inGame && targetingPlayer)
         {
@@ -214,6 +219,40 @@ public class Canon : Trap
             targetLocalAngle = 0f;
 
         if (!IsLineBlocked(pivotPoint.position, mouseWorld) && targetLocalAngle >= minAimAngle && targetLocalAngle <= maxAimAngle)
+        {
+            pivotPoint.transform.localEulerAngles = new Vector3(0f, 0f, targetLocalAngle);
+            Fire();
+        }
+        else
+        {
+            IdleRotation();
+        }
+    }
+
+    private void AimAtPlayer()
+    {
+        Vector3 playerPivot;
+        if (player.isCrouching)
+        {
+            playerPivot = player.transform.position + new Vector3(0f, -0.35f, 0f);
+        }
+        else
+        {
+            playerPivot = player.transform.position;
+        }
+        Vector3 direction = playerPivot - pivotPoint.position;
+        float targetWorldAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        float baseAngle = 0f;
+        if (canonType == CanonType.Up) baseAngle = 90f;
+        else if (canonType == CanonType.Down) baseAngle = -90f;
+        else if (canonType == CanonType.Left) baseAngle = 180f;
+        else if (canonType == CanonType.Right) baseAngle = 0f;
+
+        float targetLocalAngle = Mathf.DeltaAngle(0f, targetWorldAngle - baseAngle);
+        if (float.IsNaN(targetLocalAngle) || float.IsInfinity(targetLocalAngle))
+            targetLocalAngle = 0f;
+        if (!IsLineBlocked(pivotPoint.position, playerPivot) && targetLocalAngle >= minAimAngle && targetLocalAngle <= maxAimAngle)
         {
             pivotPoint.transform.localEulerAngles = new Vector3(0f, 0f, targetLocalAngle);
             Fire();

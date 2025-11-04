@@ -175,6 +175,7 @@ public class CanonSettings
     public CanonType canonType;
     public float fireRate;
     public float projectileSpeed;
+    public bool targetingPlayer;
 
     public CanonSettings()
     {
@@ -185,6 +186,7 @@ public class CanonSettings
         this.canonType = canon.canonType;
         this.fireRate = canon.fireRate;
         this.projectileSpeed = canon.projectileSpeed;
+        this.targetingPlayer = canon.targetingPlayer;
     }
 }
 

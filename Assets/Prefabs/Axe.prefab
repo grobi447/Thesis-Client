@@ -417,7 +417,7 @@ GameObject:
   - component: {fileID: 6961762227959668751}
   m_Layer: 0
   m_Name: Axe
-  m_TagString: Untagged
+  m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -454,7 +454,9 @@ MonoBehaviour:
   emptySprite: {fileID: 21300000, guid: c3ec830027f137743be1434e039cdd2e, type: 3}
   gridManager: {fileID: 0}
   uiHandler: {fileID: 0}
+  position: {x: 0, y: 0, z: 0}
   canPlace: 1
+  inGame: 0
   trapType: 4
   isActive: 0
   border: {fileID: 6036875365712754833}

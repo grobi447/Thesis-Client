@@ -178,26 +178,6 @@ public class MapLoader : MonoBehaviour
             newTile.TileRenderer.sprite = tileSprite;
         }
 
-        Color tileColor = newTile.TileRenderer.color;
-        if (newTile.position.z == 0)
-        {
-            tileColor.a = 0.5f;
-        }
-        else
-        {
-            tileColor.a = 1f;
-        }
-        newTile.TileRenderer.color = tileColor;
-
-        newTile.TileRenderer.sortingOrder = (int)position.z;
-
-        newTile.SpriteData = new SpriteData
-        {
-            name = tileWrapper.tile.name,
-            sprite = tileSprite,
-            type = tileWrapper.tile.type,
-            trapType = tileWrapper.tile.trapType
-        };
         switch (tileWrapper.tile.type)
         {
             case SpriteType.Block:
@@ -213,6 +193,38 @@ public class MapLoader : MonoBehaviour
                 newTile.gameObject.tag = "Finish";
                 break;
         }
+
+        Color tileColor = newTile.TileRenderer.color;
+        if (newTile.position.z == 0)
+        {
+            tileColor.a = 0.5f;
+            newTile.GetComponent<Collider2D>().enabled = false;
+        }
+        else
+        {
+            tileColor.a = 1f;
+            if (newTile.gameObject.tag == "Spawn" || newTile.gameObject.tag == "Finish")
+            {
+                newTile.GetComponent<Collider2D>().isTrigger = true;
+                newTile.GetComponent<Collider2D>().enabled = true;
+            }
+            else
+            {
+                newTile.GetComponent<Collider2D>().isTrigger = false;
+                newTile.GetComponent<Collider2D>().enabled = true;
+            }
+        }
+        newTile.TileRenderer.color = tileColor;
+
+        newTile.TileRenderer.sortingOrder = (int)position.z;
+
+        newTile.SpriteData = new SpriteData
+        {
+            name = tileWrapper.tile.name,
+            sprite = tileSprite,
+            type = tileWrapper.tile.type,
+            trapType = tileWrapper.tile.trapType
+        };
 
         if (newTile is Trap trap && tileWrapper.trapSettings != null)
         {
@@ -262,6 +274,7 @@ public class MapLoader : MonoBehaviour
             case TrapType.Spike:
                 if (trapSettings is SpikeSettings spikeSettings && trap is Spike spike)
                 {
+                    spike.GetComponent<BoxCollider2D>().isTrigger = true;
                     spike.settings["startTime"] = spikeSettings.startTime;
                     spike.settings["onTime"] = spikeSettings.onTime;
                     spike.settings["offTime"] = spikeSettings.offTime;
@@ -271,6 +284,8 @@ public class MapLoader : MonoBehaviour
             case TrapType.Saw:
                 if (trapSettings is SawSettings sawSettings && trap is Saw saw)
                 {
+                    saw.GetComponent<BoxCollider2D>().enabled = false;
+                    saw.GetComponent<CircleCollider2D>().enabled = true;
                     saw.speed = sawSettings.speed;
                 }
                 break;
@@ -278,15 +293,20 @@ public class MapLoader : MonoBehaviour
             case TrapType.Canon:
                 if (trapSettings is CanonSettings canonSettings && trap is Canon canon)
                 {
+                    canon.GetComponent<BoxCollider2D>().enabled = false;
+                    canon.canonBody.GetComponent<BoxCollider2D>().enabled = true;
                     canon.canonType = canonSettings.canonType;
                     canon.fireRate = canonSettings.fireRate;
                     canon.projectileSpeed = canonSettings.projectileSpeed;
+                    canon.targetingPlayer = canonSettings.targetingPlayer;
                 }
                 break;
 
             case TrapType.Axe:
                 if (trapSettings is AxeSettings axeSettings && trap is Axe axe)
                 {
+                    axe.GetComponent<BoxCollider2D>().enabled = false;
+                    axe.GetComponent<CapsuleCollider2D>().enabled = true;
                     axe.axeMovement = axeSettings.axeMovement;
                     axe.axeDirection = axeSettings.axeDirection;
                     axe.speed = axeSettings.speed;
