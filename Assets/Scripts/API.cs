@@ -17,6 +17,7 @@ public class API : MonoBehaviour
     public MapSelector mapSelector;
     public List<Dictionary<string, object>> mapLoader = new List<Dictionary<string, object>>();
     public Leaderboard[] leaderboard;
+    public GameManager gameManager;
     private class AcceptAllCertificatesSignedWithASelfSignedCertificate : CertificateHandler
     {
         protected override bool ValidateCertificate(byte[] certificateData)
@@ -239,9 +240,113 @@ public class API : MonoBehaviour
                 LeaderboardResponse response = JsonConvert.DeserializeObject<LeaderboardResponse>(request.downloadHandler.text);
                 leaderboard = response?.leaderboard;
             }
-            else { 
+            else
+            {
                 leaderboard = new Leaderboard[0];
             }
+        }
+    }
+
+    public void GetUserLeaderboard(string mapId, string userId)
+    {
+        StartCoroutine(GetUserLeaderboardRequest(mapId, userId));
+    }
+
+    public IEnumerator GetUserLeaderboardRequest(string mapId, string userId)
+    {
+        string url = $"{baseURL}leaderboard/{mapId}/{userId}";
+
+
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
+
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                Leaderboard response = JsonConvert.DeserializeObject<Leaderboard>(request.downloadHandler.text);
+                gameManager.playerDeathCount = response.current_deaths ?? 0;
+                gameManager.playerLeaderboardCount = response.leaderboard_deaths;
+                gameManager.UpdateDeathCountUI(gameManager.playerDeathCount);
+
+            }
+            else
+            {
+                yield return CreateLeaderboardEntryRequest(mapId, userId);
+                yield return GetUserLeaderboardRequest(mapId, userId);
+            }
+        }
+    }
+
+    public void CreateLeaderboardEntry(string mapId, string userId)
+    {
+        StartCoroutine(CreateLeaderboardEntryRequest(mapId, userId));
+    }
+
+    public IEnumerator CreateLeaderboardEntryRequest(string mapId, string userId)
+    {
+        string url = $"{baseURL}leaderboard/";
+
+        string json = JsonConvert.SerializeObject(new Leaderboard { map_id = mapId, user = userId, current_deaths = null, leaderboard_deaths = null });
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "POST"))
+        {
+            byte[] bodyRaw = new System.Text.UTF8Encoding().GetBytes(json);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
+            yield return request.SendWebRequest();
+
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Error creating leaderboard entry: " + request.error);
+            }
+            else
+            {
+                Debug.Log("Successfully created leaderboard entry.");
+            }
+        }
+    }
+
+    public void UpdateLeaderboardCurrentDeath(string mapId, string userId, int? deaths)
+    {
+        StartCoroutine(UpdateLeaderboardCurrentDeathRequest(mapId, userId, deaths));
+    }
+
+    public IEnumerator UpdateLeaderboardCurrentDeathRequest(string mapId, string userId, int? deaths)
+    {
+        string url = deaths.HasValue 
+            ? $"{baseURL}leaderboard/current/{mapId}/{userId}?current_deaths={deaths.Value}"
+            : $"{baseURL}leaderboard/current/{mapId}/{userId}";
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "PATCH"))
+        {
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
+
+            yield return request.SendWebRequest();
+        }
+    }
+
+    public void UpdateLeaderboardLeaderboardDeath(string mapId, string userId, int? deaths)
+    {
+        StartCoroutine(UpdateLeaderboardLeaderboardDeathRequest(mapId, userId, deaths));
+    }
+
+    public IEnumerator UpdateLeaderboardLeaderboardDeathRequest(string mapId, string userId, int? deaths)
+    {
+        string url = deaths.HasValue 
+            ? $"{baseURL}leaderboard/leaderboard/{mapId}/{userId}?leaderboard_deaths={deaths.Value}"
+            : $"{baseURL}leaderboard/leaderboard/{mapId}/{userId}";
+
+        using (UnityWebRequest request = new UnityWebRequest(url, "PATCH"))
+        {
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
+
+            yield return request.SendWebRequest();
         }
     }
 

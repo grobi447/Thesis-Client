@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-#nullable enable
-
 public class MapManager
 {
-    private static MapManager? instance;
+    private static MapManager instance;
 
     public static MapManager Instance
     {
@@ -19,12 +17,12 @@ public class MapManager
         }
     }
 
-    public string? activeMapId;
-    public string? nextMapId;
+    public string activeMapId;
+    public List<string> installedMaps = new List<string>();
 
-    public void SetMapHandler(string activeMapId, string? nextMapId)
+    public void LoadNextMap()
     {
-        this.activeMapId = activeMapId;
-        this.nextMapId = nextMapId;
+        int activeMapIdIndex = installedMaps.IndexOf(activeMapId);
+        activeMapId = activeMapIdIndex + 1 < installedMaps.Count ? installedMaps[activeMapIdIndex + 1] : installedMaps[0];
     }
 }

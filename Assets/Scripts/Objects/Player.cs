@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
@@ -33,9 +35,20 @@ public class Player : MonoBehaviour
     public Animator animator;
     public BoxCollider2D boxCollider;
     public CapsuleCollider2D capsuleCollider;
-
+    private SpriteRenderer spriteRenderer;
+    private bool isDead = false;
+    private bool isFinished = false;
+    public GameManager gameManager;
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        gameManager = FindObjectOfType<GameManager>();
+    }
+    
     private void Update()
     {
+        if (isDead) return;
+        
         isCrouching = crouch != null && crouch.action.IsPressed();
         
         if (!isCrouching)
@@ -124,15 +137,27 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-
-        rb.velocity = new Vector2(movement.x * moveSpeed, rb.velocity.y);
+        if (!isDead)
+        {
+            rb.velocity = new Vector2(movement.x * moveSpeed, rb.velocity.y);
+        }
     }
 
     private void CheckGrounded()
     {
         wasGrounded = isGrounded;
         Vector2 checkPosition = groundCheck != null ? groundCheck.position : (Vector2)transform.position;
-        isGrounded = Physics2D.OverlapCircle(checkPosition, groundCheckRadius, groundLayer);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(checkPosition, groundCheckRadius, groundLayer);
+        
+        isGrounded = false;
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.CompareTag("Block"))
+            {
+                isGrounded = true;
+                break;
+            }
+        }
     }
 
     private void HandleJump()
@@ -193,10 +218,66 @@ public class Player : MonoBehaviour
         {
             Die();
         }
+
+        if (collision.CompareTag("Finish") && !isFinished)
+        {
+            isFinished = true;
+            gameManager.StartCoroutine(gameManager.FinishedLevelRoutine());
+        }
+
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Trap") && collision.collider.gameObject.name == "Blade")
+        {
+            Die();
+        }
     }
 
     private void Die()
     {
-        Debug.Log("Player died!");
+        StartCoroutine(DieCoroutine());
+    }
+
+    private IEnumerator DieCoroutine()
+    {
+        isDead = true;
+        movement = Vector2.zero;
+        rb.velocity = Vector2.zero;
+        capsuleCollider.enabled = false;
+        boxCollider.enabled = false;
+        jump.action.Disable();
+        move.action.Disable();
+        crouch.action.Disable();
+        rb.bodyType = RigidbodyType2D.Static;
+        animator.SetBool("IsJumping", false);
+        animator.SetBool("IsFalling", false);
+        animator.SetFloat("Speed", 0f);
+        animator.SetBool("IsCrouching", false);
+        animator.SetTrigger("Die");
+        
+        yield return new WaitForSeconds(1f);
+        spriteRenderer.enabled = false;
+        GameObject spawnPoint = GameObject.FindGameObjectWithTag("Spawn");
+        if (spawnPoint != null)
+        {
+            transform.position = spawnPoint.transform.position + new Vector3(0f, 0.5f, 0f);
+        }
+        gameManager.playerDeathCount++;
+        gameManager.UpdateDeathCountUI(gameManager.playerDeathCount);
+        gameManager.SaveDeathCount();
+        yield return new WaitForSeconds(1f);
+        
+        rb.bodyType = RigidbodyType2D.Dynamic;
+        
+        spriteRenderer.enabled = true;
+        animator.Rebind();
+        animator.Update(0f);
+        capsuleCollider.enabled = true;
+        boxCollider.enabled = true;
+        jump.action.Enable();
+        move.action.Enable();
+        crouch.action.Enable();
+        isDead = false;
     }
 }

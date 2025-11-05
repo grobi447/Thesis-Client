@@ -34,6 +34,7 @@ public class MapSelector : MonoBehaviour
     {
         LoadExistingMaps();
         LoadNewMaps();
+        MapManager.Instance.installedMaps = installedMaps;
     }   
 
     public void LoadExistingMaps()
@@ -182,8 +183,7 @@ public class MapSelector : MonoBehaviour
     public void UpdateActiveMap(string mapId)
     {
         activeMapId = mapId;
-        int activeMapIdIndex = installedMaps.IndexOf(activeMapId);
-        MapManager.Instance.SetMapHandler(activeMapId, activeMapIdIndex + 1 < installedMaps.Count ? installedMaps[activeMapIdIndex + 1] : null);
+        MapManager.Instance.activeMapId = activeMapId;
         foreach (GameObject mapItem in mapItems)
         {
             GameObject loaded = mapItem.transform.Find("Loaded").gameObject;
@@ -245,6 +245,7 @@ public class MapSelector : MonoBehaviour
     public void OnPlay(){
         if (!string.IsNullOrEmpty(activeMapId))
         {
+
             UnityEngine.SceneManagement.SceneManager.LoadScene("InGame");
         }
     }

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,7 +19,8 @@ public class MapLoader : MonoBehaviour
     public Transform tilesParent;
     public Camera mainCamera;
     public Image skyboxRenderer;
-
+    public TextMeshProUGUI mapnameText;
+    public TextMeshProUGUI creatorText;
     private Dictionary<string, Tile> prefabDict;
 
     void Awake()
@@ -33,6 +35,7 @@ public class MapLoader : MonoBehaviour
             }
         }
         RenderMap();
+        
     }
 
     private void LoadJSON() {
@@ -46,7 +49,8 @@ public class MapLoader : MonoBehaviour
         };
 
         map = JsonConvert.DeserializeObject<API.MapData>(jsonContent, jsonSettings);
-
+        mapnameText.text = map.map_name;
+        creatorText.text = $"Created by: {map.created_by}";
         foreach (var tileWrapper in map.data.tiles)
         {
             if (tileWrapper == null || tileWrapper.tile == null) continue;

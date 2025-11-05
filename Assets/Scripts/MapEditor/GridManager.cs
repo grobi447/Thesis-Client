@@ -47,6 +47,7 @@ public class GridManager : MonoBehaviour
         trapPrefabDict = new Dictionary<string, Tile>();
         foreach (var prefab in trapTilePrefabs)
             trapPrefabDict.Add(prefab.name, prefab);
+        PauseMenu.GameIsPaused = false;
     }
 
     private void Start()

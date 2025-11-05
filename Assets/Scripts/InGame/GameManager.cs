@@ -1,18 +1,28 @@
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
+    public API api;
     public GameObject playerPrefab;
-    private GameObject player;
-
+    private Player player;
+    public int playerDeathCount;
+    public int? playerLeaderboardCount;
+    public  TextMeshProUGUI deathCountText; 
     void Awake()
     {
+        PauseMenu.GameIsPaused = false;
         if (playerPrefab != null)
         {
-            player = Instantiate(playerPrefab);
+            player = Instantiate(playerPrefab).GetComponent<Player>();
         }
+        api = FindObjectOfType<API>();
+        api.GetUserLeaderboard(MapManager.Instance.activeMapId, UserManager.Instance.username);
+
     }
 
     void Start()
@@ -26,4 +36,27 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+
+    public void UpdateDeathCountUI(int deathCount)
+    {
+        deathCountText.text = deathCount.ToString();
+    }
+
+    public IEnumerator FinishedLevelRoutine()
+    {
+        if (playerDeathCount < playerLeaderboardCount || playerLeaderboardCount == null)
+        {
+            yield return api.UpdateLeaderboardLeaderboardDeathRequest(MapManager.Instance.activeMapId, UserManager.Instance.username, playerDeathCount);
+        }
+        
+        yield return api.UpdateLeaderboardCurrentDeathRequest(MapManager.Instance.activeMapId, UserManager.Instance.username, null);
+
+        MapManager.Instance.LoadNextMap();
+        SceneController.Instance.LoadScene();
+    }
+
+    public void SaveDeathCount()
+    {
+        api.UpdateLeaderboardCurrentDeath(MapManager.Instance.activeMapId, UserManager.Instance.username, playerDeathCount);
+    }
 }
