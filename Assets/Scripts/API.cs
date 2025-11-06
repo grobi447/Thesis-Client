@@ -298,15 +298,6 @@ public class API : MonoBehaviour
             request.SetRequestHeader("Content-Type", "application/json");
             request.certificateHandler = new AcceptAllCertificatesSignedWithASelfSignedCertificate();
             yield return request.SendWebRequest();
-
-            if (request.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError("Error creating leaderboard entry: " + request.error);
-            }
-            else
-            {
-                Debug.Log("Successfully created leaderboard entry.");
-            }
         }
     }
 

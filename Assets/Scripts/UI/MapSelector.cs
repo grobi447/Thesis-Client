@@ -25,11 +25,6 @@ public class MapSelector : MonoBehaviour
     public GameObject loadedPanel;
     public Scrollbar scrollbar;
 
-    public void Start()
-    {
-        scrollbar.value = 1;
-    }
-
     public void LoadMaps()
     {
         LoadExistingMaps();
@@ -245,8 +240,7 @@ public class MapSelector : MonoBehaviour
     public void OnPlay(){
         if (!string.IsNullOrEmpty(activeMapId))
         {
-
-            UnityEngine.SceneManagement.SceneManager.LoadScene("InGame");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("InGame");
         }
     }
 }

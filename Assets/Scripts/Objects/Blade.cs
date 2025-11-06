@@ -16,6 +16,7 @@ public class Blade : Trap
     private bool canTrigger = true;
     private Player player;
     private MapLoader mapLoader;
+    public BoxCollider2D tileBoxCollider;
 
     private void Awake()
     {
@@ -79,6 +80,7 @@ public class Blade : Trap
         float elapsed = 0f;
         while (elapsed < settings["crushTime"])
         {
+            GetComponent<EdgeCollider2D>().enabled = true;
             transform.position = Vector3.Lerp(startPos, endPos, elapsed / settings["crushTime"]);
             elapsed += Time.deltaTime;
             yield return null;
@@ -87,6 +89,7 @@ public class Blade : Trap
         elapsed = 0f;
         while (elapsed < settings["upTime"])
         {
+            GetComponent<EdgeCollider2D>().enabled = false;
             transform.position = Vector3.Lerp(endPos, startPos, elapsed / settings["upTime"]);
             elapsed += Time.deltaTime;
             yield return null;

@@ -50,8 +50,8 @@ public class UiHandler : MonoBehaviour
     [SerializeField] private GameObject savePanel;
     [SerializeField] private TMPro.TMP_InputField mapNameInput;
     bool isSavePanelOpen = false;
-    private View currentView = View.Sky;
-    private Tool currentTool = Tool.Brush;
+    public View currentView = View.Sky;
+    public Tool currentTool = Tool.Brush;
 
     void Start()
     {

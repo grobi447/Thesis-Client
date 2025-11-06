@@ -30,7 +30,7 @@ public class GridManager : MonoBehaviour
     public CanonType currentCanonDirection = CanonType.Left;
     public AxeMovement currentAxeMovement = AxeMovement.Half;
     public AxeDirection currentAxeDirection = AxeDirection.Down;
-    private Dictionary<Vector3, Tile> tiles;
+    public Dictionary<Vector3, Tile> tiles;
     private Dictionary<string, Tile> trapPrefabDict;
     public Tile TilePrefab => tilePrefab;
     public Dictionary<string, Tile> TrapPrefabDict => trapPrefabDict;

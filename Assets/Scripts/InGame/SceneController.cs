@@ -21,7 +21,7 @@ public class SceneController : MonoBehaviour
 
     public void LoadScene()
     {
-        transitionAnimator = FindAnyObjectByType<Animator>();
+        transitionAnimator = GameObject.Find("Load").GetComponent<Animator>();
         StartCoroutine(LoadLevel());
     }
 

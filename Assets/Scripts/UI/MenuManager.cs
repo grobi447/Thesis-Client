@@ -55,6 +55,7 @@ public class MenuManager : MonoBehaviour
         mapSelector.LoadMaps();
         mainMenuPanel.SetActive(false);
         mapSelectorPanel.SetActive(true);
+        mapSelector.scrollbar.value = 0;
     }
     public void BackToMainMenu()
     {

@@ -226,13 +226,6 @@ public class Player : MonoBehaviour
         }
 
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Trap") && collision.collider.gameObject.name == "Blade")
-        {
-            Die();
-        }
-    }
 
     private void Die()
     {

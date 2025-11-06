@@ -118,6 +118,39 @@ public class MapLoader : MonoBehaviour
             GameObject layer = new GameObject($"Layer {z}");
             layer.transform.parent = tilesParent;
         }
+        GameObject boundaryParent = new GameObject("Boundaries");
+        boundaryParent.transform.parent = tilesParent;
+
+        float mapWidth = 32f;
+        float mapHeight = 18f;
+        GameObject boundary = new GameObject("MapBoundary");
+        boundary.transform.parent = boundaryParent.transform;
+        boundary.tag = "Trap";
+
+        EdgeCollider2D edgeCollider = boundary.AddComponent<EdgeCollider2D>();
+        edgeCollider.isTrigger = true;
+        Vector2[] points = new Vector2[5]
+        {
+            new Vector2(-0.5f, -0.5f),
+            new Vector2(mapWidth - 0.5f, -0.5f),
+            new Vector2(mapWidth - 0.5f, mapHeight - 0.5f),
+            new Vector2(-0.5f, mapHeight - 0.5f),
+            new Vector2(-0.5f, -0.5f)
+        };
+
+        edgeCollider.points = points;
+    }
+
+    private void CreateBoundary(string name, Vector2 position, Vector2 size, Transform parent)
+    {
+        GameObject boundary = new GameObject(name);
+        boundary.transform.position = position;
+        boundary.transform.parent = parent;
+        boundary.tag = "Block";
+
+        BoxCollider2D collider = boundary.AddComponent<BoxCollider2D>();
+        collider.size = size;
+        collider.isTrigger = false;
     }
 
     private void RenderRails()
@@ -180,6 +213,11 @@ public class MapLoader : MonoBehaviour
         if (tileSprite != null)
         {
             newTile.TileRenderer.sprite = tileSprite;
+            if(tileSprite.name.Contains("half")){
+                BoxCollider2D boxCollider = newTile.GetComponent<BoxCollider2D>();
+                boxCollider.size = new Vector2(boxCollider.size.x, 0.4f);
+                boxCollider.offset = new Vector2(boxCollider.offset.x, 0.3f);
+            }
         }
 
         switch (tileWrapper.tile.type)
@@ -320,6 +358,8 @@ public class MapLoader : MonoBehaviour
             case TrapType.Blade:
                 if (trapSettings is BladeSettings bladeSettings && trap is Blade blade)
                 {
+                    blade.GetComponentInParent<BoxCollider2D>().enabled = false;
+                    blade.tileBoxCollider.enabled = true;
                     blade.settings["crushTime"] = bladeSettings.crushTime;
                     blade.settings["upTime"] = bladeSettings.upTime;
                     blade.settings["reload"] = bladeSettings.reload;
