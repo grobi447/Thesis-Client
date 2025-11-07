@@ -173,6 +173,10 @@ public class Player : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * jumpCutMultiplier);
             isJumping = false;
         }
+        if (isJumping && rb.velocity.y <= 0f && !isGrounded)
+        {
+            isJumping = false;
+        }
 
         if (isGrounded && !wasGrounded)
         {
@@ -225,7 +229,24 @@ public class Player : MonoBehaviour
             isFinished = true;
             gameManager.StartCoroutine(gameManager.FinishedLevelRoutine());
         }
+    }
 
+    // Handle head collision to reset jump state
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Only check for collisions with blocks
+        if (collision.collider.CompareTag("Block"))
+        {
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                // If contact point is above the player
+                if (contact.point.y > transform.position.y + 0.1f)
+                {
+                    isJumping = false;
+                    break;
+                }
+            }
+        }
     }
 
     public void Die()
