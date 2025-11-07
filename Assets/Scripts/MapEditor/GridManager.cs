@@ -60,11 +60,6 @@ public class GridManager : MonoBehaviour
     private void Update()
     {
         isMouseDown = Input.GetMouseButton(0);
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            CreateMap();
-        }
-
     }
 
     private void GenerateGrid()
@@ -492,7 +487,7 @@ public class GridManager : MonoBehaviour
     {
         return tiles.Any(t => t.Value.name == "Finish");
     }
-    public void CreateMap(string mapName = "Map")
+    public void CreateMap(string mapName)
     {
         string sky = uiHandler.sky.GetComponent<Image>().sprite.name;
         Map map = new Map(tiles, rails, sky);

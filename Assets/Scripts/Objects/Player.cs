@@ -8,21 +8,21 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
 
     public float moveSpeed = 5f;
-    private Vector2 movement;
+    public Vector2 movement;
 
     public float jumpForce = 15f;
     public float minJumpForce = 10f;
     public float jumpCutMultiplier = 0.3f;
-    private bool isJumping = false;
+    public bool isJumping = false;
 
     public bool isGrounded = false;
     public Transform groundCheck;
     public float groundCheckRadius = 0.3f;
     public LayerMask groundLayer;
-    private bool wasGrounded = false;
+    public bool wasGrounded = false;
 
     public float jumpBufferTime = 0.2f;
-    private float jumpBufferCounter;
+    public float jumpBufferCounter;
 
     public float fallMultiplier = 4.5f;
     public float lowJumpMultiplier = 4f;
@@ -36,16 +36,17 @@ public class Player : MonoBehaviour
     public BoxCollider2D boxCollider;
     public CapsuleCollider2D capsuleCollider;
     private SpriteRenderer spriteRenderer;
-    private bool isDead = false;
-    private bool isFinished = false;
+    public bool isDead = false;
+    public bool isFinished = false;
     public GameManager gameManager;
-    private void Awake()
+    
+    public void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         gameManager = FindObjectOfType<GameManager>();
     }
     
-    private void Update()
+    public void Update()
     {
         if (isDead) return;
         
@@ -84,7 +85,7 @@ public class Player : MonoBehaviour
         FlipCharacter();
     }
 
-    private void UpdateAnimator()
+    public void UpdateAnimator()
     {
         if (animator != null)
         {
@@ -106,7 +107,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void FlipCharacter()
+    public void FlipCharacter()
     {
         if (movement.x > 0)
         {
@@ -118,7 +119,7 @@ public class Player : MonoBehaviour
         }   
     }
 
-    private void HandleCrouchCollider()
+    public void HandleCrouchCollider()
     {
         if (boxCollider != null && capsuleCollider != null)
         {
@@ -135,7 +136,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {
         if (!isDead)
         {
@@ -143,7 +144,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void CheckGrounded()
+    public void CheckGrounded()
     {
         wasGrounded = isGrounded;
         Vector2 checkPosition = groundCheck != null ? groundCheck.position : (Vector2)transform.position;
@@ -160,7 +161,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void HandleJump()
+    public void HandleJump()
     {
         if (jumpBufferCounter > 0f && isGrounded && !isJumping)
         {
@@ -179,14 +180,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void PerformJump()
+    public void PerformJump()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         isJumping = true;
         jumpBufferCounter = 0f;
     }
 
-    private void ApplyJumpPhysics()
+    public void ApplyJumpPhysics()
     {
         if (rb.velocity.y < 0)
         {
@@ -198,21 +199,21 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    public void OnEnable()
     {
         jump.action.Enable();
         move.action.Enable();
         crouch.action.Enable();
     }
 
-    private void OnDisable()
+    public void OnDisable()
     {
         jump.action.Disable();
         move.action.Disable();
         crouch.action.Disable();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Trap") || collision.CompareTag("Bullet"))
         {
@@ -227,12 +228,12 @@ public class Player : MonoBehaviour
 
     }
 
-    private void Die()
+    public void Die()
     {
         StartCoroutine(DieCoroutine());
     }
 
-    private IEnumerator DieCoroutine()
+    public IEnumerator DieCoroutine()
     {
         isDead = true;
         movement = Vector2.zero;
