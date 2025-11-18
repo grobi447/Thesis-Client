@@ -1,0 +1,5 @@
+<map id="MapeditorTileTest.OnMouseEnter.ShouldSetTileColor_WhenFinishIsSelected_NoOtherFinishes" name="MapeditorTileTest.OnMouseEnter.ShouldSetTileColor_WhenFinishIsSelected_NoOtherFinishes">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,270,64"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_tile.html#a14e28c17929618d2b2e5503768a8b848" title=" " alt="" coords="318,21,431,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="270,32,302,32,302,37,270,37"/>
+</map>

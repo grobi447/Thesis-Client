@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.SimpleSpinner
+namespace UI
 {
     [RequireComponent(typeof(Image))]
     public class SimpleSpinner : MonoBehaviour
@@ -11,7 +11,7 @@ namespace Assets.SimpleSpinner
         public AnimationCurve RotationAnimationCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
         public bool RandomPeriod = true;
-        
+
         private float _period;
 
         public void Start()

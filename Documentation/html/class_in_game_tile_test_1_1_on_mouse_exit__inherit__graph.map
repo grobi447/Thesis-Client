@@ -1,0 +1,5 @@
+<map id="InGameTileTest.OnMouseExit" name="InGameTileTest.OnMouseExit">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,251,191,336"/>
+<area shape="rect" id="Node000002" href="$class_in_game_tile_test.html" title=" " alt="" coords="41,5,156,203"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,218,101,251,96,251,96,218"/>
+</map>

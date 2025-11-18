@@ -1,0 +1,5 @@
+<map id="UI.MapSelector" name="UI.MapSelector">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,123,217,661"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="61,5,162,75"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,89,114,123,109,123,109,89"/>
+</map>

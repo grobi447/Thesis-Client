@@ -1,0 +1,5 @@
+<map id="UI.MenuManager.Login" name="UI.MenuManager.Login">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,162,32"/>
+<area shape="rect" id="Node000002" href="$class_u_i_1_1_menu_manager.html#abf4044b6a2e354726ba76746370133da" title=" " alt="" coords="210,5,411,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,16,194,16,194,21,162,21"/>
+</map>

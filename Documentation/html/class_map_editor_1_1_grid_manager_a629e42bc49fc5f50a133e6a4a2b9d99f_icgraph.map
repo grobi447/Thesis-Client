@@ -1,0 +1,9 @@
+<map id="MapEditor.GridManager.LockRails" name="MapEditor.GridManager.LockRails">
+<area shape="rect" id="Node000001" title=" " alt="" coords="545,27,735,69"/>
+<area shape="rect" id="Node000002" href="$class_map_editor_1_1_grid_manager.html#ac07817e2d64ffac64ae4147f1caed2d3" title=" " alt="" coords="269,5,497,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="529,38,497,34,498,29,529,33"/>
+<area shape="rect" id="Node000003" href="$class_map_editor_1_1_grid_manager.html#a96f3f88af502cd7b95e9f55e5a0d9f26" title=" " alt="" coords="281,56,485,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="530,63,486,68,485,63,529,58"/>
+<area shape="rect" id="Node000004" href="$class_map_editor_1_1_grid_manager.html#a6e7a358f6f0e291c7e83e93c53793919" title=" " alt="" coords="5,64,221,91"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="265,80,221,80,221,75,265,75"/>
+</map>

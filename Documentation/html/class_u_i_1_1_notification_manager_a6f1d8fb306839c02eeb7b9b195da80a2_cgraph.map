@@ -1,0 +1,9 @@
+<map id="UI.NotificationManager.OnErrorMessage" name="UI.NotificationManager.OnErrorMessage">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,23,182,65"/>
+<area shape="rect" id="Node000002" href="$class_u_i_1_1_notification_manager.html#ace72c882906f222d1f19728d272189b6" title=" " alt="" coords="230,23,422,65"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,41,214,41,214,47,182,47"/>
+<area shape="rect" id="Node000003" href="$class_u_i_1_1_notification_manager.html#a3d058c52ad7cb58500a1fb08dc15812e" title=" " alt="" coords="475,5,674,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="422,32,459,28,460,33,423,37"/>
+<area shape="rect" id="Node000004" href="$class_u_i_1_1_notification_manager.html#a8f4edab8a6fc1d961fd7df50d68d3587" title=" " alt="" coords="470,56,679,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="423,51,455,54,454,60,422,56"/>
+</map>

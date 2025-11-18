@@ -1,0 +1,5 @@
+<map id="MapeditorTileTest.UseTool" name="MapeditorTileTest.UseTool">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,288,249,448"/>
+<area shape="rect" id="Node000002" href="$class_mapeditor_tile_test.html" title=" " alt="" coords="47,5,207,240"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,255,130,288,125,288,125,255"/>
+</map>

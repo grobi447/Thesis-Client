@@ -5,8 +5,10 @@ using NUnit.Framework;
 using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.TestTools;
-
-
+using UI;
+using Objects;
+using InGame;
+using MapEditor;
 [TestFixture]
 public class MapeditorTileTest
 {

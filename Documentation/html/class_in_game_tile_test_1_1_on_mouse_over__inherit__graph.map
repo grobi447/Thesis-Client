@@ -1,0 +1,5 @@
+<map id="InGameTileTest.OnMouseOver" name="InGameTileTest.OnMouseOver">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,251,233,357"/>
+<area shape="rect" id="Node000002" href="$class_in_game_tile_test.html" title=" " alt="" coords="62,5,177,203"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,218,122,251,117,251,117,218"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="Objects.Player.FlipCharacter" name="Objects.Player.FlipCharacter">
+<area shape="rect" id="Node000001" title=" " alt="" coords="207,5,396,32"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_player.html#a8fb63abc96462f352bb5e47e1e376252" title=" " alt="" coords="5,5,159,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="191,21,159,21,159,16,191,16"/>
+</map>

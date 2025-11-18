@@ -1,0 +1,5 @@
+<map id="MapeditorTileTest.OnMouseExit" name="MapeditorTileTest.OnMouseExit">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,288,202,411"/>
+<area shape="rect" id="Node000002" href="$class_mapeditor_tile_test.html" title=" " alt="" coords="24,5,184,240"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,255,106,288,101,288,101,255"/>
+</map>

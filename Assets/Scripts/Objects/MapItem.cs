@@ -1,27 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UI;
 
-public class MapItem : MonoBehaviour
+namespace Objects
 {
-    public string mapId;
-    public string mapName;
-    public string createdBy;
-    public MapSelector mapSelector;
-    public void Initialize(string mapId, string mapName, string createdBy)
+    public class MapItem : MonoBehaviour
     {
-        this.mapId = mapId;
-        this.mapName = mapName;
-        this.createdBy = createdBy;
-    }
+        public string mapId;
+        public string mapName;
+        public string createdBy;
+        public MapSelector mapSelector;
+        public void Initialize(string mapId, string mapName, string createdBy)
+        {
+            this.mapId = mapId;
+            this.mapName = mapName;
+            this.createdBy = createdBy;
+        }
 
-    public void Awake()
-    {
-        mapSelector = FindObjectOfType<MapSelector>();
-    }
+        public void Awake()
+        {
+            mapSelector = FindObjectOfType<MapSelector>();
+        }
 
-    public void OnSelectButtonPressed()
-    {
-        mapSelector.UpdateActiveMap(mapId);
+        public void OnSelectButtonPressed()
+        {
+            mapSelector.UpdateActiveMap(mapId);
+        }
     }
 }

@@ -1,0 +1,10 @@
+<map id="UI.MenuManager.LoggedIn" name="UI.MenuManager.LoggedIn">
+<area shape="rect" id="Node000001" title=" " alt="" coords="505,43,683,69"/>
+<area shape="rect" id="Node000002" href="$class_u_i_1_1_menu_manager.html#ab5e567a2ea238d9b467dad68a2024e13" title=" " alt="" coords="227,5,456,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="490,43,436,35,437,30,490,38"/>
+<area shape="rect" id="Node000003" href="$class_u_i_1_1_pause_menu.html#a2fd0a724295d9b9ede72aec3063cc787" title=" " alt="" coords="226,80,457,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="490,74,437,82,436,77,490,69"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="385,68,370,61,341,59,315,61,301,66,297,71,304,78,300,81,292,71,297,61,314,55,341,53,371,56,387,63"/>
+<area shape="rect" id="Node000004" href="$class_u_i_1_1_pause_menu.html#a7e27d69b0664a05cbde7742f2ca3169d" title=" " alt="" coords="5,80,178,107"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="210,96,178,96,178,91,210,91"/>
+</map>

@@ -1,0 +1,15 @@
+<map id="Objects.Rail.SetSprite" name="Objects.Rail.SetSprite">
+<area shape="rect" id="Node000001" title=" " alt="" coords="782,35,934,61"/>
+<area shape="rect" id="Node000002" href="$class_in_game_1_1_map_loader.html#a3b4400a57ff593462d57d8852b522310" title=" " alt="" coords="523,5,734,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="766,39,734,35,735,30,767,34"/>
+<area shape="rect" id="Node000005" href="$class_map_editor_1_1_grid_manager.html#ae34e0308290829e5fdd71fedd107f3ad" title=" " alt="" coords="526,56,731,99"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="767,62,732,67,731,62,766,57"/>
+<area shape="rect" id="Node000003" href="$class_in_game_1_1_map_loader.html#ac124ab9e3866afa100841a78f80197df" title=" " alt="" coords="269,5,475,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="507,21,475,21,475,16,507,16"/>
+<area shape="rect" id="Node000004" href="$class_in_game_1_1_map_loader.html#adc966342be2bd5f63d83565fbf1885de" title=" " alt="" coords="23,5,203,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="253,21,203,21,203,16,253,16"/>
+<area shape="rect" id="Node000006" href="$class_map_editor_1_1_grid_manager.html#a96f3f88af502cd7b95e9f55e5a0d9f26" title=" " alt="" coords="270,56,474,99"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="511,80,474,80,474,75,511,75"/>
+<area shape="rect" id="Node000007" href="$class_map_editor_1_1_grid_manager.html#a6e7a358f6f0e291c7e83e93c53793919" title=" " alt="" coords="5,64,221,91"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="254,80,221,80,221,75,254,75"/>
+</map>

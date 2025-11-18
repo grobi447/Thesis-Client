@@ -1,0 +1,5 @@
+<map id="MapEditor.GridManager.ReplaceToTile" name="MapEditor.GridManager.ReplaceToTile">
+<area shape="rect" id="Node000001" title=" " alt="" coords="285,5,495,48"/>
+<area shape="rect" id="Node000002" href="$class_map_editor_1_1_grid_manager.html#a1db07df2471a518297428d1777de23ba" title=" " alt="" coords="5,13,237,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="269,29,237,29,237,24,269,24"/>
+</map>

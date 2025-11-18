@@ -1,0 +1,9 @@
+<map id="Objects.Tile.HandleCanonHover" name="Objects.Tile.HandleCanonHover">
+<area shape="rect" id="Node000001" title=" " alt="" coords="700,5,875,48"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_tile.html#a3601a3b5d51e80be2d00371c371cd7a6" title=" " alt="" coords="455,13,652,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="685,29,653,29,653,24,685,24"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_tile.html#a7a80642c6ed858ec1ec8c0fe56bcb29f" title=" " alt="" coords="236,13,407,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="440,29,408,29,408,24,440,24"/>
+<area shape="rect" id="Node000004" href="$class_objects_1_1_tile.html#aec8fb7371f6b02bb71049c1f3322f1dc" title=" " alt="" coords="5,13,188,40"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="220,29,188,29,188,24,220,24"/>
+</map>

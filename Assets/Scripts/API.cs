@@ -4,8 +4,11 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
+using UI;
+using InGame;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using Objects;
 
 public class API : MonoBehaviour
 {
@@ -70,6 +73,7 @@ public class API : MonoBehaviour
             {
                 notificationManager.OnSuccessMessage(apiResponse?.detail);
                 menuManager.LoggedIn();
+                UserManager.Instance.username = apiResponse.userdata.username;
             }
             else
             {

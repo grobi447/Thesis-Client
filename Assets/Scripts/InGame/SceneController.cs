@@ -2,6 +2,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+namespace InGame
+{
 public class SceneController : MonoBehaviour
 {
     public static SceneController Instance;
@@ -32,4 +34,5 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadSceneAsync("InGame");
         transitionAnimator.SetTrigger("Start");
     }
+}
 }

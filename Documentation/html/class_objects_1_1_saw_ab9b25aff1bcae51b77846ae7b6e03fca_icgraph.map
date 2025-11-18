@@ -1,0 +1,20 @@
+<map id="Objects.Saw.GetRailAtPosition" name="Objects.Saw.GetRailAtPosition">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1005,52,1208,79"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_saw.html#af015198e53e4eff9a0718b54d817ee85" title=" " alt="" coords="754,27,943,54"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="989,57,943,52,944,47,989,51"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_saw.html#a58ccafb49511bf5cdcb1dd8f22b7728e" title=" " alt="" coords="514,27,683,54"/>
+<area shape="poly" id="edge10_Node000001_Node000003" title=" " alt="" coords="1059,48,1010,31,956,18,896,10,849,8,741,18,664,29,663,24,740,12,849,3,897,4,957,12,1012,26,1061,43"/>
+<area shape="rect" id="Node000007" href="$class_objects_1_1_saw.html#a5f28cabaaf69e3326387622a17dda4bd" title=" " alt="" coords="740,78,957,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="989,80,957,83,957,78,989,74"/>
+<area shape="rect" id="Node000008" href="$class_objects_1_1_saw.html#a75949b14b6affec1673b21c96a7adb8d" title=" " alt="" coords="504,128,692,155"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="1059,88,1010,105,957,119,889,130,819,138,693,144,693,139,819,132,888,125,956,114,1009,100,1057,83"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="739,43,683,43,683,38,739,38"/>
+<area shape="rect" id="Node000006" href="$class_objects_1_1_saw.html#ae315a639f745c579a18e9f975a268467" title=" " alt="" coords="528,78,669,104"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="764,60,668,80,667,74,763,55"/>
+<area shape="rect" id="Node000004" href="$class_map_editor_1_1_grid_manager.html#a8d18578249be6853a481b9965352673d" title=" " alt="" coords="264,70,456,112"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="518,60,457,73,456,68,517,55"/>
+<area shape="rect" id="Node000005" href="$class_map_editor_1_1_grid_manager.html#a8ed9bf305b2441a6177d08cc0ab39af2" title=" " alt="" coords="5,70,216,112"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="248,94,216,94,216,88,248,88"/>
+<area shape="poly" id="edge7_Node000007_Node000006" title=" " alt="" coords="725,94,669,94,669,88,725,88"/>
+<area shape="poly" id="edge9_Node000008_Node000004" title=" " alt="" coords="517,127,456,114,457,109,518,122"/>
+</map>

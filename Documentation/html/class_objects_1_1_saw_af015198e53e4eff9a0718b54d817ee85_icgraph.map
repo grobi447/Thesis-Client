@@ -1,0 +1,11 @@
+<map id="Objects.Saw.FindNextTarget" name="Objects.Saw.FindNextTarget">
+<area shape="rect" id="Node000001" title=" " alt="" coords="721,39,910,65"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_saw.html#a58ccafb49511bf5cdcb1dd8f22b7728e" title=" " alt="" coords="504,13,673,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="706,42,674,39,674,33,706,37"/>
+<area shape="rect" id="Node000005" href="$class_objects_1_1_saw.html#ae315a639f745c579a18e9f975a268467" title=" " alt="" coords="518,64,659,91"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="706,67,660,72,660,67,706,62"/>
+<area shape="rect" id="Node000003" href="$class_map_editor_1_1_grid_manager.html#a8d18578249be6853a481b9965352673d" title=" " alt="" coords="264,5,456,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="488,29,457,29,457,24,488,24"/>
+<area shape="rect" id="Node000004" href="$class_map_editor_1_1_grid_manager.html#a8ed9bf305b2441a6177d08cc0ab39af2" title=" " alt="" coords="5,5,216,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="248,29,216,29,216,24,248,24"/>
+</map>

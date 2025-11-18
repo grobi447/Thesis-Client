@@ -1,0 +1,11 @@
+<map id="Objects.Canon.Fire" name="Objects.Canon.Fire">
+<area shape="rect" id="Node000001" title=" " alt="" coords="443,56,577,83"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_canon.html#a1bc3c2ca7adf251b7a1ceba0b6b7c715" title=" " alt="" coords="208,5,395,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="437,54,359,35,360,30,438,49"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_canon.html#a16d1bec5bb7196fcbd57ee561a7e2374" title=" " alt="" coords="5,56,160,83"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="428,72,160,72,160,67,428,67"/>
+<area shape="rect" id="Node000004" href="$class_objects_1_1_canon.html#acde31746f743aa76c15636e320a4c14e" title=" " alt="" coords="209,107,394,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="438,89,360,109,359,103,437,84"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="226,39,144,58,143,53,225,33"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="225,105,143,86,144,81,226,100"/>
+</map>

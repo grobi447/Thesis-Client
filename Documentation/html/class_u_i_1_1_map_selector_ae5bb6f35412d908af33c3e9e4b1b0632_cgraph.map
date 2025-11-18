@@ -1,0 +1,7 @@
+<map id="UI.MapSelector.UpdateActiveMap" name="UI.MapSelector.UpdateActiveMap">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,226,40"/>
+<area shape="rect" id="Node000002" href="$class_u_i_1_1_map_selector.html#ac3fe206e45af3ffca5a28bd528b4a7bc" title=" " alt="" coords="274,5,503,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="226,24,258,24,258,29,226,29"/>
+<area shape="rect" id="Node000003" href="$class_u_i_1_1_map_selector.html#a7c0da1953004b755f412eec6093bf6a4" title=" " alt="" coords="551,5,758,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="503,24,535,24,535,29,503,29"/>
+</map>

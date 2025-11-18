@@ -1,0 +1,10 @@
+<map id="API.CreateLeaderboardEntryRequest" name="API.CreateLeaderboardEntryRequest">
+<area shape="rect" id="Node000001" title=" " alt="" coords="485,35,673,77"/>
+<area shape="rect" id="Node000002" href="$class_a_p_i.html#aae8dab83b704029ada704ddb3deb220e" title=" " alt="" coords="235,5,423,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="469,42,423,35,423,30,470,37"/>
+<area shape="rect" id="Node000003" href="$class_a_p_i.html#af704965ac5d382a1654205a860bfcb1f" title=" " alt="" coords="221,80,437,107"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="470,75,423,82,423,77,469,70"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="371,68,356,61,329,59,304,61,290,65,287,71,293,78,289,81,281,71,286,61,302,55,329,53,358,56,373,63"/>
+<area shape="rect" id="Node000004" href="$class_a_p_i.html#a6bafc69443618f6a8dbe6d3c6a67b461" title=" " alt="" coords="5,80,173,107"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="205,96,173,96,173,91,205,91"/>
+</map>

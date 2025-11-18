@@ -1,0 +1,9 @@
+<map id="MapEditor.GridManager.UpdateColliders" name="MapEditor.GridManager.UpdateColliders">
+<area shape="rect" id="Node000001" title=" " alt="" coords="531,35,735,77"/>
+<area shape="rect" id="Node000002" href="$class_map_editor_1_1_grid_manager.html#a584e24acfd36216ee2c80bc7d945ed80" title=" " alt="" coords="263,5,464,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="515,46,463,40,464,35,516,41"/>
+<area shape="rect" id="Node000003" href="$class_map_editor_1_1_grid_manager.html#a249cf9386eadd6a1798e4bc54e1bb809" title=" " alt="" coords="244,72,483,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="516,71,484,75,483,70,515,66"/>
+<area shape="rect" id="Node000004" href="$class_map_editor_1_1_grid_manager.html#ad3ff77b7f3b20e3b5a9c0ec06aca580c" title=" " alt="" coords="5,72,196,99"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="228,88,196,88,196,83,228,83"/>
+</map>

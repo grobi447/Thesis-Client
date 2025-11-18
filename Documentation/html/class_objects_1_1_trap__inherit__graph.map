@@ -1,0 +1,17 @@
+<map id="Objects.Trap" name="Objects.Trap">
+<area shape="rect" id="Node000001" title=" " alt="" coords="328,731,418,843"/>
+<area shape="rect" id="Node000004" href="$class_objects_1_1_axe.html" title=" " alt="" coords="5,1083,111,1323"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="314,799,267,810,216,829,167,856,145,873,126,892,98,935,79,984,66,1034,60,1083,55,1083,61,1033,73,982,93,933,122,889,141,869,164,851,214,824,265,805,313,794"/>
+<area shape="rect" id="Node000005" href="$class_objects_1_1_blade.html" title=" " alt="" coords="136,1040,258,1365"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="319,835,294,862,273,892,241,965,220,1041,215,1040,236,963,268,889,290,858,315,831"/>
+<area shape="rect" id="Node000006" href="$class_objects_1_1_canon.html" title=" " alt="" coords="282,891,464,1515"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="376,858,376,891,370,891,370,858"/>
+<area shape="rect" id="Node000007" href="$class_objects_1_1_saw.html" title=" " alt="" coords="488,1029,637,1376"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="431,832,456,859,478,889,510,957,534,1029,529,1031,505,959,473,892,452,862,427,836"/>
+<area shape="rect" id="Node000008" href="$class_objects_1_1_spike.html" title=" " alt="" coords="661,1115,835,1291"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="433,792,485,803,544,821,601,849,627,868,651,889,671,913,689,940,715,999,733,1059,743,1114,738,1115,728,1060,710,1001,684,943,667,916,647,893,624,872,598,854,542,826,484,808,432,797"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_tile.html" title=" " alt="" coords="302,123,444,683"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="376,698,376,731,370,731,370,698"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="323,5,423,75"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="376,90,376,123,370,123,370,90"/>
+</map>

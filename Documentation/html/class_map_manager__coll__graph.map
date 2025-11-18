@@ -1,0 +1,4 @@
+<map id="MapManager" name="MapManager">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,118,117"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="119,38,137,45,145,61,143,71,137,78,133,75,138,69,140,62,134,49,117,43"/>
+</map>

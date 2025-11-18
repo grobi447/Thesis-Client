@@ -1,0 +1,9 @@
+<map id="Objects.Tile.HandleAxeHover" name="Objects.Tile.HandleAxeHover">
+<area shape="rect" id="Node000001" title=" " alt="" coords="700,5,895,32"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_tile.html#a3601a3b5d51e80be2d00371c371cd7a6" title=" " alt="" coords="455,5,652,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="685,21,653,21,653,16,685,16"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_tile.html#a7a80642c6ed858ec1ec8c0fe56bcb29f" title=" " alt="" coords="236,5,407,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="440,21,408,21,408,16,440,16"/>
+<area shape="rect" id="Node000004" href="$class_objects_1_1_tile.html#aec8fb7371f6b02bb71049c1f3322f1dc" title=" " alt="" coords="5,5,188,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="220,21,188,21,188,16,220,16"/>
+</map>

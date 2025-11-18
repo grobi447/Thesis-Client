@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using InGame;
+namespace Objects
+{
 public class Saw : Trap
 {
     public Vector3 currentDirection = Vector3.right;
@@ -60,7 +62,7 @@ public class Saw : Trap
         }
         else
         {
-            MapLoader mapLoader = FindObjectOfType<MapLoader>();
+            InGame.MapLoader mapLoader = FindObjectOfType<InGame.MapLoader>();
             if (mapLoader != null)
             {
                 return mapLoader.GetRailAtPosition(position);
@@ -129,4 +131,5 @@ public class Saw : Trap
             isMoving = false;
         }
     }
+}
 }

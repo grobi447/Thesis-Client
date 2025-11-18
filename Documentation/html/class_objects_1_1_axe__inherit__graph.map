@@ -1,0 +1,9 @@
+<map id="Objects.Axe" name="Objects.Axe">
+<area shape="rect" id="Node000001" title=" " alt="" coords="23,891,129,1131"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_trap.html" title=" " alt="" coords="31,731,121,843"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="78,857,78,891,73,891,73,857"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_tile.html" title=" " alt="" coords="5,123,146,683"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="78,698,78,731,73,731,73,698"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="26,5,126,75"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="78,90,78,123,73,123,73,90"/>
+</map>

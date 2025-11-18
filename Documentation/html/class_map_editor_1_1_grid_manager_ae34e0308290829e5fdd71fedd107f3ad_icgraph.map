@@ -1,0 +1,7 @@
+<map id="MapEditor.GridManager.UpdateRailSpriteAtPosition" name="MapEditor.GridManager.UpdateRailSpriteAtPosition">
+<area shape="rect" id="Node000001" title=" " alt="" coords="521,5,725,48"/>
+<area shape="rect" id="Node000002" href="$class_map_editor_1_1_grid_manager.html#a96f3f88af502cd7b95e9f55e5a0d9f26" title=" " alt="" coords="269,5,473,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="506,29,473,29,473,24,506,24"/>
+<area shape="rect" id="Node000003" href="$class_map_editor_1_1_grid_manager.html#a6e7a358f6f0e291c7e83e93c53793919" title=" " alt="" coords="5,13,221,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="253,29,221,29,221,24,253,24"/>
+</map>

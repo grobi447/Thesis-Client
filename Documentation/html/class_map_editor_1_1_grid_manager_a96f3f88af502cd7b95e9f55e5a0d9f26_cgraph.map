@@ -1,0 +1,14 @@
+<map id="MapEditor.GridManager.UpdateRailAndNeighbors" name="MapEditor.GridManager.UpdateRailAndNeighbors">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,39,210,81"/>
+<area shape="rect" id="Node000002" href="$class_map_editor_1_1_grid_manager.html#a629e42bc49fc5f50a133e6a4a2b9d99f" title=" " alt="" coords="265,5,455,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="210,44,249,39,249,44,210,49"/>
+<area shape="rect" id="Node000004" href="$class_map_editor_1_1_grid_manager.html#ae34e0308290829e5fdd71fedd107f3ad" title=" " alt="" coords="258,72,462,115"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="210,71,242,75,242,80,210,76"/>
+<area shape="rect" id="Node000003" href="$class_map_editor_1_1_grid_manager.html#a0378a8f59f1c06b457c8379f47c4ef80" title=" " alt="" coords="530,5,713,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="456,24,514,24,514,29,456,29"/>
+<area shape="poly" id="edge5_Node000004_Node000003" title=" " alt="" coords="446,69,519,50,521,55,447,74"/>
+<area shape="rect" id="Node000005" href="$class_map_editor_1_1_grid_manager.html#a7879065dd3c7346efd85e46affbc8d99" title=" " alt="" coords="510,72,732,115"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="463,91,495,91,495,96,463,96"/>
+<area shape="rect" id="Node000006" href="$class_objects_1_1_rail.html#aa3cfd17c8e586390526a9cf1f7d633dd" title=" " alt="" coords="546,139,697,165"/>
+<area shape="poly" id="edge6_Node000004_Node000006" title=" " alt="" coords="458,113,544,132,543,137,457,118"/>
+</map>

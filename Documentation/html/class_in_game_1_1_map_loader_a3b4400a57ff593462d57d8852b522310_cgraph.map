@@ -1,0 +1,7 @@
+<map id="InGame.MapLoader.RenderRails" name="InGame.MapLoader.RenderRails">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,43,217,69"/>
+<area shape="rect" id="Node000002" href="$class_in_game_1_1_map_loader.html#ae467ae0a0acbb23f2ef584e805de9c82" title=" " alt="" coords="265,5,448,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="217,41,249,37,249,42,217,46"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_rail.html#aa3cfd17c8e586390526a9cf1f7d633dd" title=" " alt="" coords="281,72,432,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="217,66,266,72,265,77,217,71"/>
+</map>

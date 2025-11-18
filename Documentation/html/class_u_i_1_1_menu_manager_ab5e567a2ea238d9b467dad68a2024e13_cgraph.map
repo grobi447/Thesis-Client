@@ -1,0 +1,7 @@
+<map id="UI.MenuManager.BackToMainMenu" name="UI.MenuManager.BackToMainMenu">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,235,40"/>
+<area shape="rect" id="Node000002" href="$class_u_i_1_1_menu_manager.html#ab41870bbb781c23a94321dfb884e4461" title=" " alt="" coords="283,13,461,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="235,24,267,24,267,29,235,29"/>
+<area shape="rect" id="Node000003" href="$class_u_i_1_1_menu_manager.html#ad1838ad0f8979ac896bde980a3be0b0c" title=" " alt="" coords="509,5,695,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="461,24,493,24,493,29,461,29"/>
+</map>

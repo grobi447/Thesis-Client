@@ -1,0 +1,12 @@
+<map id="Objects.Canon.HasBlockNeighbor" name="Objects.Canon.HasBlockNeighbor">
+<area shape="rect" id="Node000001" title=" " alt="" coords="714,43,936,69"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_canon.html#aa7ce73d421965973caf4dbaf6b77bcc2" title=" " alt="" coords="478,5,666,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="698,44,666,40,667,35,699,39"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_canon.html#a9bfe8924fc7ffdde3a139c139a6b21f3" title=" " alt="" coords="238,43,430,69"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="699,62,666,63,478,63,430,62,430,56,478,57,666,57,699,57"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="463,43,431,47,430,41,462,38"/>
+<area shape="rect" id="Node000004" href="$class_objects_1_1_canon.html#ab10e23a7e79296a1ad83b0675db2932e" title=" " alt="" coords="27,13,168,40"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="222,45,168,38,168,33,223,40"/>
+<area shape="rect" id="Node000005" href="$class_map_editor_1_1_ui_handler.html#a949768d8f69d9bdfea9bdeb7647af7fb" title=" " alt="" coords="5,64,190,107"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="222,73,190,77,190,71,222,67"/>
+</map>

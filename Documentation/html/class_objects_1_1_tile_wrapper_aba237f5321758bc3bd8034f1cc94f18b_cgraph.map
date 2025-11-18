@@ -1,0 +1,5 @@
+<map id="Objects.TileWrapper.TileWrapper" name="Objects.TileWrapper.TileWrapper">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,170,48"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_tile_wrapper.html#a7b98c7242961f7c56d28deb33ab211c0" title=" " alt="" coords="218,5,400,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="170,24,202,24,202,29,170,29"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="Objects.Canon.Fire" name="Objects.Canon.Fire">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,140,57"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_bullet.html#aaf0863d3d4d73da0df5b0239ffdd2e26" title=" " alt="" coords="202,5,327,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,32,186,26,186,32,140,38"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_canon.html#a0e8652d1b83eee1b9a00090e66530756" title=" " alt="" coords="188,56,341,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="140,50,173,55,172,60,140,56"/>
+</map>

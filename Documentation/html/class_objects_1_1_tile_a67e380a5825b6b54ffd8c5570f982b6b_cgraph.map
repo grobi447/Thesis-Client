@@ -1,0 +1,5 @@
+<map id="Objects.Tile.OnMouseOver" name="Objects.Tile.OnMouseOver">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,185,32"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_tile.html#a73ed25de62e895381475d3ac1081770e" title=" " alt="" coords="233,5,376,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,16,217,16,217,21,185,21"/>
+</map>

@@ -1,0 +1,17 @@
+<map id="MapEditor.GridManager.SyncAllSaws" name="MapEditor.GridManager.SyncAllSaws">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,48,198,91"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_saw.html#a15b8993d6b82592e75d96dd45da70c30" title=" " alt="" coords="246,5,433,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,46,258,33,259,38,199,51"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_saw.html#a75949b14b6affec1673b21c96a7adb8d" title=" " alt="" coords="481,56,669,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="198,67,465,67,465,72,198,72"/>
+<area shape="rect" id="Node000006" href="$class_objects_1_1_saw.html#a58ccafb49511bf5cdcb1dd8f22b7728e" title=" " alt="" coords="255,107,424,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="199,87,259,100,258,106,198,92"/>
+<area shape="rect" id="Node000004" href="$class_objects_1_1_saw.html#ab9b25aff1bcae51b77846ae7b6e03fca" title=" " alt="" coords="717,107,921,133"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="644,81,737,100,736,106,642,86"/>
+<area shape="rect" id="Node000005" href="$class_in_game_1_1_map_loader.html#a6b2ea890eb1e4b649c30f217fbe02338" title=" " alt="" coords="969,99,1152,141"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="921,117,953,117,953,123,921,123"/>
+<area shape="poly" id="edge8_Node000006_Node000004" title=" " alt="" coords="424,117,702,117,702,123,424,123"/>
+<area shape="rect" id="Node000007" href="$class_objects_1_1_saw.html#af015198e53e4eff9a0718b54d817ee85" title=" " alt="" coords="481,157,669,184"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="406,131,495,151,494,156,404,137"/>
+<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="642,154,736,134,737,140,644,159"/>
+</map>

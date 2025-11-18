@@ -1,337 +1,342 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using MapEditor;
+using UI;
 
-
-public enum SpriteType
+namespace Objects
 {
-    Empty,
-    Block,
-    Trap,
-    Rail,
-    Spawn,
-    Finish
-}
 
-[Serializable]
-public class SpriteData
-{
-    public string name;
-    public Sprite sprite;
-    public SpriteType type;
-    public TrapType trapType;
-}
-
-public class Tile : MonoBehaviour
-{
-    [SerializeField] private SpriteRenderer tileRenderer;
-    [SerializeField] public Sprite emptySprite;
-
-    private SpriteData spriteData;
-    public GridManager gridManager;
-    public UiHandler uiHandler;
-    public Vector3 position;
-    public bool canPlace = true;
-    public bool inGame;
-    private Color visibleColor = new Color(1, 1, 1, 1);
-    private Color invisibleColor = new Color(1, 1, 1, 0);
-    private bool wasPaused = false;
-
-    public SpriteRenderer TileRenderer
+    public enum SpriteType
     {
-        get => tileRenderer;
-        set => tileRenderer = value;
-    }
-    public SpriteData SpriteData
-    {
-        get => spriteData;
-        set => spriteData = value;
+        Empty,
+        Block,
+        Trap,
+        Rail,
+        Spawn,
+        Finish
     }
 
-    public void Init(GridManager gridManager, Vector3 position)
+    [Serializable]
+    public class SpriteData
     {
-        this.gridManager = gridManager;
-        uiHandler = GameObject.Find("UiHandler").GetComponent<UiHandler>();
-        this.position = position;
+        public string name;
+        public Sprite sprite;
+        public SpriteType type;
+        public TrapType trapType;
     }
 
-    void Update()
+    public class Tile : MonoBehaviour
     {
-        if (!inGame && PauseMenu.GameIsPaused && !wasPaused)
+        [SerializeField] private SpriteRenderer tileRenderer;
+        [SerializeField] public Sprite emptySprite;
+
+        private SpriteData spriteData;
+        public MapEditor.GridManager gridManager;
+        public UiHandler uiHandler;
+        public Vector3 position;
+        public bool canPlace = true;
+        public bool inGame;
+        private Color visibleColor = new Color(1, 1, 1, 1);
+        private Color invisibleColor = new Color(1, 1, 1, 0);
+        private bool wasPaused = false;
+
+        public SpriteRenderer TileRenderer
         {
-            tileRenderer.color = spriteData == null ? invisibleColor : visibleColor;
-            canPlace = true;
+            get => tileRenderer;
+            set => tileRenderer = value;
         }
-        wasPaused = PauseMenu.GameIsPaused;
-    }
-
-    public void OnMouseEnter()
-    {
-        if (!inGame && !PauseMenu.GameIsPaused) HandleHover();
-    }
-
-    public void OnMouseExit()
-    {
-        if (!inGame && !PauseMenu.GameIsPaused)
+        public SpriteData SpriteData
         {
-            tileRenderer.color = spriteData == null ? invisibleColor : visibleColor;
-            canPlace = true;
+            get => spriteData;
+            set => spriteData = value;
         }
-    }
 
-    public void OnMouseOver()
-    {
-        if (!inGame && !PauseMenu.GameIsPaused)
+        public void Init(MapEditor.GridManager gridManager, Vector3 position)
         {
-            View currentView = uiHandler.GetCurrentView();
-            if (canPlace && GridManager.isMouseDown && GridManager.hasSelectedSprite && currentView != View.Sky)
+            this.gridManager = gridManager;
+            uiHandler = GameObject.Find("UiHandler").GetComponent<UiHandler>();
+            this.position = position;
+        }
+
+        void Update()
+        {
+            if (!inGame && PauseMenu.GameIsPaused && !wasPaused)
             {
-                SpriteData selectedData = gridManager.GetLastSelectedSprite(currentView);
+                tileRenderer.color = spriteData == null ? invisibleColor : visibleColor;
+                canPlace = true;
+            }
+            wasPaused = PauseMenu.GameIsPaused;
+        }
 
-                if (uiHandler.GetCurrentTool() == Tool.Brush && selectedData != null)
+        public void OnMouseEnter()
+        {
+            if (!inGame && !PauseMenu.GameIsPaused) HandleHover();
+        }
+
+        public void OnMouseExit()
+        {
+            if (!inGame && !PauseMenu.GameIsPaused)
+            {
+                tileRenderer.color = spriteData == null ? invisibleColor : visibleColor;
+                canPlace = true;
+            }
+        }
+
+        public void OnMouseOver()
+        {
+            if (!inGame && !PauseMenu.GameIsPaused)
+            {
+                View currentView = uiHandler.GetCurrentView();
+                if (canPlace && MapEditor.GridManager.isMouseDown && MapEditor.GridManager.hasSelectedSprite && currentView != View.Sky)
                 {
-                    if (selectedData.type != SpriteType.Block && selectedData.type != SpriteType.Spawn && selectedData.type != SpriteType.Finish && this.GetType() == typeof(Tile))
+                    SpriteData selectedData = gridManager.GetLastSelectedSprite(currentView);
+
+                    if (uiHandler.GetCurrentTool() == Tool.Brush && selectedData != null)
                     {
-                        gridManager.ReplaceToTrap(selectedData, position);
-                        return;
+                        if (selectedData.type != SpriteType.Block && selectedData.type != SpriteType.Spawn && selectedData.type != SpriteType.Finish && this.GetType() == typeof(Tile))
+                        {
+                            gridManager.ReplaceToTrap(selectedData, position);
+                            return;
+                        }
+                        if ((selectedData.type == SpriteType.Block || selectedData.type == SpriteType.Spawn || selectedData.type == SpriteType.Finish) && this.GetType() != typeof(Tile) && this.GetType() != typeof(Rail))
+                        {
+                            gridManager.ReplaceToTile(selectedData, position);
+                            return;
+                        }
+                        if (selectedData.type == SpriteType.Trap && this.GetType() != typeof(Tile))
+                        {
+                            gridManager.ReplaceToTrap(selectedData, position);
+                            return;
+                        }
+                        spriteData = selectedData;
+                        tileRenderer.sprite = spriteData.sprite;
+                        gameObject.name = spriteData.name;
+                        gameObject.tag = spriteData.type.ToString();
                     }
-                    if ((selectedData.type == SpriteType.Block || selectedData.type == SpriteType.Spawn || selectedData.type == SpriteType.Finish) && this.GetType() != typeof(Tile) && this.GetType() != typeof(Rail))
+
+                    if (uiHandler.GetCurrentTool() == Tool.Rubber)
                     {
-                        gridManager.ReplaceToTile(selectedData, position);
-                        return;
+                        if (this is Rail)
+                        {
+                            gridManager.destroyRail((Rail)this);
+                            return;
+                        }
+                        if (this is Trap)
+                        {
+                            gridManager.destroyTrap((Trap)this);
+                            return;
+                        }
                     }
-                    if (selectedData.type == SpriteType.Trap && this.GetType() != typeof(Tile))
-                    {
-                        gridManager.ReplaceToTrap(selectedData, position);
-                        return;
-                    }
-                    spriteData = selectedData;
-                    tileRenderer.sprite = spriteData.sprite;
-                    gameObject.name = spriteData.name;
-                    gameObject.tag = spriteData.type.ToString();
+                    UseTool();
                 }
-
-                if (uiHandler.GetCurrentTool() == Tool.Rubber)
-                {
-                    if (this is Rail)
-                    {
-                        gridManager.destroyRail((Rail)this);
-                        return;
-                    }
-                    if (this is Trap)
-                    {
-                        gridManager.destroyTrap((Trap)this);
-                        return;
-                    }
-                }
-                UseTool();
             }
         }
-    }
 
-    public void UseTool()
-    {
-        switch (uiHandler.GetCurrentTool())
+        public void UseTool()
         {
-            case Tool.Brush:
-                if (gridManager.GetCurrentLayer() == 0) visibleColor = new Color(1, 1, 1, 0.5f);
-                else visibleColor = new Color(1, 1, 1, 1f);
-                tileRenderer.color = visibleColor;
-                break;
-            case Tool.Rubber:
-                spriteData = null;
-                tileRenderer.sprite = emptySprite;
-                gameObject.name = $"Tile {position.x} {position.y} {position.z}";
-                Rail rail = gridManager.GetRailAtPosition(this.transform.position);
-                if (rail != null)
-                {
-                    rail.GetComponent<Collider2D>().layerOverridePriority = 1;
-                    rail.GetComponent<Collider2D>().enabled = false;
-                    rail.GetComponent<Collider2D>().enabled = true;
-                }
-                break;
-            case Tool.Settings:
-                if (this.GetType().BaseType == typeof(Trap))
-                {
-                    gridManager.SetActiveTraps((Trap)this);
-                }
-                break;
-            case Tool.Rail:
-                gridManager.PaintRail(position);
-                break;
-            default:
-                throw new System.ArgumentOutOfRangeException();
-        }
-    }
-
-    public void TurnOffCollider()
-    {
-        GetComponent<BoxCollider2D>().enabled = false;
-    }
-
-    public void TurnOnCollider()
-    {
-        GetComponent<BoxCollider2D>().enabled = true;
-    }
-
-    public void HandleHover()
-    {
-        SpriteData selectedTile = gridManager.GetLastSelectedSprite(uiHandler.GetCurrentView());
-
-        if (selectedTile != null)
-        {
-            if (selectedTile.type == SpriteType.Trap)
+            switch (uiHandler.GetCurrentTool())
             {
-                HandleTrapHover(selectedTile);
-                return;
-            }
-            if (selectedTile.type == SpriteType.Spawn && uiHandler.GetCurrentTool() == Tool.Brush)
-            {
-                HandleSpawnHover();
-                return;
-            }
-            if (selectedTile.type == SpriteType.Finish && uiHandler.GetCurrentTool() == Tool.Brush)
-            {
-                HandleFinishHover();
-                return;
-            }
-            tileRenderer.color = new Color(1, 1, 1, 0.7f);
-
-        }
-    }
-
-    public void HandleTrapHover(SpriteData selectedTile)
-    {
-        if (selectedTile.trapType == TrapType.Spike)
-        {
-            HandleSpikeHover(selectedTile);
-        }
-        if (selectedTile.trapType == TrapType.Saw)
-        {
-            if (uiHandler.GetCurrentTool() == Tool.Rail)
-            {
-                HandlerRailHover();
-                return;
-            }
-            else if (uiHandler.GetCurrentTool() == Tool.Brush)
-            {
-
-                HandleSawHover();
-                return;
-            }
-            tileRenderer.color = new Color(1, 1, 1, 0.7f);
-        }
-        if (selectedTile.trapType == TrapType.Canon)
-        {
-            if (uiHandler.GetCurrentTool() == Tool.Brush)
-            {
-                HandleCanonHover();
-                return;
-            }
-            tileRenderer.color = new Color(1, 1, 1, 0.7f);
-        }
-        if (selectedTile.trapType == TrapType.Axe)
-        {
-            if (uiHandler.GetCurrentTool() == Tool.Brush)
-            {
-                HandleAxeHover();
-                return;
-            }
-            tileRenderer.color = new Color(1, 1, 1, 0.7f);
-        }
-        if (selectedTile.trapType == TrapType.Blade)
-        {
-            if (uiHandler.GetCurrentTool() == Tool.Brush)
-            {
-                HandleBladeHover();
-                return;
-            }
-            tileRenderer.color = new Color(1, 1, 1, 0.7f);
-        }
-
-    }
-
-    public void HandleSpikeHover(SpriteData selectedTile)
-    {
-        if (uiHandler.GetCurrentTool() == Tool.Brush)
-        {
-            if (this.SpriteData != null) canPlace = false;
-            switch (selectedTile.name)
-            {
-                case "SpikeTop":
-                    if (!gridManager.HasBlockNeighbor(this, Vector3.down)) canPlace = false;
+                case Tool.Brush:
+                    if (gridManager.GetCurrentLayer() == 0) visibleColor = new Color(1, 1, 1, 0.5f);
+                    else visibleColor = new Color(1, 1, 1, 1f);
+                    tileRenderer.color = visibleColor;
                     break;
-                case "SpikeBottom":
-                    if (!gridManager.HasBlockNeighbor(this, Vector3.up)) canPlace = false;
+                case Tool.Rubber:
+                    spriteData = null;
+                    tileRenderer.sprite = emptySprite;
+                    gameObject.name = $"Tile {position.x} {position.y} {position.z}";
+                    Rail rail = gridManager.GetRailAtPosition(this.transform.position);
+                    if (rail != null)
+                    {
+                        rail.GetComponent<Collider2D>().layerOverridePriority = 1;
+                        rail.GetComponent<Collider2D>().enabled = false;
+                        rail.GetComponent<Collider2D>().enabled = true;
+                    }
                     break;
-                case "SpikeLeft":
-                    if (!gridManager.HasBlockNeighbor(this, Vector3.right)) canPlace = false;
+                case Tool.Settings:
+                    if (this.GetType().BaseType == typeof(Trap))
+                    {
+                        gridManager.SetActiveTraps((Trap)this);
+                    }
                     break;
-                case "SpikeRight":
-                    if (!gridManager.HasBlockNeighbor(this, Vector3.left)) canPlace = false;
+                case Tool.Rail:
+                    gridManager.PaintRail(position);
                     break;
                 default:
                     throw new System.ArgumentOutOfRangeException();
             }
+        }
+
+        public void TurnOffCollider()
+        {
+            GetComponent<BoxCollider2D>().enabled = false;
+        }
+
+        public void TurnOnCollider()
+        {
+            GetComponent<BoxCollider2D>().enabled = true;
+        }
+
+        public void HandleHover()
+        {
+            SpriteData selectedTile = gridManager.GetLastSelectedSprite(uiHandler.GetCurrentView());
+
+            if (selectedTile != null)
+            {
+                if (selectedTile.type == SpriteType.Trap)
+                {
+                    HandleTrapHover(selectedTile);
+                    return;
+                }
+                if (selectedTile.type == SpriteType.Spawn && uiHandler.GetCurrentTool() == Tool.Brush)
+                {
+                    HandleSpawnHover();
+                    return;
+                }
+                if (selectedTile.type == SpriteType.Finish && uiHandler.GetCurrentTool() == Tool.Brush)
+                {
+                    HandleFinishHover();
+                    return;
+                }
+                tileRenderer.color = new Color(1, 1, 1, 0.7f);
+
+            }
+        }
+
+        public void HandleTrapHover(SpriteData selectedTile)
+        {
+            if (selectedTile.trapType == TrapType.Spike)
+            {
+                HandleSpikeHover(selectedTile);
+            }
+            if (selectedTile.trapType == TrapType.Saw)
+            {
+                if (uiHandler.GetCurrentTool() == Tool.Rail)
+                {
+                    HandlerRailHover();
+                    return;
+                }
+                else if (uiHandler.GetCurrentTool() == Tool.Brush)
+                {
+
+                    HandleSawHover();
+                    return;
+                }
+                tileRenderer.color = new Color(1, 1, 1, 0.7f);
+            }
+            if (selectedTile.trapType == TrapType.Canon)
+            {
+                if (uiHandler.GetCurrentTool() == Tool.Brush)
+                {
+                    HandleCanonHover();
+                    return;
+                }
+                tileRenderer.color = new Color(1, 1, 1, 0.7f);
+            }
+            if (selectedTile.trapType == TrapType.Axe)
+            {
+                if (uiHandler.GetCurrentTool() == Tool.Brush)
+                {
+                    HandleAxeHover();
+                    return;
+                }
+                tileRenderer.color = new Color(1, 1, 1, 0.7f);
+            }
+            if (selectedTile.trapType == TrapType.Blade)
+            {
+                if (uiHandler.GetCurrentTool() == Tool.Brush)
+                {
+                    HandleBladeHover();
+                    return;
+                }
+                tileRenderer.color = new Color(1, 1, 1, 0.7f);
+            }
+
+        }
+
+        public void HandleSpikeHover(SpriteData selectedTile)
+        {
+            if (uiHandler.GetCurrentTool() == Tool.Brush)
+            {
+                if (this.SpriteData != null) canPlace = false;
+                switch (selectedTile.name)
+                {
+                    case "SpikeTop":
+                        if (!gridManager.HasBlockNeighbor(this, Vector3.down)) canPlace = false;
+                        break;
+                    case "SpikeBottom":
+                        if (!gridManager.HasBlockNeighbor(this, Vector3.up)) canPlace = false;
+                        break;
+                    case "SpikeLeft":
+                        if (!gridManager.HasBlockNeighbor(this, Vector3.right)) canPlace = false;
+                        break;
+                    case "SpikeRight":
+                        if (!gridManager.HasBlockNeighbor(this, Vector3.left)) canPlace = false;
+                        break;
+                    default:
+                        throw new System.ArgumentOutOfRangeException();
+                }
+                if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
+                else TileRenderer.color = new Color(0, 1, 0, 0.7f);
+                return;
+            }
+
+            if (uiHandler.GetCurrentTool() == Tool.Rubber)
+            {
+                TileRenderer.color = new Color(1, 1, 1, 0.7f);
+                return;
+            }
+
+            if (uiHandler.GetCurrentTool() == Tool.Settings)
+            {
+                if (SpriteData != null && SpriteData.type != SpriteType.Block)
+                    TileRenderer.color = new Color(0, 1, 0, 0.7f);
+                else
+                    TileRenderer.color = new Color(1, 0, 0, 0.7f);
+            }
+        }
+
+        public void HandlerRailHover()
+        {
+            canPlace = this.GetType().BaseType != typeof(Trap) && this.SpriteData == null;
             if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
             else TileRenderer.color = new Color(0, 1, 0, 0.7f);
-            return;
         }
 
-        if (uiHandler.GetCurrentTool() == Tool.Rubber)
+        public void HandleSawHover()
         {
-            TileRenderer.color = new Color(1, 1, 1, 0.7f);
-            return;
+            canPlace = this.GetType() == typeof(Rail);
+            if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
+            else TileRenderer.color = new Color(0, 1, 0, 0.7f);
         }
 
-        if (uiHandler.GetCurrentTool() == Tool.Settings)
+        public void HandleCanonHover()
         {
-            if (SpriteData != null && SpriteData.type != SpriteType.Block)
-                TileRenderer.color = new Color(0, 1, 0, 0.7f);
-            else
-                TileRenderer.color = new Color(1, 0, 0, 0.7f);
+            canPlace = this.GetType() == typeof(Tile) && this.SpriteData == null;
+            if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
+            else TileRenderer.color = new Color(0, 1, 0, 0.7f);
         }
-    }
 
-    public void HandlerRailHover()
-    {
-        canPlace = this.GetType().BaseType != typeof(Trap) && this.SpriteData == null;
-        if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
-        else TileRenderer.color = new Color(0, 1, 0, 0.7f);
-    }
-
-    public void HandleSawHover()
-    {
-        canPlace = this.GetType() == typeof(Rail);
-        if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
-        else TileRenderer.color = new Color(0, 1, 0, 0.7f);
-    }
-
-    public void HandleCanonHover()
-    {
-        canPlace = this.GetType() == typeof(Tile) && this.SpriteData == null;
-        if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
-        else TileRenderer.color = new Color(0, 1, 0, 0.7f);
-    }
-
-    public void HandleAxeHover()
-    {
-        tileRenderer.color = new Color(1, 1, 1, 0.7f);
-    }
-    public void HandleBladeHover()
-    {
-        tileRenderer.color = new Color(1, 1, 1, 0.7f);
-    }
-    public void HandleSpawnHover()
-    {
-        canPlace = this.SpriteData == null && !gridManager.IsSpawnSet() && gridManager.HasBlockNeighbor(this, Vector3.down);
-        if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
-        else TileRenderer.color = new Color(0, 1, 0, 0.7f);
-    }
-    public void HandleFinishHover()
-    {
-        canPlace = this.SpriteData == null && !gridManager.IsFinishSet() && gridManager.HasBlockNeighbor(this, Vector3.down);
-        if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
-        else TileRenderer.color = new Color(0, 1, 0, 0.7f);
+        public void HandleAxeHover()
+        {
+            tileRenderer.color = new Color(1, 1, 1, 0.7f);
+        }
+        public void HandleBladeHover()
+        {
+            tileRenderer.color = new Color(1, 1, 1, 0.7f);
+        }
+        public void HandleSpawnHover()
+        {
+            canPlace = this.SpriteData == null && !gridManager.IsSpawnSet() && gridManager.HasBlockNeighbor(this, Vector3.down);
+            if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
+            else TileRenderer.color = new Color(0, 1, 0, 0.7f);
+        }
+        public void HandleFinishHover()
+        {
+            canPlace = this.SpriteData == null && !gridManager.IsFinishSet() && gridManager.HasBlockNeighbor(this, Vector3.down);
+            if (!canPlace) TileRenderer.color = new Color(1, 0, 0, 0.7f);
+            else TileRenderer.color = new Color(0, 1, 0, 0.7f);
+        }
     }
 }

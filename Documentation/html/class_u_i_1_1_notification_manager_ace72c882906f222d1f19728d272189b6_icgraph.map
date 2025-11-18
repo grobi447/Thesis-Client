@@ -1,0 +1,7 @@
+<map id="UI.NotificationManager.ShowMessage" name="UI.NotificationManager.ShowMessage">
+<area shape="rect" id="Node000001" title=" " alt="" coords="230,39,422,81"/>
+<area shape="rect" id="Node000002" href="$class_u_i_1_1_notification_manager.html#a6f1d8fb306839c02eeb7b9b195da80a2" title=" " alt="" coords="5,5,182,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="214,47,182,42,183,37,214,41"/>
+<area shape="rect" id="Node000003" href="$class_u_i_1_1_notification_manager.html#a967ec6032fa5a7b4abbdebc10b25768f" title=" " alt="" coords="5,72,182,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="214,79,183,83,182,78,214,73"/>
+</map>

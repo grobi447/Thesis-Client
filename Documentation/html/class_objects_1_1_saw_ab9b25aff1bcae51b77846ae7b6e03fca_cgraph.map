@@ -1,0 +1,5 @@
+<map id="Objects.Saw.GetRailAtPosition" name="Objects.Saw.GetRailAtPosition">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,209,40"/>
+<area shape="rect" id="Node000002" href="$class_in_game_1_1_map_loader.html#a6b2ea890eb1e4b649c30f217fbe02338" title=" " alt="" coords="257,5,440,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,24,241,24,241,29,209,29"/>
+</map>

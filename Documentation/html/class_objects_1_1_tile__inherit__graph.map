@@ -1,0 +1,19 @@
+<map id="Objects.Tile" name="Objects.Tile">
+<area shape="rect" id="Node000001" title=" " alt="" coords="224,123,365,683"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_rail.html" title=" " alt="" coords="130,731,304,885"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="241,698,234,731,229,730,235,697"/>
+<area shape="rect" id="Node000004" href="$class_objects_1_1_trap.html" title=" " alt="" coords="328,752,418,864"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="354,697,365,752,360,753,349,698"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="244,5,345,75"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="297,90,297,123,292,123,292,90"/>
+<area shape="rect" id="Node000005" href="$class_objects_1_1_axe.html" title=" " alt="" coords="5,1125,111,1365"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="332,877,318,888,291,901,265,907,216,907,193,906,170,908,148,917,126,935,95,977,75,1025,63,1076,57,1126,52,1125,57,1075,70,1023,91,974,122,931,145,913,169,903,192,900,216,901,264,902,289,896,316,883,328,873"/>
+<area shape="rect" id="Node000006" href="$class_objects_1_1_blade.html" title=" " alt="" coords="136,1083,258,1408"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="327,877,319,887,294,910,283,920,273,935,241,1007,221,1083,215,1082,236,1005,268,932,279,916,290,906,315,883,323,874"/>
+<area shape="rect" id="Node000007" href="$class_objects_1_1_canon.html" title=" " alt="" coords="282,933,464,1557"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="376,879,376,934,370,934,370,879"/>
+<area shape="rect" id="Node000008" href="$class_objects_1_1_saw.html" title=" " alt="" coords="488,1072,637,1419"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="430,863,456,896,478,932,508,1000,531,1071,526,1073,503,1002,473,935,451,899,426,867"/>
+<area shape="rect" id="Node000009" href="$class_objects_1_1_spike.html" title=" " alt="" coords="661,1157,835,1333"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="433,819,486,834,544,857,601,889,628,909,651,932,687,984,714,1042,731,1102,742,1157,737,1158,726,1103,709,1044,683,986,647,935,624,913,598,893,542,861,484,839,432,824"/>
+</map>

@@ -1,0 +1,21 @@
+<map id="Objects.Tile.HandleHover" name="Objects.Tile.HandleHover">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,105,177,132"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_tile.html#a127a9cdea5852aef6144513e793440c9" title=" " alt="" coords="238,31,409,73"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,102,231,76,233,81,141,107"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_tile.html#a521b39ee88a043b4f1d6244b465b680a" title=" " alt="" coords="235,97,412,140"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="177,116,220,116,220,121,177,121"/>
+<area shape="rect" id="Node000004" href="$class_objects_1_1_tile.html#a3601a3b5d51e80be2d00371c371cd7a6" title=" " alt="" coords="225,164,422,191"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="147,130,254,157,252,162,146,135"/>
+<area shape="rect" id="Node000005" href="$class_objects_1_1_tile.html#a0402138a83139a7355fbb7303bc3f350" title=" " alt="" coords="472,5,666,32"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="402,161,420,150,432,137,438,125,443,98,449,70,456,55,468,42,474,38,477,42,472,46,460,59,454,71,449,98,443,126,436,141,424,154,405,166"/>
+<area shape="rect" id="Node000006" href="$class_objects_1_1_tile.html#a2671dc1c842533816d889c13b380a584" title=" " alt="" coords="484,56,653,99"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="393,161,421,150,435,140,444,130,454,119,469,108,479,103,481,108,471,113,457,123,448,133,438,144,423,154,395,166"/>
+<area shape="rect" id="Node000007" href="$class_objects_1_1_tile.html#adc4423374792800d4fcf58fc4b920be3" title=" " alt="" coords="482,123,656,165"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="422,161,466,155,466,161,423,167"/>
+<area shape="rect" id="Node000008" href="$class_objects_1_1_tile.html#a836f85228a9411f88b38703411bb6126" title=" " alt="" coords="487,189,650,232"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="423,188,472,195,472,200,422,193"/>
+<area shape="rect" id="Node000009" href="$class_objects_1_1_tile.html#a52ff5ae5aa64cdb37359cbcc44ec6638" title=" " alt="" coords="470,256,667,283"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="353,189,407,215,471,241,493,249,492,254,469,247,404,220,350,194"/>
+<area shape="rect" id="Node000010" href="$class_objects_1_1_tile.html#aa409dc2ed7e6ef99b3d68d57f63496b9" title=" " alt="" coords="484,307,653,349"/>
+<area shape="poly" id="edge9_Node000004_Node000010" title=" " alt="" coords="340,189,395,239,432,267,471,292,482,298,479,302,469,297,429,272,391,243,337,193"/>
+</map>

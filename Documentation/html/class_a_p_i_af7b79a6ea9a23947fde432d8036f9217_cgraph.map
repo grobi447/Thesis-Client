@@ -1,0 +1,8 @@
+<map id="API.CreateMap" name="API.CreateMap">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,117,56"/>
+<area shape="rect" id="Node000002" href="$class_a_p_i.html#aff024759e1be9d25e4b6e7893979b1eb" title=" " alt="" coords="165,29,325,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,40,149,40,149,45,117,45"/>
+<area shape="rect" id="Node000003" href="$class_a_p_i.html#aecbc523c641125d2ac4cb10d539ea49d" title=" " alt="" coords="373,29,539,56"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="326,40,357,40,357,45,326,45"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="420,30,414,21,418,11,433,5,456,3,481,5,495,12,492,16,480,10,456,8,434,10,422,15,419,20,425,27"/>
+</map>

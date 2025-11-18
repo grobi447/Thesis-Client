@@ -1,0 +1,13 @@
+<map id="Objects.Canon.AimAtPlayer" name="Objects.Canon.AimAtPlayer">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,81,191,108"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_canon.html#a822fb43c2724a07405cce1a1b3c28f6a" title=" " alt="" coords="269,31,403,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,78,255,58,256,64,165,83"/>
+<area shape="rect" id="Node000005" href="$class_objects_1_1_canon.html#ae7210d16c7d191eabd097ce6001d495e" title=" " alt="" coords="245,81,427,108"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="191,92,229,92,229,97,191,97"/>
+<area shape="rect" id="Node000006" href="$class_objects_1_1_canon.html#ad25ab66972008986b6755b228c3b2ccf" title=" " alt="" coords="239,132,433,159"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="165,106,256,126,255,131,164,111"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_bullet.html#aaf0863d3d4d73da0df5b0239ffdd2e26" title=" " alt="" coords="495,5,620,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="403,34,479,25,480,30,404,39"/>
+<area shape="rect" id="Node000004" href="$class_objects_1_1_canon.html#a0e8652d1b83eee1b9a00090e66530756" title=" " alt="" coords="481,56,634,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="404,49,466,56,465,62,403,54"/>
+</map>

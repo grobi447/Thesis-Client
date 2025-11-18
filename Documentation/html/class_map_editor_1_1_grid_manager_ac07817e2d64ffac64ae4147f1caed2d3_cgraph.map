@@ -1,0 +1,10 @@
+<map id="MapEditor.GridManager.destroyRail" name="MapEditor.GridManager.destroyRail">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,72,234,99"/>
+<area shape="rect" id="Node000002" href="$class_map_editor_1_1_grid_manager.html#a7879065dd3c7346efd85e46affbc8d99" title=" " alt="" coords="282,5,504,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,69,275,49,276,54,186,74"/>
+<area shape="rect" id="Node000003" href="$class_map_editor_1_1_grid_manager.html#a0378a8f59f1c06b457c8379f47c4ef80" title=" " alt="" coords="552,93,735,136"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="234,89,537,106,536,111,234,94"/>
+<area shape="rect" id="Node000004" href="$class_map_editor_1_1_grid_manager.html#a629e42bc49fc5f50a133e6a4a2b9d99f" title=" " alt="" coords="298,123,488,165"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="186,97,283,118,282,123,185,102"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="488,130,536,125,537,130,489,136"/>
+</map>

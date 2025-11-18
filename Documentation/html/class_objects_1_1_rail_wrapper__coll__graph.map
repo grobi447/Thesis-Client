@@ -1,0 +1,5 @@
+<map id="Objects.RailWrapper" name="Objects.RailWrapper">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,189,136,280"/>
+<area shape="rect" id="Node000002" href="$struct_objects_1_1_vec3.html" title=" " alt="" coords="26,5,115,117"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="73,117,73,172,68,172,68,117"/>
+</map>

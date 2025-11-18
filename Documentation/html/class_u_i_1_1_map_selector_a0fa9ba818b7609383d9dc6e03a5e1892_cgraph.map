@@ -1,0 +1,13 @@
+<map id="UI.MapSelector.LoadExistingMaps" name="UI.MapSelector.LoadExistingMaps">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,43,229,69"/>
+<area shape="rect" id="Node000002" href="$class_u_i_1_1_map_selector.html#a4ee9cb5eac9d7e582510ba29b6e48c56" title=" " alt="" coords="277,43,478,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="229,53,261,53,261,59,229,59"/>
+<area shape="rect" id="Node000003" href="$class_u_i_1_1_map_selector.html#ada697e8f06d333cf4ddb72d9a7ff5752" title=" " alt="" coords="526,35,731,77"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="478,53,510,53,510,59,478,59"/>
+<area shape="rect" id="Node000004" href="$class_u_i_1_1_map_selector.html#af762c96247ff0f897bddd3ea539589fd" title=" " alt="" coords="779,5,963,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="732,41,763,37,764,42,732,46"/>
+<area shape="rect" id="Node000005" href="$class_u_i_1_1_map_selector.html#a1230be5d1f835292760113bd5250b1e6" title=" " alt="" coords="1011,5,1208,48"/>
+<area shape="poly" id="edge6_Node000003_Node000005" title=" " alt="" coords="732,61,843,64,962,57,1012,49,1013,54,963,63,843,69,732,66"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="963,33,995,33,995,38,963,38"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="1010,20,978,20,978,15,1010,15"/>
+</map>

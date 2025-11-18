@@ -1,0 +1,9 @@
+<map id="InGameTileTest" name="InGameTileTest">
+<area shape="rect" id="Node000001" title=" " alt="" coords="258,5,373,203"/>
+<area shape="rect" id="Node000002" href="$class_in_game_tile_test_1_1_on_mouse_enter.html" title=" " alt="" coords="5,261,199,347"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="249,170,148,263,145,260,246,166"/>
+<area shape="rect" id="Node000003" href="$class_in_game_tile_test_1_1_on_mouse_exit.html" title=" " alt="" coords="223,261,408,347"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="318,217,318,261,313,261,313,217"/>
+<area shape="rect" id="Node000004" href="$class_in_game_tile_test_1_1_on_mouse_over.html" title=" " alt="" coords="432,251,660,357"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="386,162,488,249,484,253,382,166"/>
+</map>

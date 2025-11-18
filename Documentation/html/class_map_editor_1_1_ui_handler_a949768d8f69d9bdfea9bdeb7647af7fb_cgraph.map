@@ -1,0 +1,10 @@
+<map id="MapEditor.UiHandler.ToggleCanonDirection" name="MapEditor.UiHandler.ToggleCanonDirection">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,35,190,77"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_canon.html#a9bfe8924fc7ffdde3a139c139a6b21f3" title=" " alt="" coords="238,43,430,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,53,222,53,222,59,190,59"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_canon.html#aa7ce73d421965973caf4dbaf6b77bcc2" title=" " alt="" coords="478,5,666,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="430,42,462,38,463,43,431,47"/>
+<area shape="rect" id="Node000004" href="$class_objects_1_1_canon.html#a09c4b4647470e837c1ebbbf9edfa7467" title=" " alt="" coords="714,43,936,69"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="430,56,478,57,666,57,699,57,699,62,666,63,478,63,430,62"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="667,35,699,39,698,44,666,40"/>
+</map>

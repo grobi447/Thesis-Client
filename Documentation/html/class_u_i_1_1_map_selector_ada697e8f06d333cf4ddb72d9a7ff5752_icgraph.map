@@ -1,0 +1,12 @@
+<map id="UI.MapSelector.UpdatePreviewImage" name="UI.MapSelector.UpdatePreviewImage">
+<area shape="rect" id="Node000001" title=" " alt="" coords="750,23,956,65"/>
+<area shape="rect" id="Node000002" href="$class_u_i_1_1_map_selector.html#a4ee9cb5eac9d7e582510ba29b6e48c56" title=" " alt="" coords="501,31,702,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="735,47,703,47,703,41,735,41"/>
+<area shape="rect" id="Node000003" href="$class_u_i_1_1_map_selector.html#a0fa9ba818b7609383d9dc6e03a5e1892" title=" " alt="" coords="230,5,453,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="485,35,453,32,454,27,486,30"/>
+<area shape="rect" id="Node000005" href="$class_u_i_1_1_map_selector.html#a3a1d4c4d6b6998e0944d5d022cf234b5" title=" " alt="" coords="240,56,443,83"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="486,58,444,62,443,57,485,53"/>
+<area shape="rect" id="Node000004" href="$class_u_i_1_1_map_selector.html#a6971f1e83b34239d95fddfb9c4f1b940" title=" " alt="" coords="5,31,182,57"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="214,34,183,38,182,32,214,29"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="224,60,182,56,183,50,224,55"/>
+</map>

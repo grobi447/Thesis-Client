@@ -1,0 +1,7 @@
+<map id="Objects.Player.OnTriggerEnter2D" name="Objects.Player.OnTriggerEnter2D">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,174,48"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_player.html#a85a119d2267382187584615c99bd0946" title=" " alt="" coords="222,13,353,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="174,24,206,24,206,29,174,29"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_player.html#a83a3a3df27321b1036507873217a5151" title=" " alt="" coords="401,13,588,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="353,24,385,24,385,29,353,29"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="MapEditor.GridManager.GenerateGrid" name="MapEditor.GridManager.GenerateGrid">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,35,245,61"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_tile.html#a14e28c17929618d2b2e5503768a8b848" title=" " alt="" coords="338,5,452,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="245,32,322,24,323,29,245,38"/>
+<area shape="rect" id="Node000003" href="$class_map_editor_1_1_grid_manager.html#a2e9eb36c6451ac7fd99a05cdbbc45eae" title=" " alt="" coords="293,56,497,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="245,58,278,62,277,67,245,64"/>
+</map>

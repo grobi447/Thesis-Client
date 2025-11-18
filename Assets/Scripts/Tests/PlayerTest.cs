@@ -1,7 +1,8 @@
 using NUnit.Framework;
 using UnityEngine;
+using InGame;
 using UnityEngine.InputSystem;
-
+using Objects;
 [TestFixture]
 public class PlayerTest
 {

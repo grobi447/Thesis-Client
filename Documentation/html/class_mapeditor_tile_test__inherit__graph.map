@@ -1,0 +1,11 @@
+<map id="MapeditorTileTest" name="MapeditorTileTest">
+<area shape="rect" id="Node000001" title=" " alt="" coords="426,5,586,240"/>
+<area shape="rect" id="Node000002" href="$class_mapeditor_tile_test_1_1_on_mouse_enter.html" title=" " alt="" coords="5,288,272,981"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="415,178,347,228,315,258,286,290,274,306,270,303,282,286,311,254,344,224,412,174"/>
+<area shape="rect" id="Node000003" href="$class_mapeditor_tile_test_1_1_on_mouse_exit.html" title=" " alt="" coords="296,573,493,696"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="480,255,410,574,405,573,475,254"/>
+<area shape="rect" id="Node000004" href="$class_mapeditor_tile_test_1_1_on_mouse_over.html" title=" " alt="" coords="517,517,718,752"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="537,254,595,517,589,518,532,255"/>
+<area shape="rect" id="Node000005" href="$class_mapeditor_tile_test_1_1_use_tool.html" title=" " alt="" coords="742,555,986,715"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="599,172,669,222,703,253,733,286,775,352,808,423,833,492,850,554,845,556,828,494,803,425,770,354,729,290,699,256,666,226,596,176"/>
+</map>

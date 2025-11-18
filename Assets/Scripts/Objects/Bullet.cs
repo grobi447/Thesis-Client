@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Bullet : MonoBehaviour
+namespace Objects
 {
-    private float speed;
-    Vector3 shootingDirection;
-
-    public void Init(float speed, Vector3 shootingDirection)
+    public class Bullet : MonoBehaviour
     {
-        this.speed = speed;
-        this.shootingDirection = shootingDirection.normalized;
-    }
+        private float speed;
+        Vector3 shootingDirection;
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Block") || collision.gameObject.CompareTag("Trap") && !collision.name.Contains("Canon"))
+        public void Init(float speed, Vector3 shootingDirection)
         {
-            Destroy(gameObject);
+            this.speed = speed;
+            this.shootingDirection = shootingDirection.normalized;
         }
-    }
 
-    void Update()
-    {
-        transform.position += shootingDirection * speed * Time.deltaTime;
-        if (transform.position.x < 0 || transform.position.x > 31 || transform.position.y < 0 || transform.position.y > 17)
+        void OnTriggerEnter2D(Collider2D collision)
         {
-            Destroy(gameObject);
+            if (collision.gameObject.CompareTag("Block") || collision.gameObject.CompareTag("Trap") && !collision.name.Contains("Canon"))
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        void Update()
+        {
+            transform.position += shootingDirection * speed * Time.deltaTime;
+            if (transform.position.x < 0 || transform.position.x > 31 || transform.position.y < 0 || transform.position.y > 17)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

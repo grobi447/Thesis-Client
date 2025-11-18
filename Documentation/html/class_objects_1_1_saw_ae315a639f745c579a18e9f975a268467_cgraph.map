@@ -1,0 +1,12 @@
+<map id="Objects.Saw.Update" name="Objects.Saw.Update">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,147,57"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_saw.html#af015198e53e4eff9a0718b54d817ee85" title=" " alt="" coords="209,5,397,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="147,33,193,28,194,34,147,39"/>
+<area shape="rect" id="Node000005" href="$class_objects_1_1_saw.html#a5f28cabaaf69e3326387622a17dda4bd" title=" " alt="" coords="195,56,411,83"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="147,49,180,53,179,58,147,55"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_saw.html#ab9b25aff1bcae51b77846ae7b6e03fca" title=" " alt="" coords="459,31,662,57"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="398,25,444,30,444,35,397,31"/>
+<area shape="rect" id="Node000004" href="$class_in_game_1_1_map_loader.html#a6b2ea890eb1e4b649c30f217fbe02338" title=" " alt="" coords="710,23,894,65"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="663,41,695,41,695,47,663,47"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="411,56,443,53,444,58,412,61"/>
+</map>

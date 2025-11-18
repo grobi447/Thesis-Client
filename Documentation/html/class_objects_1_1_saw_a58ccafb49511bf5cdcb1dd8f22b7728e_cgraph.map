@@ -1,0 +1,10 @@
+<map id="Objects.Saw.StartMoving" name="Objects.Saw.StartMoving">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,175,57"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_saw.html#af015198e53e4eff9a0718b54d817ee85" title=" " alt="" coords="223,5,411,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,32,207,28,207,34,175,37"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_saw.html#ab9b25aff1bcae51b77846ae7b6e03fca" title=" " alt="" coords="459,31,662,57"/>
+<area shape="poly" id="edge4_Node000001_Node000003" title=" " alt="" coords="175,41,443,41,443,47,175,47"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="412,26,444,29,443,34,411,31"/>
+<area shape="rect" id="Node000004" href="$class_in_game_1_1_map_loader.html#a6b2ea890eb1e4b649c30f217fbe02338" title=" " alt="" coords="710,23,894,65"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="663,41,695,41,695,47,663,47"/>
+</map>

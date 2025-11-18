@@ -1,0 +1,7 @@
+<map id="Objects.Blade.GetEndPosition" name="Objects.Blade.GetEndPosition">
+<area shape="rect" id="Node000001" title=" " alt="" coords="399,5,597,32"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_blade.html#a4c3e66fc03d3ac014bc1080a150f7973" title=" " alt="" coords="203,5,351,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="383,21,351,21,351,16,383,16"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_blade.html#aebec7178fbcc9a038810921e69618551" title=" " alt="" coords="5,5,155,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="187,21,155,21,155,16,187,16"/>
+</map>

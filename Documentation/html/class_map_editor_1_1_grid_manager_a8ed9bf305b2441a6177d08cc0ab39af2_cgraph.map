@@ -1,0 +1,29 @@
+<map id="MapEditor.GridManager.ReplaceToTrap" name="MapEditor.GridManager.ReplaceToTrap">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,100,216,143"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_tile.html#a14e28c17929618d2b2e5503768a8b848" title=" " alt="" coords="303,16,416,43"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,97,263,52,288,44,290,49,265,57,158,102"/>
+<area shape="rect" id="Node000003" href="$class_map_editor_1_1_grid_manager.html#a8d18578249be6853a481b9965352673d" title=" " alt="" coords="264,67,456,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="216,105,248,100,249,106,216,110"/>
+<area shape="rect" id="Node000010" href="$class_map_editor_1_1_grid_manager.html#abf49f9faf9f716ed207090906475e37e" title=" " alt="" coords="264,133,456,176"/>
+<area shape="poly" id="edge11_Node000001_Node000010" title=" " alt="" coords="216,133,249,137,248,142,216,138"/>
+<area shape="rect" id="Node000013" href="$class_objects_1_1_tile.html#a73ed25de62e895381475d3ac1081770e" title=" " alt="" coords="288,200,432,227"/>
+<area shape="poly" id="edge14_Node000001_Node000013" title=" " alt="" coords="158,141,265,185,287,193,285,198,263,191,156,146"/>
+<area shape="rect" id="Node000004" href="$class_objects_1_1_saw.html#a15b8993d6b82592e75d96dd45da70c30" title=" " alt="" coords="504,5,691,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="435,64,534,34,535,39,436,69"/>
+<area shape="rect" id="Node000005" href="$class_objects_1_1_saw.html#a75949b14b6affec1673b21c96a7adb8d" title=" " alt="" coords="741,31,929,57"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="456,76,725,51,726,57,456,82"/>
+<area shape="rect" id="Node000008" href="$class_objects_1_1_saw.html#a58ccafb49511bf5cdcb1dd8f22b7728e" title=" " alt="" coords="513,107,682,133"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="457,98,498,104,497,109,456,104"/>
+<area shape="rect" id="Node000006" href="$class_objects_1_1_saw.html#ab9b25aff1bcae51b77846ae7b6e03fca" title=" " alt="" coords="979,81,1182,108"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="904,55,998,75,997,80,903,61"/>
+<area shape="rect" id="Node000007" href="$class_in_game_1_1_map_loader.html#a6b2ea890eb1e4b649c30f217fbe02338" title=" " alt="" coords="1230,73,1413,116"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="1183,92,1214,92,1214,97,1183,97"/>
+<area shape="poly" id="edge10_Node000008_Node000006" title=" " alt="" coords="682,113,963,98,963,103,683,118"/>
+<area shape="rect" id="Node000009" href="$class_objects_1_1_saw.html#af015198e53e4eff9a0718b54d817ee85" title=" " alt="" coords="741,132,929,159"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="683,126,726,131,725,136,682,132"/>
+<area shape="poly" id="edge9_Node000009_Node000006" title=" " alt="" coords="903,129,997,109,998,114,904,134"/>
+<area shape="rect" id="Node000011" href="$class_objects_1_1_spike.html#aa1eaa00d67adf033245f8cf89526a9bf" title=" " alt="" coords="506,161,689,188"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="457,160,490,163,490,168,456,165"/>
+<area shape="rect" id="Node000012" href="$class_objects_1_1_spike.html#acad8dbd5f4c766bf8e25f3e55270f4fa" title=" " alt="" coords="739,183,931,225"/>
+<area shape="poly" id="edge13_Node000011_Node000012" title=" " alt="" coords="690,183,724,188,724,193,689,189"/>
+</map>

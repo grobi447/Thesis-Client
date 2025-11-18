@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['idlespeed_0',['idleSpeed',['../class_objects_1_1_canon.html#ab29fd4b955fd3c69e10b15cd2ac27da4',1,'Objects::Canon']]],
+  ['imagecomponent_1',['imageComponent',['../class_map_editor_1_1_texture_manager.html#a1b5e0ee872a377a207d7db6135a6f1ee',1,'MapEditor::TextureManager']]],
+  ['ingame_2',['inGame',['../class_objects_1_1_tile.html#ac93c28864f96d4aa7e53eff3904e94d6',1,'Objects::Tile']]],
+  ['initialposition_3',['initialPosition',['../class_objects_1_1_canon.html#ad0e9b6027b5f28d7964d35502326f2d1',1,'Objects::Canon']]],
+  ['initialrotation_4',['initialRotation',['../class_objects_1_1_axe.html#abeeba4346ee3d29e1882d164fa269e30',1,'Objects::Axe']]],
+  ['installedmaps_5',['installedMaps',['../class_map_manager.html#a8b4d4882a77ad26e8ba35cb721c40a6a',1,'MapManager.installedMaps'],['../class_u_i_1_1_map_selector.html#a88bfe9802c393a9f3a885b0b40bc4b82',1,'UI.MapSelector.installedMaps']]],
+  ['instance_6',['Instance',['../class_in_game_1_1_scene_controller.html#ab11adf14fd0034f4a92187e7304b1231',1,'InGame::SceneController']]],
+  ['instance_7',['instance',['../class_map_editor_1_1_screenshot_handler.html#abe087ec8e7969c7340bf986c5194002f',1,'MapEditor.ScreenshotHandler.instance'],['../class_map_manager.html#a10bc5a6075dfb81f7193915c34c5301e',1,'MapManager.instance'],['../class_user_manager.html#a7af6f651e8ca97551156c9a8939a5674',1,'UserManager.instance']]],
+  ['invisiblecolor_8',['invisibleColor',['../class_objects_1_1_tile.html#a7341a33db36666805bfa050154614224',1,'Objects::Tile']]],
+  ['isactive_9',['isActive',['../class_objects_1_1_trap.html#a56b85a3253104e6568d35f59ffe18b64',1,'Objects::Trap']]],
+  ['iscrouching_10',['isCrouching',['../class_objects_1_1_player.html#a4749165399a4332d8fc11e7868882a9a',1,'Objects::Player']]],
+  ['isdead_11',['isDead',['../class_objects_1_1_player.html#a708747cc636fd0eefa4361def23bd287',1,'Objects::Player']]],
+  ['isfinished_12',['isFinished',['../class_objects_1_1_player.html#ae65f22cee831140738f500a6d0d58f56',1,'Objects::Player']]],
+  ['isgrounded_13',['isGrounded',['../class_objects_1_1_player.html#a4a5d1095edf592c3da564644e25cb6b7',1,'Objects::Player']]],
+  ['isjumping_14',['isJumping',['../class_objects_1_1_player.html#a5473b3d280c97efe4de8c46d359548b9',1,'Objects::Player']]],
+  ['islocked_15',['isLocked',['../class_objects_1_1_rail.html#a93e293a078360c93654f1df0ba35baf6',1,'Objects::Rail']]],
+  ['ismousedown_16',['isMouseDown',['../class_map_editor_1_1_grid_manager.html#af339aa653294a041e6f3b10c640acc4d',1,'MapEditor::GridManager']]],
+  ['ismoving_17',['isMoving',['../class_objects_1_1_saw.html#ac2ef9abc15d6d38fd2c373cb838b3d74',1,'Objects::Saw']]],
+  ['issavepanelopen_18',['isSavePanelOpen',['../class_map_editor_1_1_ui_handler.html#ac41927494f630522f34fc068dc274c6f',1,'MapEditor::UiHandler']]]
+];

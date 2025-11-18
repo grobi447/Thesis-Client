@@ -1,0 +1,5 @@
+<map id="MapManager.LoadNextMap" name="MapManager.LoadNextMap">
+<area shape="rect" id="Node000001" title=" " alt="" coords="263,13,444,40"/>
+<area shape="rect" id="Node000002" href="$class_in_game_1_1_game_manager.html#a5821f1b4625c5cd3943fffd256035512" title=" " alt="" coords="5,5,215,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="247,29,215,29,215,24,247,24"/>
+</map>

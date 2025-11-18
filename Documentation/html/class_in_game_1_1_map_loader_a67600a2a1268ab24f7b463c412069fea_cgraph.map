@@ -1,0 +1,9 @@
+<map id="InGame.MapLoader.CreateTile" name="InGame.MapLoader.CreateTile">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,64,205,91"/>
+<area shape="rect" id="Node000002" href="$class_in_game_1_1_map_loader.html#ac2f83ffdd222db4f59cdb0d2a8cd79d2" title=" " alt="" coords="253,5,474,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="166,61,286,33,287,39,168,66"/>
+<area shape="rect" id="Node000003" href="$class_in_game_1_1_map_loader.html#a741f4554a304645d09ac2e851fd77dc5" title=" " alt="" coords="266,56,460,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="205,75,251,75,251,80,205,80"/>
+<area shape="rect" id="Node000004" href="$class_in_game_1_1_map_loader.html#a1157144aff4c68e359f3bf323277c065" title=" " alt="" coords="273,123,454,165"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="161,89,264,116,262,121,159,94"/>
+</map>

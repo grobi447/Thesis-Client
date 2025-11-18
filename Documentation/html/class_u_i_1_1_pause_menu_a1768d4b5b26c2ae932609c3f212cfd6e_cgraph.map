@@ -1,0 +1,7 @@
+<map id="UI.PauseMenu.Update" name="UI.PauseMenu.Update">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,160,57"/>
+<area shape="rect" id="Node000002" href="$class_u_i_1_1_pause_menu.html#adcc0b6519d00a9a60bd58e4ac962e90e" title=" " alt="" coords="214,5,363,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,32,198,27,198,32,160,37"/>
+<area shape="rect" id="Node000003" href="$class_u_i_1_1_pause_menu.html#a87757210b71f565cc4c12ec52bd7e1d0" title=" " alt="" coords="208,56,369,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="160,51,193,55,192,60,160,56"/>
+</map>

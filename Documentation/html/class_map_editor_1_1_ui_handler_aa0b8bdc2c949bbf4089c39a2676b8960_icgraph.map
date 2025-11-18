@@ -1,0 +1,9 @@
+<map id="MapEditor.UiHandler.UpdateView" name="MapEditor.UiHandler.UpdateView">
+<area shape="rect" id="Node000001" title=" " alt="" coords="248,80,465,107"/>
+<area shape="rect" id="Node000002" href="$class_map_editor_1_1_ui_handler.html#aaca160299dbf7f17e3b131a6bd05630b" title=" " alt="" coords="10,5,195,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="287,78,186,51,187,46,288,73"/>
+<area shape="rect" id="Node000003" href="$class_map_editor_1_1_ui_handler.html#aa7aec01a49b4743edac9e011281b1568" title=" " alt="" coords="5,72,200,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="232,96,200,96,200,91,232,91"/>
+<area shape="rect" id="Node000004" href="$class_map_editor_1_1_ui_handler.html#ad91cab5bec2c9f2a158d518147d36121" title=" " alt="" coords="15,139,190,165"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="282,113,164,141,163,135,280,108"/>
+</map>

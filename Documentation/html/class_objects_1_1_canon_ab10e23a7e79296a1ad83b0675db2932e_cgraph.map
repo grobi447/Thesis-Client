@@ -1,0 +1,10 @@
+<map id="Objects.Canon.Start" name="Objects.Canon.Start">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,43,146,69"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_canon.html#a9bfe8924fc7ffdde3a139c139a6b21f3" title=" " alt="" coords="194,43,386,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,53,178,53,178,59,146,59"/>
+<area shape="rect" id="Node000003" href="$class_objects_1_1_canon.html#aa7ce73d421965973caf4dbaf6b77bcc2" title=" " alt="" coords="434,5,622,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="386,42,418,38,419,43,387,47"/>
+<area shape="rect" id="Node000004" href="$class_objects_1_1_canon.html#a09c4b4647470e837c1ebbbf9edfa7467" title=" " alt="" coords="670,43,892,69"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="386,56,434,57,622,57,655,57,655,62,622,63,434,63,386,62"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="623,35,655,39,654,44,622,40"/>
+</map>

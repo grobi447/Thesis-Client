@@ -1,0 +1,7 @@
+<map id="Objects.Axe.SetDirection" name="Objects.Axe.SetDirection">
+<area shape="rect" id="Node000001" title=" " alt="" coords="238,35,407,61"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_axe.html#a0c3c35dfb98d776df1effba727a413f2" title=" " alt="" coords="35,5,160,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="222,38,160,29,161,24,222,32"/>
+<area shape="rect" id="Node000003" href="$class_map_editor_1_1_ui_handler.html#a9b44776c46aebc57b3f811e6b94b5283" title=" " alt="" coords="5,56,190,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="222,64,190,68,190,63,222,58"/>
+</map>

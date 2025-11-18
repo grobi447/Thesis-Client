@@ -1,0 +1,11 @@
+<map id="UI.ButtonHoverEffect" name="UI.ButtonHoverEffect">
+<area shape="rect" id="Node000001" title=" " alt="" coords="204,123,340,277"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,106,75"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="115,81,205,147,202,151,112,85"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="130,5,262,75"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="221,87,237,122,233,124,216,89"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="286,5,410,75"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="327,89,311,124,306,122,323,87"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="433,5,564,75"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="440,85,341,154,338,150,437,81"/>
+</map>

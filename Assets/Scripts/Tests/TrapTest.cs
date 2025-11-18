@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using UnityEngine;
-
+using Objects;
 [TestFixture]
 public class TrapTest
 {

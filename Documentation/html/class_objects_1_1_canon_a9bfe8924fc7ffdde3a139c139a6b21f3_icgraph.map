@@ -1,0 +1,7 @@
+<map id="Objects.Canon.UpdateCanon" name="Objects.Canon.UpdateCanon">
+<area shape="rect" id="Node000001" title=" " alt="" coords="238,35,430,61"/>
+<area shape="rect" id="Node000002" href="$class_objects_1_1_canon.html#ab10e23a7e79296a1ad83b0675db2932e" title=" " alt="" coords="27,5,168,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="222,37,168,30,168,25,223,32"/>
+<area shape="rect" id="Node000003" href="$class_map_editor_1_1_ui_handler.html#a949768d8f69d9bdfea9bdeb7647af7fb" title=" " alt="" coords="5,56,190,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="222,65,190,69,190,63,222,59"/>
+</map>

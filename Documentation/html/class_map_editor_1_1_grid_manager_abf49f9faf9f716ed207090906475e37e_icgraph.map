@@ -1,0 +1,5 @@
+<map id="MapEditor.GridManager.SyncAllSpikes" name="MapEditor.GridManager.SyncAllSpikes">
+<area shape="rect" id="Node000001" title=" " alt="" coords="264,5,456,48"/>
+<area shape="rect" id="Node000002" href="$class_map_editor_1_1_grid_manager.html#a8ed9bf305b2441a6177d08cc0ab39af2" title=" " alt="" coords="5,5,216,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="248,29,216,29,216,24,248,24"/>
+</map>

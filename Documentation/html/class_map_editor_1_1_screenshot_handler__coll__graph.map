@@ -1,0 +1,9 @@
+<map id="MapEditor.ScreenshotHandler" name="MapEditor.ScreenshotHandler">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,393,202,591"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="48,5,149,75"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,90,105,394,100,394,96,90"/>
+<area shape="rect" id="Node000003" href="$class_map_editor_1_1_screenshot_handler.html" title=" " alt="" coords="120,124,317,321"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="131,85,156,123,152,126,127,88"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="179,322,155,379,150,377,174,320"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="318,199,336,207,344,222,341,232,334,239,331,235,336,230,338,223,332,211,315,204"/>
+</map>
