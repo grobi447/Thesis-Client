@@ -26,47 +26,78 @@ namespace UI
         public GameObject leaderboardPanel;
         public GameObject loadingPanel;
         public GameObject loadedPanel;
+        public GameObject spinner;
         public Scrollbar scrollbar;
+        private bool waitingForRemoteMaps;
 
         public void LoadMaps()
         {
             LoadExistingMaps();
+            LoadRemoteMaps();
+            MapManager.Instance.installedMaps = installedMaps;
+        }
+
+        private void LoadRemoteMaps()
+        {
+            if (api == null)
+            {
+                return;
+            }
+
+            if (api.mapLoader != null && api.mapLoader.Count > 0)
+            {
+                LoadNewMaps();
+                MapManager.Instance.installedMaps = installedMaps;
+            }
+            else if (!waitingForRemoteMaps && gameObject.activeInHierarchy)
+            {
+                StartCoroutine(WaitForRemoteMaps());
+            }
+        }
+
+        private IEnumerator WaitForRemoteMaps()
+        {
+            waitingForRemoteMaps = true;
+            if (spinner != null)
+            {
+                spinner.SetActive(true);
+            }
+            yield return new WaitUntil(() => api != null && api.mapLoader != null && api.mapLoader.Count > 0);
             LoadNewMaps();
             MapManager.Instance.installedMaps = installedMaps;
+            waitingForRemoteMaps = false;
+            if (spinner != null)
+            {
+                spinner.SetActive(false);
+            }
         }
 
         public void LoadExistingMaps()
         {
-            string mapsPath = Application.dataPath + "/Maps/";
-            if (Directory.Exists(mapsPath))
-            {
-                foreach (string mapIdOrder in api.mapLoader.Select(m => m["map_id"].ToString()))
-                {
-                    if (!installedMaps.Contains(mapIdOrder))
-                    {
-                        string dir = Path.Combine(mapsPath, mapIdOrder);
-                        string dataPath = Path.Combine(dir, $"{mapIdOrder}.json");
-                        if (File.Exists(dataPath))
-                        {
-                            installedMaps.Add(mapIdOrder);
-                            GameObject mapItem = Instantiate(mapPrefab, contentPanel.transform);
-                            mapItem.GetComponent<MapItem>().Initialize(
-                                mapIdOrder,
-                                JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataPath))["map_name"].ToString(),
-                                JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataPath))["created_by"].ToString()
-                            );
-                            mapItem.name = mapIdOrder;
-                            mapItem.transform.SetParent(contentPanel.transform, false);
-                            SetupMapItem(mapItem, JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataPath)));
-                        }
-                    }
-                }
-            }
-            else
+            string mapsPath = Path.Combine(Application.dataPath, "Maps");
+            if (!Directory.Exists(mapsPath))
             {
                 Directory.CreateDirectory(mapsPath);
+                return;
             }
 
+            foreach (string directory in Directory.GetDirectories(mapsPath))
+            {
+                string mapId = Path.GetFileName(directory);
+                if (string.IsNullOrEmpty(mapId) || installedMaps.Contains(mapId))
+                {
+                    continue;
+                }
+
+                string dataPath = Path.Combine(directory, $"{mapId}.json");
+                if (!File.Exists(dataPath))
+                {
+                    continue;
+                }
+
+                Dictionary<string, object> mapData = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataPath));
+                CreateMapItem(mapId, mapData);
+            }
         }
 
         public void LoadNewMaps()
@@ -75,15 +106,6 @@ namespace UI
             {
                 if (!installedMaps.Contains(mapData["map_id"].ToString()))
                 {
-                    installedMaps.Add(mapData["map_id"].ToString());
-                    GameObject mapItem = Instantiate(mapPrefab, contentPanel.transform);
-                    mapItem.GetComponent<MapItem>().Initialize(
-                        mapData["map_id"].ToString(),
-                        mapData["map_name"].ToString(),
-                        mapData["created_by"].ToString()
-                    );
-                    mapItem.name = mapData["map_id"].ToString();
-                    mapItem.transform.SetParent(contentPanel.transform, false);
                     string mapsPath = Application.dataPath + "/Maps/";
                     string mapId = mapData["map_id"].ToString();
                     string mapDir = Path.Combine(mapsPath, mapId);
@@ -95,9 +117,23 @@ namespace UI
                     string jsonData = JsonConvert.SerializeObject(mapData, Formatting.Indented);
                     File.WriteAllText(dataPath, jsonData);
                     api.DownloadMapImage(mapId);
-                    SetupMapItem(mapItem, mapData);
+                    CreateMapItem(mapId, mapData);
                 }
             }
+        }
+
+        private void CreateMapItem(string mapId, Dictionary<string, object> mapData)
+        {
+            installedMaps.Add(mapId);
+            GameObject mapItem = Instantiate(mapPrefab, contentPanel.transform);
+            mapItem.GetComponent<MapItem>().Initialize(
+                mapId,
+                mapData["map_name"].ToString(),
+                mapData["created_by"].ToString()
+            );
+            mapItem.name = mapId;
+            mapItem.transform.SetParent(contentPanel.transform, false);
+            SetupMapItem(mapItem, mapData);
         }
 
         public void SetupMapItem(GameObject mapItem, Dictionary<string, object> mapData)

@@ -68,8 +68,11 @@ public class API : MonoBehaviour
 
             yield return request.SendWebRequest();
             UserResponse apiResponse = JsonUtility.FromJson<UserResponse>(request.downloadHandler.text);
-
-            if (request.result == UnityWebRequest.Result.Success)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                notificationManager.OnErrorMessage($"Error: {request.error}");
+            }
+            else if (request.result == UnityWebRequest.Result.Success)
             {
                 notificationManager.OnSuccessMessage(apiResponse?.detail);
                 menuManager.LoggedIn();
@@ -97,8 +100,11 @@ public class API : MonoBehaviour
 
             yield return request.SendWebRequest();
             UserResponse apiResponse = JsonUtility.FromJson<UserResponse>(request.downloadHandler.text);
-
-            if (request.result == UnityWebRequest.Result.Success)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
+            {
+                 notificationManager.OnErrorMessage($"Error: {request.error}");
+            }
+            else if (request.result == UnityWebRequest.Result.Success)
             {
                 notificationManager.OnSuccessMessage(apiResponse?.detail);
                 UserManager.Instance.username = apiResponse.userdata.username;
